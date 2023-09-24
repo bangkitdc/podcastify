@@ -1,6 +1,51 @@
-version: '3.3'
+version: '3.8'
 services:
-  web:
+  podcastify-app-web:
+    container_name: podcastify-app-web
     image: tubes-1:latest
+    hostname: podcastify-app-web
+    env_file:
+      - .env
     ports:
-      - 8008:80
+      - 8000:80
+    depends_on:
+      - podcastify-app-db
+      - podcastify-app-phpmyadmin
+    networks:
+      - podcastify-app
+    volumes:
+      - ./src:/var/www/html/src
+      - ./.htaccess:/var/www/html/.htaccess
+
+  podcastify-app-db:
+    container_name: podcastify-app-db
+    image: mysql:latest
+    hostname: podcastify-app-db
+    ports:
+      - 3307:3306
+    networks:
+      - podcastify-app
+    env_file:
+      - .env
+    volumes:
+      - ./mysql:/var/lib/mysql
+  
+  podcastify-app-phpmyadmin:
+    container_name: podcastify-app-phpmyadmin
+    image: phpmyadmin:latest
+    hostname: podcastify-app-phpmyadmin
+    networks:
+      - podcastify-app
+    environment:
+      PMA_HOST: podcastify-app-db
+    depends_on:
+      - podcastify-app-db
+    ports:
+      - 8080:80
+
+volumes:
+  mysql:
+    driver: local
+
+networks:
+  podcastify-app:
