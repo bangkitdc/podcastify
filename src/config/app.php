@@ -12,7 +12,7 @@ class App {
      *
      * 
      */
-    public function __construct() {
+    public function __construct() {        
         // By default, page not found
         require_once __DIR__ . '/../app/controllers/ErrorController.php';
         $this->controller = new ErrorController();
@@ -53,7 +53,7 @@ class App {
 
             return $url;
         }
-
+        
         return [];
     }
 }
