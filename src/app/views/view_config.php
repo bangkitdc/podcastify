@@ -10,6 +10,10 @@ switch ($path) {
   // case 'error':
   //   include  VIEW_DIR . "components/" . $page . ".php";
   //   break;
+  
+  case '/podcast':
+    include VIEW_DIR . "components/podcast/podcast.php";
+    break;
 
   default:
     include VIEW_DIR . "components/errors/404.php";
