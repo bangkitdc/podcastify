@@ -10,17 +10,24 @@ class PodcastController extends Controller
         $podcast_models = new Podcast();
         if ($isAjax) {
             // If it's an AJAX request, only include podcast.php
-            sleep(1);
-            $q = isset($_GET['podcast_id']) ? (int) $_GET['podcast_id'] : '';
+            $q = isset($_GET['podcast_id']) ? filter_var($_GET['podcast_id'], FILTER_SANITIZE_STRING) : '';
+
             $podcasts = array();
+
             if ($q == '') {
               $podcasts_data = $podcast_models->findAll();
-              foreach ($podcasts_data as $data) {
-                array_push($podcasts, $data);
-              }
             } else {
               $podcasts_data = $podcast_models->findSome($q);
-              array_push($podcasts, $podcasts_data);
+            }
+
+            if (is_object($podcasts_data)) {
+                array_push($podcasts, $podcasts_data);
+            } else if (is_array($podcasts_data)) {
+                foreach ($podcasts_data as $data) {
+                    array_push($podcasts, $data);
+                }
+            } else {
+                $podcasts = [];
             }
 
             include VIEW_DIR . "components/podcast/podcast.php";
