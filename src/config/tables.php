@@ -24,4 +24,16 @@ class Tables
         role_id             SMALLINT        NOT NULL,
         FOREIGN KEY (role_id) REFERENCES role (role_id)
     );";
+
+    public const PODCASTS_TABLE =
+    "CREATE TABLE IF NOT EXISTS podcasts (
+        podcast_id          INT             AUTO_INCREMENT      PRIMARY KEY,
+        title               VARCHAR(255)    NOT NULL,
+        description         TEXT,
+        creator_name        VARCHAR(255)    NOT NULL,
+        image_url           VARCHAR(255),
+        total_eps           INT             NOT NULL DEFAULT 0,
+        created_at          TIMESTAMP       NOT NULL,
+        updated_at          TIMESTAMP       NOT NULL
+    );";
 }
