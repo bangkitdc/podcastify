@@ -12,6 +12,6 @@ switch ($path) {
   //   break;
 
   default:
-    include VIEW_DIR . "components/errors/404.php";
+    include VIEW_DIR . "pages/errors/404.php";
     break;
 }
