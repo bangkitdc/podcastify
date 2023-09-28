@@ -8,20 +8,21 @@ class App {
     protected $params = [];
 
     /**
-     * 
      *
-     * 
+     *
+     *
      */
-    public function __construct() {        
+    public function __construct() {
         // By default, page not found
         require_once __DIR__ . '/../app/controllers/ErrorController.php';
         $this->controller = new ErrorController();
 
-        // $url = $this->parseURL();
-        // if (isset($url[0]) and file_exists(BASE_DIR . $url[0] . '_controller.php')) {
-        //     $this->controller = $url[0];
-        //     unset($url[0]);
-        // }
+        $url = $this->parseURL();
+        if (isset($url[0]) and file_exists(BASE_DIR . ucfirst($url[0]) . 'Controller.php')) {
+            require_once BASE_DIR . ucfirst($url[0]) . 'Controller.php';
+            $this->controller = new (ucfirst($url[0]) . 'Controller');
+            unset($url[0]);
+        }
 
         // require_once BASE_DIR . $this->controller . '_controller.php';
         // $this->controller = new $this->controller;
@@ -53,7 +54,7 @@ class App {
 
             return $url;
         }
-        
+
         return [];
     }
 }
