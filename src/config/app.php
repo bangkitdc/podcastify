@@ -17,25 +17,32 @@ class App {
         require_once __DIR__ . '/../app/controllers/ErrorController.php';
         $this->controller = new ErrorController();
 
-        // $url = $this->parseURL();
-        // if (isset($url[0]) and file_exists(BASE_DIR . $url[0] . '_controller.php')) {
-        //     $this->controller = $url[0];
-        //     unset($url[0]);
-        // }
+        $url = $this->parseURL();
+
+        if (isset($url[0]) and file_exists(BASE_DIR . $url[0] . 'Controller.php')) {
+            $this->controller = $url[0];
+            
+            unset($url[0]);
+
+            require_once BASE_DIR . $this->controller . 'Controller.php';
+            $this->controller = ucfirst($this->controller) . 'Controller';
+            $this->controller = new $this->controller;
+        }
 
         // require_once BASE_DIR . $this->controller . '_controller.php';
+        // $this->controller = ucfirst($this->controller) . 'Controller';
         // $this->controller = new $this->controller;
 
-        // if (isset($url[1])) {
-        //     if (method_exists($this->controller, $url[1])) {
-        //         $this->method = $url[1];
-        //         unset($url[1]);
-        //     }
-        // }
+        if (isset($url[1])) {
+            if (method_exists($this->controller, $url[1])) {
+                $this->method = $url[1];
+                unset($url[1]);
+            }
+        }
 
-        // if (!empty($url)) {
-        //     $this->params = array_values($url);
-        // }
+        if (!empty($url)) {
+            $this->params = array_values($url);
+        }
 
         call_user_func_array([$this->controller, $this->method], $this->params);
     }
