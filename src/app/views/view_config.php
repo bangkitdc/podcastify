@@ -7,10 +7,12 @@ $urlParts = parse_url($currentUrl);
 $path = isset($urlParts['path']) ? $urlParts['path'] : '';
 
 switch ($path) {
-  // case 'error':
-  //   include  VIEW_DIR . "components/" . $page . ".php";
-  //   break;
-
+    // case 'error':
+    //   include  VIEW_DIR . "components/" . $page . ".php";
+    //   break;
+  case '/episode':
+    include VIEW_DIR . "pages/episode/index.php";
+    break;
   default:
     include VIEW_DIR . "pages/errors/404.php";
     break;
