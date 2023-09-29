@@ -70,7 +70,7 @@ CREATE TABLE episodes (
     liked_count         INT             NOT NULL DEFAULT 0,
     created_at          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (podcast_id) REFERENCES podcasts(podcast_id),
+    FOREIGN KEY (podcast_id) REFERENCES podcasts(podcast_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 
