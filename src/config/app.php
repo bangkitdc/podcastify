@@ -12,30 +12,44 @@ class App {
      *
      * 
      */
-    public function __construct() {        
-        // By default, page not found
-        require_once __DIR__ . '/../app/controllers/ErrorController.php';
-        $this->controller = new ErrorController();
+    public function __construct() { 
+        // Explode URL
+        // [0] : controller
+        // [1] : method/ params
+        // Example : podcast/1, podcast/add
 
-        // $url = $this->parseURL();
-        // if (isset($url[0]) and file_exists(BASE_DIR . $url[0] . '_controller.php')) {
-        //     $this->controller = $url[0];
-        //     unset($url[0]);
-        // }
+        $url = $this->parseURL();
+        if (isset($url[0])) {
+            if (file_exists(BASE_DIR . $url[0] . 'Controller.php')) {
+                $this->controller = $url[0];
+                unset($url[0]);
+            }
+        } else {
+            $this->controller = 'Home';
+        }
 
-        // require_once BASE_DIR . $this->controller . '_controller.php';
-        // $this->controller = new $this->controller;
+        $controllerClassName = $this->controller . 'Controller';
 
-        // if (isset($url[1])) {
-        //     if (method_exists($this->controller, $url[1])) {
-        //         $this->method = $url[1];
-        //         unset($url[1]);
-        //     }
-        // }
+        if (class_exists($controllerClassName)) {
+            require_once BASE_DIR . $this->controller . 'Controller.php';
+        } else {
+            require_once BASE_DIR . 'ErrorController.php';
+            $controllerClassName = 'ErrorController';
+        }
 
-        // if (!empty($url)) {
-        //     $this->params = array_values($url);
-        // }
+        $this->controller = new $controllerClassName;
+
+        // Check if url[1] is a method or params
+        if (isset($url[1])) {
+            if (method_exists($this->controller, $url[1])) {
+                $this->method = $url[1];
+                unset($url[1]);
+            }
+        }
+
+        if (!empty($url)) {
+            $this->params = array_values($url);
+        }
 
         call_user_func_array([$this->controller, $this->method], $this->params);
     }

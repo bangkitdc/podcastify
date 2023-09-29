@@ -1,8 +1,9 @@
 :root {
   /* Color  */
-  --clr-background-base: #121212;
+  --clr-background-base-one: #000000;
+  --clr-background-base-two: #121212;
   --clr-background-highlight-one: #1a1a1a;
-  --clr-background-highlight-two: #2a2a2a;
+  --clr-background-highlight-two: #878787;
   --clr-background-highlight-three: #454545;
   --clr-text-primary: #ffffff;
   --clr-text-secondary: #a7a7a7;
@@ -42,11 +43,6 @@
   --rounded-2xl: 1rem;
   --rounded-3xl: 1.5rem;
   --rounded-full: 1000rem;
-
-  --spacing: 0.25rem;
-  --transition: all 0.2s linear;
-  --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Fonts */
@@ -111,7 +107,7 @@
 }
 
 body {
-  background-color: var(--clr-background-highlight-one);
+  background-color: var(--clr-background-base-one);
   font-family: CircularSpotifyText;
 }
 
@@ -155,10 +151,10 @@ button {
 }
 
 .btn {
-  padding: 14px 32px;
-  border-radius: var(--rounded-lg);
+  padding: 1rem 2rem;
+  border-radius: var(--rounded-full);
   border: none;
-  background-color: var(--clr-background-base);
+  background-color: var(--clr-background-base-two);
   color: var(--clr-text-primary);
   font-family: CircularSpotifyText;
   transition: var(--transition);
@@ -181,8 +177,8 @@ button {
 
 .secondary {
   background-color: var(--clr-text-primary);
-  color: var(--clr-text-secondary);
-  border: 0.5px solid var(--clr-background-highlight-two);
+  color: var(--clr-text-black);
+  border: 1px solid var(--clr-background-highlight-two);
 }
 
 .secondary:hover {
@@ -190,30 +186,6 @@ button {
   border: 0.7px solid var(--clr-text-black);
 }
 
-/* Arrow  */
-.arrow {
-  border: solid var(--clr-text-secondary);
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-}
-
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-
-.up {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-}
-
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
+a {
+  text-decoration: none;
 }
