@@ -1,5 +1,6 @@
 <?php
 require_once BASE_URL . '/src/app/services/podcast/PodcastService.php';
+require_once BASE_URL . '/src/app/views/components/podcast/episodesList.php';
 
 class PodcastController extends BaseController
 {
@@ -41,6 +42,16 @@ class PodcastController extends BaseController
         $data['episodes'] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
 
         $this->view("pages/podcast/podcast_detail", $data);
+    }
+
+    // /episodes?page=
+    public function episodes($id) {
+        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $page = isset($_GET['page']) ? filter_var($_GET['page'], FILTER_SANITIZE_STRING) : 1;
+
+        $data['episodes'] = $this->podcast_service->getEpisodesByPodcastId($id, 2, $page);
+
+        return episodeList($data['episodes']);
     }
 
     // /search?key=
