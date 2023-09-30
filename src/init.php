@@ -7,3 +7,5 @@ require_once 'config/tables.php';
 
 require_once 'app/controllers/Controller.php';
 require_once 'app/controllers/ErrorController.php';
+
+require_once 'app/models/Episode.php';
