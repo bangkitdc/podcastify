@@ -8,24 +8,26 @@ $path = isset($urlParts['path']) ? $urlParts['path'] : '';
 
 // Handle the root path
 if ($path === '/') {
-    include VIEW_DIR . "pages/home/index.php";
+    include VIEWS_DIR . "pages/home/index.php";
 } else {
     switch ($path) {
-        case 'podcast':
-            include  VIEW_DIR . "pages/" . $path . "/index.php";
+        case '/podcast':
+            include  VIEWS_DIR . "pages/" . $path . "/index.php";
             break;
-
+        case '/home':
+            include VIEWS_DIR . "pages/home/index.php";
+            break;
         default:
-            include VIEW_DIR . "pages/errors/404.php";
+            include VIEWS_DIR . "pages/errors/404.php";
             break;
     }
     // // Check if the file exists for the given path
-    // $filePath = VIEW_DIR . "pages/" . $path . ".php";
+    // $filePath = VIEWS_DIR . "pages/" . $path . ".php";
 
     // if (file_exists($filePath)) {
     //     include $filePath;
     // } else {
     //     // The file doesn't exist, include the 404 page
-    //     include VIEW_DIR . "pages/errors/404.php";
+    //     include VIEWS_DIR . "pages/errors/404.php";
     // }
 }

@@ -252,11 +252,6 @@ h2 {
   width: 100%;
 }
 
-#range {
-  margin: 0 10px;
-  flex: 1;
-}
-
 .volume-slider {
   width: 100px;
   height: 4px;
@@ -266,16 +261,18 @@ h2 {
   -webkit-appearance: none;
   appearance: none;
   border-radius: var(--rounded-full);
+  margin: 0 10px;
+  flex: 1;
 }
 
 #range::-webkit-slider-runnable-track {
-  height: 3px;
+  height: 4px;
   border: none;
   border-radius: var(--rounded-full);
 }
 
 #range::-moz-range-track {
-  height: 3px;
+  height: 4px;
   border: none;
   border-radius: var(--rounded-full);
 }

@@ -4,6 +4,12 @@ var currentPath = window.location.pathname;
 var navItems = [
   {
     id: "home-nav",
+    href: "/home",
+    imgActive: "/home-active.svg",
+    imgInactive: "/home-inactive.svg",
+  },
+  {
+    id: "home-nav",
     href: "/",
     imgActive: "/home-active.svg",
     imgInactive: "/home-inactive.svg",
