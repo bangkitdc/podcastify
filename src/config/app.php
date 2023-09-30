@@ -28,11 +28,14 @@ class App {
             $this->controller = 'Home';
         }
 
+        // Double check
+        if (!method_exists($this->controller . 'Controller', $this->method)) {
+            $this->controller = "Error";
+        }
+
         $controllerClassName = $this->controller . 'Controller';
 
-        if (class_exists($controllerClassName)) {
-            require_once BASE_DIR . $this->controller . 'Controller.php';
-        } else {
+        if (!class_exists($controllerClassName)) {
             require_once BASE_DIR . 'ErrorController.php';
             $controllerClassName = 'ErrorController';
         }
@@ -50,6 +53,10 @@ class App {
         if (!empty($url)) {
             $this->params = array_values($url);
         }
+
+        // echo '<pre>';
+        // print_r($this->params);
+        // echo '</pre>';
 
         call_user_func_array([$this->controller, $this->method], $this->params);
     }

@@ -1,7 +1,7 @@
 <div id="template">
   <div class="wrapper">
     <div class="icon">
-      <img src="<?= ICONS_DIR ?>/logo.svg" alt="Logo" width="60px">
+      <img src="<?= ICONS_DIR ?>logo.svg" alt="Logo" width="60px">
     </div>
     <div class="content">
       <h1>Page not found</h1>

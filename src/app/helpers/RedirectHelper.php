@@ -2,13 +2,15 @@
 
 class RedirectHelper 
 {
-    // function redirectHome()
-    // {
-    //     header("Location: /", true, ResponseHelper::HTTP_STATUS_MOVED_PERMANENTLY);
-    // }
+    public static function redirectHome()
+    {
+        header("Location: /", true, ResponseHelper::HTTP_STATUS_MOVED_PERMANENTLY);
+        exit;
+    }
 
-    // function redirectTo($page, $replace = true, $status_code = ResponseHelper::HTTP_STATUS_MOVED_PERMANENTLY)
-    // {
-    //     header("Location: " . $page);
-    // }
+    public static function redirectTo($page, $replace = true, $statusCode = ResponseHelper::HTTP_STATUS_MOVED_PERMANENTLY)
+    {
+        header("Location: " . $page, $replace, $statusCode);
+        exit;
+    }
 }
