@@ -19,23 +19,8 @@ class PodcastService {
     }
 
     public function getPodcastById($podcast_id) {
-        $podcasts = array();
-        if ($podcast_id == '') {
-            $podcasts_data = $this->podcast_model->findAll();
-        } else {
-            $podcasts_data = $this->podcast_model->findSome($podcast_id);
-        }
-
-        if (is_object($podcasts_data)) {
-            array_push($podcasts, $podcasts_data);
-        } else if (is_array($podcasts_data)) {
-            foreach ($podcasts_data as $data) {
-                array_push($podcasts, $data);
-            }
-        } else {
-            $podcasts = [];
-        }
-        return $podcasts;
+        $podcast_data = $this->podcast_model->findSome($podcast_id);
+        return $podcast_data;
     }
 
     public function getPodcastBySearch($search_key) {
