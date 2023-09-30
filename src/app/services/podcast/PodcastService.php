@@ -31,4 +31,9 @@ class PodcastService {
         }
         return $podcasts;
     }
+
+    public function getEpisodesByPodcastId($podcast_id, $limit = 10, $page = 1) {
+        $episodes = $this->podcast_model->getEpisodesByPodcastId($podcast_id, $limit, $page);
+        return $episodes;
+    }
 }

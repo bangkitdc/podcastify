@@ -11,32 +11,44 @@ class PodcastController extends BaseController
 
     public function index()
     {
-        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case "GET":
+                $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
 
-        // Check if its from search bar
-        $is_search = isset($_GET['is_search']) ? $_GET['is_search'] : false;
+                $podcasts = $this->podcast_service->getAllPodcast();
 
-        if ($isAjax) {
-            if ($is_search) {
-                $search_key = $_GET['key'];
+                if ($isAjax) {
+                    $this->view("pages/podcast/index", ['podcasts' => $podcasts]);
+                } else {
+                    // If it's not an AJAX request, include the full HTML structure
+                    $this->view('layouts/default', ['podcasts' => $podcasts]);
+                }
 
-                $podcasts = $this->podcast_service->getPodcastBySearch($search_key);
+            case "POST":
+                return;
 
-                include VIEW_DIR . "pages/podcast/index.php";
-            }
-            else {
-                // If it's an AJAX request, only include podcast_detail.php
-                $q = isset($_GET['podcast_id']) ? filter_var($_GET['podcast_id'], FILTER_SANITIZE_STRING) : '';
-
-                $podcasts = $this->podcast_service->getPodcastById($q);
-
-                include VIEW_DIR . "pages/podcast/podcast_detail.php";
-            }
-        } else {
-            // If it's not an AJAX request, include the full HTML structure
-            $podcasts = $this->podcast_service->getAllPodcast();
-
-            $this->view('layouts/default', ['podcasts' => $podcasts]);
+            default:
+                ResponseHelper::responseNotAllowedMethod();
+                return;
         }
+    }
+
+    // /podcast/{id}
+    public function podcast($id) {
+        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+        $data['podcast'] = $this->podcast_service->getPodcastById($id);
+        $data['episodes'] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
+
+        $this->view("pages/podcast/podcast_detail", $data);
+    }
+
+    // /search?key=
+    public function search() {
+        $search_key = isset($_GET['key']) ? filter_var($_GET['key'], FILTER_SANITIZE_STRING) : '';
+
+        $podcasts = $this->podcast_service->getPodcastBySearch($search_key);
+
+        include VIEW_DIR . "pages/podcast/index.php";
     }
 }

@@ -1,7 +1,5 @@
 <div id="template">
   <div>
-    <p>Index</p>
-
     <?php
         require_once VIEW_DIR . "components/podcast/contentBox.php";
 
@@ -11,7 +9,7 @@
         echo "<div id=\"template\" class=\"podcast-container\">";
             echo "<div class=\"podcast-box-area $hide_podcast_box_class\">";
                 foreach ($podcasts as $podcast) {
-                    baseContentBox($podcast);
+                    baseContentBox($podcast, false, "showPodcast($podcast->podcast_id)");
                 }
             echo "</div>";
 

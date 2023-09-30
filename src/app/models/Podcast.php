@@ -73,4 +73,16 @@ class Podcast {
         return $result;
     }
 
+    public function getEpisodesByPodcastId($podcast_id, $limit, $page) {
+        $query = "SELECT * FROM episodes where podcast_id = :podcast_id LIMIT :limit OFFSET :offset";
+        $this->db->query($query);
+
+        $offset = ($page - 1) * $limit;
+        $this->db->bind(":podcast_id", $podcast_id);
+        $this->db->bind(":limit", $limit);
+        $this->db->bind(":offset", $offset);
+
+        $result = $this->db->fetchAll();
+        return $result;
+    }
 }
