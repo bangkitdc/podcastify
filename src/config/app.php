@@ -12,27 +12,34 @@ class App {
      *
      * 
      */
-    public function __construct() {        
-        // By default, page not found
-        require_once __DIR__ . '/../app/controllers/ErrorController.php';
-        $this->controller = new ErrorController();
+    public function __construct() { 
+        // Explode URL
+        // [0] : controller
+        // [1] : method/ params
+        // Example : podcast/1, podcast/add
 
         $url = $this->parseURL();
-
-        if (isset($url[0]) and file_exists(BASE_DIR . $url[0] . 'Controller.php')) {
-            $this->controller = $url[0];
-            
-            unset($url[0]);
-
-            require_once BASE_DIR . $this->controller . 'Controller.php';
-            $this->controller = ucfirst($this->controller) . 'Controller';
-            $this->controller = new $this->controller;
+        if (isset($url[0])) {
+            if (file_exists(BASE_DIR . $url[0] . 'Controller.php')) {
+                $this->controller = $url[0];
+                unset($url[0]);
+            }
+        } else {
+            $this->controller = 'Home';
         }
 
-        // require_once BASE_DIR . $this->controller . '_controller.php';
-        // $this->controller = ucfirst($this->controller) . 'Controller';
-        // $this->controller = new $this->controller;
+        $controllerClassName = $this->controller . 'Controller';
 
+        if (class_exists($controllerClassName)) {
+            require_once BASE_DIR . $this->controller . 'Controller.php';
+        } else {
+            require_once BASE_DIR . 'ErrorController.php';
+            $controllerClassName = 'ErrorController';
+        }
+
+        $this->controller = new $controllerClassName;
+
+        // Check if url[1] is a method or params
         if (isset($url[1])) {
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
