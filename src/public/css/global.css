@@ -16,6 +16,7 @@
   --clr-text-black: #000000;
 
   --clr-background-card: #181818;
+  --clr-hover-dropdown: #3E3E3E;
 
   /* Font size */
   --fs-album-title-pc: 4rem;
@@ -158,6 +159,7 @@ h3 {
 /* Button  */
 button {
   cursor: pointer;
+  outline: none;
 }
 
 .btn {
@@ -167,6 +169,7 @@ button {
   background-color: var(--clr-background-base-two);
   color: var(--clr-text-primary);
   font-family: CircularSpotifyText;
+  font-size: 1rem;
   transition: var(--transition);
 }
 

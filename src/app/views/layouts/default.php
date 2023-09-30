@@ -48,7 +48,7 @@
 
     <div id="content" class="content">
       <div class="navbar">
-        <div class="button-flex">
+        <div class="btn-flex">
           <button class="btn-navbar">
             <img src="<?= ICONS_DIR ?>/left-arrow.svg" />
           </button>
@@ -57,11 +57,21 @@
           </button>
         </div>
         <div class="btn-flex">
-          <button class="dropdown-btn">
+          <button id="dropdown-btn" class="dropdown-btn">
             <img class="profile-img" src="<?= IMAGES_DIR ?>/avatar-template.png" alt="avatar">
-            <p>Guest</p>
+            <p class="text-username">Guest</p>
             <img src="<?= ICONS_DIR ?>/down-arrow.svg" class="down-arrow-icon" />
           </button>
+        </div>
+        <div id="dropdown" class="dropdown-container">
+          <ul class="dropdown-menu" aria-labelledby="dropdownDefaultButton">
+            <li>
+              <a href="#" class="dropdown-link">Profile</a>
+            </li>
+            <li class="logout-link">
+              <a href="#" class="dropdown-link">Log out</a>
+            </li>
+          </ul>
         </div>
       </div>
 
