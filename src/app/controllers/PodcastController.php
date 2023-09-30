@@ -62,4 +62,16 @@ class PodcastController extends BaseController
 
         include VIEW_DIR . "pages/podcast/index.php";
     }
+
+    public function edit($id) {
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'GET':
+                $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+                $data['podcast'] = $this->podcast_service->getPodcastById($id);
+
+                $this->view("pages/podcast/podcast_management", $data);
+                break;
+        }
+    }
 }
