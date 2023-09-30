@@ -61,4 +61,16 @@ class Podcast {
 
         $this->db->execute();
     }
+
+    public function getPodcastBySearch($search_key) {
+        $query = "SELECT * FROM podcasts WHERE title LIKE :search_key";
+        $this->db->query($query);
+
+        $search_key = "%" . $search_key . "%";
+        $this->db->bind(':search_key', $search_key);
+
+        $result = $this->db->fetchAll();
+        return $result;
+    }
+
 }
