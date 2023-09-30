@@ -1,0 +1,44 @@
+body {
+  text-align: center;
+  vertical-align: middle;
+  background-color: var(--clr-background-base-two);
+}
+
+.wrapper {
+  display: block;
+  left: 50%;
+  padding: 32px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  width: 100%;
+}
+
+.icon {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.btn-wrapper {
+  padding: 1rem;
+  padding-bottom: 3rem;
+}
+
+.img {
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.01px;
+  margin: 1rem;
+}
+
+p {
+  color: var(--clr-text-secondary);
+  font-weight: 500;
+  padding-bottom: 2.5rem;
+}
