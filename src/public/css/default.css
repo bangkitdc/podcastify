@@ -209,7 +209,6 @@ h2 {
   grid-column: span 3 / span 10;
   display: flex;
   justify-content: flex-end;
-  margin-right: 2rem;
 }
 
 .player-controls {

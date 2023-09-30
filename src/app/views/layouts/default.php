@@ -94,6 +94,10 @@
   </div>
 </body>
 
+<script>
+  var ICONS_DIR = '<?= ICONS_DIR ?>';
+</script>
 <script src="<?= JS_DIR ?>/default.js"></script>
+<script src="<?= JS_DIR ?>/navbar.js"></script>
 
 </html>
