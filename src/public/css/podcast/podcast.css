@@ -61,10 +61,29 @@
   cursor: pointer;
   transition: all 0.3s;
 
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    background-color: var(--clr-background-highlight-two);
+  }
+
+  .podcast-img-placeholder {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+  }
+
   .podcast-img {
     width: 100%;
+    height: 100%;
     border-radius: 0.35rem;
     box-shadow: var(--shadow-xl);
+    object-fit: cover;
+    object-position: center center;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .podcast-content-skeleton {
@@ -77,6 +96,7 @@
   }
 
   .podcast-title {
+    margin-top: 6px;
     font-size: 1rem;
     line-height: 1.5rem;
     overflow: hidden;
@@ -105,41 +125,37 @@
     position: relative;
 
     .podcast-edit-icon {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        z-index: 10;
-        transition: all 0.3s ease;
-      }
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
 
-      .podcast-edit-tooltip {
-        visibility: hidden;
-        position: absolute;
-        background: white;
-        padding: 4px 8px;
-        color: black;
-        opacity: 0;
-        transition: opacity 0.3s;
-        z-index: 10;
-        font-size: 0.8rem;
-        left: -24px;
-        top: 24px;
-        border-radius: 5px;
-      }
+    .podcast-edit-tooltip {
+      visibility: hidden;
+      position: absolute;
+      background: white;
+      padding: 4px 8px;
+      color: black;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 10;
+      font-size: 0.8rem;
+      left: -24px;
+      top: 24px;
+      border-radius: 5px;
+    }
   }
 
   .podcast-edit-box:hover {
     .podcast-edit-tooltip {
-        visibility: visible;
-        opacity: 1;
+      visibility: visible;
+      opacity: 1;
     }
 
     .podcast-edit-icon {
-        background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.4);
     }
   }
-}
-
-.podcast-content-container:hover {
-  background-color: var(--clr-background-highlight-two);
 }
