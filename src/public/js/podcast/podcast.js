@@ -30,10 +30,12 @@ const updateWindowUrl = (additionalUrl) => {
 };
 
 const addScript = (src) => {
+  if (!document.querySelector(`script[src="${src}"]`)) {
     let script = document.createElement("script");
     script.src = src;
     document.body.appendChild(script);
-}
+  }
+};
 
 /**
  * Podcast Page
@@ -89,11 +91,11 @@ const editPodcast = (podcastId, event) => {
 };
 
 const goToAddPodcast = () => {
-    const URL = "/create";
-    let xhttp = getPodcast(URL);
+  const URL = "/create";
+  let xhttp = getPodcast(URL);
 
-    xhttp.onload = () => {
-        document.getElementById("main-content").innerHTML = xhttp.responseText;
-        addScript("/src/public/js/podcast/handle_upload.js");
-    };
-}
+  xhttp.onload = () => {
+    document.getElementById("main-content").innerHTML = xhttp.responseText;
+    addScript("/src/public/js/podcast/handle_upload.js");
+  };
+};
