@@ -1,6 +1,6 @@
 <?php
 
-require_once BASE_URL . '/src/app/models/Podcast.php';
+require_once MODELS_DIR . '/Podcast.php';
 
 class PodcastService {
     private $podcast_model;

@@ -21,8 +21,16 @@ body {
 }
 
 .btn-wrapper {
-  padding: 1rem;
   padding-bottom: 3rem;
+}
+
+.btn-error {
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.btn-error:hover {
+  transform: scale(1.05);
 }
 
 .img {

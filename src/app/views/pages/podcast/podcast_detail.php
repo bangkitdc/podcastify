@@ -1,12 +1,12 @@
 <head>
-  <link rel="stylesheet" href="<?= CSS_DIR ?>/podcast/podcast_detail.css">
+  <link rel="stylesheet" href="<?= CSS_DIR ?>podcast/podcast_detail.css">
 </head>
 <div id="template">
   <div>
     <?php
-        require_once VIEW_DIR . "components/podcast/contentBox.php";
-        require_once VIEW_DIR . "components/podcast/episodesList.php";
-        require_once VIEW_DIR . "components/podcast/paginationNav.php";
+        require_once VIEWS_DIR . "components/podcast/contentBox.php";
+        require_once VIEWS_DIR . "components/podcast/episodesList.php";
+        require_once VIEWS_DIR . "components/podcast/paginationNav.php";
 
         $MAX_EPS_PER_PAGE = 2;
 

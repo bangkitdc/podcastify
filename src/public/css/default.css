@@ -45,12 +45,13 @@ body, html {
   cursor: pointer;
   color: var(--clr-background-highlight-two);
   padding: 0.5rem 0.5rem;
+  transition: all 0.2s ease-out;
 }
 
 .link-flex:hover, .btn-navbar:hover {
   opacity: 1;
   color: var(--clr-text-primary);
-  transition: all 0.5s;
+  transition: all 0.2s ease-in;
 }
 
 .link-flex.active {
@@ -100,7 +101,6 @@ body, html {
   justify-content: flex-start;
   gap: 0.5rem;
   align-items: center;
-  opacity: 0.7;
   font-weight: 500;
   font-size: 1rem;
   cursor: pointer;
@@ -147,7 +147,14 @@ body, html {
   display: inline-flex;
   font-size: 1rem;
   transition: all 0.5s;
-  padding: 0.2rem;
+  padding: 0.25rem;
+  max-width: 182.5px;
+}
+
+.text-username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dropdown-btn:hover {
@@ -227,8 +234,8 @@ h2 {
   transition: transform 0.2s ease;
 }
 
-.play-btn:active {
-  transform: scale(0.9);
+.play-btn:hover {
+  transform: scale(1.05);
 }
 
 /* Slider */
@@ -245,11 +252,6 @@ h2 {
   width: 100%;
 }
 
-#range {
-  margin: 0 10px;
-  flex: 1;
-}
-
 .volume-slider {
   width: 100px;
   height: 4px;
@@ -259,16 +261,18 @@ h2 {
   -webkit-appearance: none;
   appearance: none;
   border-radius: var(--rounded-full);
+  margin: 0 10px;
+  flex: 1;
 }
 
 #range::-webkit-slider-runnable-track {
-  height: 3px;
+  height: 4px;
   border: none;
   border-radius: var(--rounded-full);
 }
 
 #range::-moz-range-track {
-  height: 3px;
+  height: 4px;
   border: none;
   border-radius: var(--rounded-full);
 }
@@ -307,4 +311,49 @@ h2 {
 #range-container,
 .volume-slider-container {
   overflow: hidden; /* Hide overflowing parts of the thumb */
+}
+
+/* Dropdown */
+.dropdown-container {
+  position: fixed;
+  top: 4.6rem;
+  right: 14rem;
+  z-index: 10;
+  display: none;
+}
+
+.dropdown-menu {
+  list-style: none;
+  padding: 0.25rem;
+  margin: 0;
+  background-color: var(--clr-background-highlight-two);
+  border-radius: var(--rounded);
+  position: absolute;
+  top: 100%;
+  z-index: 10;
+  box-shadow: var(--shadow-lg);
+  width: 180px;
+}
+
+.dropdown-link {
+  display: block;
+  padding: 0.75rem;
+  border-radius: var(--rounded-sm);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--clr-text-primary);
+  transition: background-color 0.3s;
+}
+
+.dropdown-link:hover {
+  background-color: var(--clr-hover-dropdown);
+}
+
+.dropdown-container.active {
+  display: block;
+}
+
+.logout-link {
+  border-top: 0.5px solid var(--clr-hover-dropdown);
 }

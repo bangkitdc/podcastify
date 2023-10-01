@@ -4,6 +4,12 @@ var currentPath = window.location.pathname;
 var navItems = [
   {
     id: "home-nav",
+    href: "/home",
+    imgActive: "/home-active.svg",
+    imgInactive: "/home-inactive.svg",
+  },
+  {
+    id: "home-nav",
     href: "/",
     imgActive: "/home-active.svg",
     imgInactive: "/home-inactive.svg",
@@ -61,3 +67,20 @@ for (var i = 0; i < navItems.length; i++) {
     document.getElementById(navItem.id).getElementsByTagName("img")[0].src = ICONS_DIR + navItem.imgInactive;
   }
 }
+
+document.addEventListener("mouseup", function (e) {
+  var dropdownBtn = document.getElementById("dropdown-btn");
+
+  var nextNode = dropdownBtn.parentNode.nextElementSibling;
+
+  // Check if the click is outside of the dropdown and the next node
+  if (!dropdownBtn.contains(e.target) && !nextNode.contains(e.target)) {
+    nextNode.classList.remove("active");
+  }
+});
+
+document.getElementById("dropdown-btn").addEventListener("click", function () {
+  document.querySelector(".dropdown-container").classList.toggle("active");
+  // document.querySelector(".arrow").classList.toggle("down");
+  // document.querySelector(".arrow").classList.toggle("up");
+});

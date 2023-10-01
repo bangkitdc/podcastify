@@ -60,7 +60,7 @@ class PodcastController extends BaseController
 
         $podcasts = $this->podcast_service->getPodcastBySearch($search_key);
 
-        include VIEW_DIR . "pages/podcast/index.php";
+        include VIEWS_DIR . "pages/podcast/index.php";
     }
 
     public function edit($id) {
