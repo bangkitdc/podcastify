@@ -15,7 +15,7 @@
     <div id="content" class="content">
       <div class="background-container"></div>
       <?php include_once COMPONENTS_SHARES_DIR . "/navbars/topbar.php" ?>
-      <div class="main-content">
+      <div id="main-content"  class="main-content">
         <?php
         $included = include VIEWS_DIR . "view_config.php";
         ?>
@@ -28,7 +28,5 @@
 
 <script src="<?= JS_DIR ?>default.js"></script>
 <script src="<?= JS_DIR ?>topbar.js"></script>
-
-<script src="<?= JS_DIR ?>/podcast/podcast.js"></script>
 
 </html>

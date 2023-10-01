@@ -4,6 +4,7 @@
 <div id="template">
   <div>
     <?php
+        require_once BASE_URL . '/src/config/storage.php';
         require_once VIEWS_DIR . "components/podcast/contentBox.php";
         require_once VIEWS_DIR . "components/podcast/episodesList.php";
         require_once VIEWS_DIR . "components/podcast/paginationNav.php";
@@ -13,13 +14,14 @@
         $podcast = $data['podcast'];
         $episodes = $data['episodes'];
         $total_pages = $podcast->total_eps == 0 ? 1 : ceil($podcast->total_eps / $MAX_EPS_PER_PAGE);
+        $image_url = Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url);
 
         // Podcasts view
         echo "<section class=\"podcast-detail-container\">";
             echo
             "
                 <div class=\"podcast-detail\">
-                    <img src=\"$podcast->image_url\" alt=\"podcastImage\" class=\"podcast-detail-img\">
+                    <img src=\"$image_url\" alt=\"podcastImage\" class=\"podcast-detail-img\">
                     <h1>$podcast->creator_name</h1>
                     <h2>$podcast->total_eps episodes</h2>
                     <h2>$podcast->description</h2>
