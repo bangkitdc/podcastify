@@ -17,6 +17,10 @@ if ($path === '/') {
         case '/home':
             include VIEWS_DIR . "pages/home/index.php";
             break;
+        case '/podcast/manage':
+            include VIEWS_DIR . "pages/podcast/podcast_management.php";
+            break;
+
         default:
             include VIEWS_DIR . "pages/errors/404.php";
             break;

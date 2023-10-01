@@ -29,4 +29,6 @@
 <script src="<?= JS_DIR ?>default.js"></script>
 <script src="<?= JS_DIR ?>topbar.js"></script>
 
+<script src="<?= JS_DIR ?>/podcast/podcast.js"></script>
+
 </html>
