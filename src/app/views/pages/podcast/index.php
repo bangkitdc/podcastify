@@ -31,3 +31,4 @@
     ?>
   </div>
 </div>
+<script src="<?= JS_DIR ?>/podcast/podcast.js"></script>

@@ -8,9 +8,11 @@ require_once BASE_URL . "/src/app/views/components/podcast/episodesList.php";
 class PodcastController extends BaseController
 {
     private $podcast_service;
+    private $upload_service;
 
     public function __construct() {
         $this->podcast_service = new PodcastService();
+        $this->upload_service = new UploadService();
     }
 
     public function index()
@@ -124,7 +126,7 @@ class PodcastController extends BaseController
                     $creator_name = filter_var($data['podcast-creator-input'], FILTER_SANITIZE_STRING);
                     $description = filter_var($data['podcast-desc-input'], FILTER_SANITIZE_STRING);
                     if (isset($data['preview-image-filename'])) {
-                        $image_url = IMAGES_DIR . filter_var($data['preview-image-filename'], FILTER_SANITIZE_STRING);
+                        $image_url = filter_var($data['preview-image-filename'], FILTER_SANITIZE_STRING);
                     } else {
                         $image_url = "";
                     }
@@ -160,7 +162,7 @@ class PodcastController extends BaseController
                     $title = filter_var($_POST['podcast-name-input'], FILTER_SANITIZE_STRING);
                     $creator_name = filter_var($_POST['podcast-creator-input'], FILTER_SANITIZE_STRING);
                     $description = filter_var($_POST['podcast-desc-input'], FILTER_SANITIZE_STRING);
-                    $image_url = IMAGES_DIR . filter_var($_POST['preview-image-filename'], FILTER_SANITIZE_STRING);
+                    $image_url = filter_var($_POST['preview-image-filename'], FILTER_SANITIZE_STRING);
 
                     $this->podcast_service->createPodcast($title, $description, $creator_name, $image_url);
                     break;
@@ -180,8 +182,8 @@ class PodcastController extends BaseController
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "POST":
-                    UploadService::upload();
-                    break;
+                    $this->upload_service->upload();
+                    return;
 
                 default:
                     ResponseHelper::responseNotAllowedMethod();
