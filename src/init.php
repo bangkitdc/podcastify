@@ -8,3 +8,4 @@ require_once 'config/tables.php';
 require_once 'app/controllers/BaseController.php';
 require_once 'app/controllers/ErrorController.php';
 require_once 'app/controllers/HomeController.php';
+require_once 'app/controllers/PodcastController.php';

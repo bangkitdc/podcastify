@@ -1,6 +1,7 @@
 <?php
 
 define("BASE_DIR", $_ENV['PWD'] . '/src/app/controllers/');
+require_once BASE_URL . "/src/app/middlewares/Middleware.php";
 
 class App {
     protected $controller;
@@ -8,20 +9,22 @@ class App {
     protected $params = [];
 
     /**
-     * 
      *
-     * 
+     *
+     *
      */
-    public function __construct() { 
+    public function __construct() {
         // Explode URL
         // [0] : controller
         // [1] : method/ params
         // Example : podcast/1, podcast/add
 
+        Middleware::checkReferer();
+        
         $url = $this->parseURL();
         if (isset($url[0])) {
-            if (file_exists(BASE_DIR . $url[0] . 'Controller.php')) {
-                $this->controller = $url[0];
+            if (file_exists(BASE_DIR . ucfirst($url[0]) . 'Controller.php')) {
+                $this->controller = ucfirst($url[0]);
                 unset($url[0]);
             }
         } else {
@@ -74,7 +77,7 @@ class App {
 
             return $url;
         }
-        
+
         return [];
     }
 }

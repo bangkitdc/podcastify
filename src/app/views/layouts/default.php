@@ -33,7 +33,7 @@
         </div>
         <div id="podcast-add-nav" class="link-flex">
           <img src="<?= ICONS_DIR ?>add-circle.svg" alt="Library" />
-          <a href="/podcast/add" class="icon-text">Add Podcast</a>
+          <button onclick="goToAddPodcast()" class="icon-text">Add Podcast</button>
         </div>
         <div id="episode-add-nav" class="link-flex">
           <img src="<?= ICONS_DIR ?>add-circle.svg" alt="Library" />
@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <div class="main-content">
+      <div id="main-content" class="main-content">
         <?php
           $included = include VIEWS_DIR . "view_config.php";
         ?>
@@ -109,5 +109,7 @@
 </script>
 <script src="<?= JS_DIR ?>default.js"></script>
 <script src="<?= JS_DIR ?>navbar.js"></script>
+
+<script src="<?= JS_DIR ?>/podcast/podcast.js"></script>
 
 </html>
