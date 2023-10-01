@@ -28,16 +28,21 @@ class App {
             $this->controller = 'Home';
         }
 
+        $this->controller = ucfirst($this->controller);
         $controllerClassName = $this->controller . 'Controller';
+        
+        require_once BASE_DIR . $this->controller . 'Controller.php';
 
         if (class_exists($controllerClassName)) {
-            require_once BASE_DIR . $this->controller . 'Controller.php';
+            // require_once BASE_DIR . $this->controller . 'Controller.php';
+            $this->controller = new $controllerClassName;
         } else {
             require_once BASE_DIR . 'ErrorController.php';
             $controllerClassName = 'ErrorController';
+            $this->controller = new $controllerClassName;
         }
 
-        $this->controller = new $controllerClassName;
+        // $this->controller = new $controllerClassName;
 
         // Check if url[1] is a method or params
         if (isset($url[1])) {
