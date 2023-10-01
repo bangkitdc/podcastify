@@ -1,0 +1,12 @@
+.file-uploader-container {
+    position: relative;
+    padding: 10px 0;
+
+    .image-preview
+    {
+        margin-top: 12px;
+        display: none;
+        width: 250px;
+        height: 250px;
+    }
+}
