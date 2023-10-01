@@ -11,14 +11,17 @@ function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") 
         <div class=\"podcast-content-container\" onclick=\"$click_evt\">
     ";
     if (!$is_skeleton) {
-        echo"<img src=\"$img_url\" alt=\"podcastImage\" class=\"podcast-img\">";
+        echo "
+            <div class=\"podcast-img-placeholder\">
+                <img src=\"$img_url\" alt=\"podcastImage\" class=\"podcast-img\">
+            </div>
+            ";
     } else {
-        echo"<div class=\"{$content_box_class}\"></div>";
+        echo "<div class=\"{$content_box_class}\"></div>";
     }
     echo
     "
             <p class=\"podcast-title\">{$title}</p>
-            <br />
             <div class=\"podcast-creator-container\">
                 <p class=\"podcast-creator\">
                     {$creator_name}
