@@ -3,11 +3,12 @@
 </head>
 <?php
 
-function baseButton($label, $id = "", $type = "default", $class = "") {
+function baseButton($label, $id = "", $type = "default", $is_disabled = false, $class = "") {
     switch ($type) {
         case "default":
             $class = "base-btn default";
             break;
+        case "submit":
         case "positive":
             $class = "base-btn positive";
             break;
@@ -18,5 +19,7 @@ function baseButton($label, $id = "", $type = "default", $class = "") {
             $class = "base-btn $class";
             break;
     }
-    echo "<button id=\"$id\" class=\"$class\">$label</button>";
+    $disable_status = $is_disabled ? 'disabled' : '';
+    $submit_status = $type == "submit" ? "submit" : '';
+    echo "<button id=\"$id\" class=\"$class\" $disable_status type=\"$submit_status\">$label</button>";
 }

@@ -3,9 +3,10 @@
 </head>
 <?php
 
-function baseInputText($placeholder, $value, $id = "", $class = "") {
+function baseInputText($placeholder, $value, $id = "", $is_required = true, $class = "") {
+    $required_status = $is_required ? 'required' : '';
     echo
     "
-        <input type=\"text\" placeholder=\"$placeholder\" value=\"$value\" class=\"base-input $class\" id=\"$id\">
+        <input type=\"text\" placeholder=\"$placeholder\" value=\"$value\" class=\"base-input $class\" id=\"$id\" $required_status />
     ";
 }

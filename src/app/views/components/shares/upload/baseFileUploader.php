@@ -3,11 +3,16 @@
 </head>
 <?php
 
-function baseFileUploader($input_id = "", $input_class = "", $img_id = "", $img_class = "") {
+function baseFileUploader($input_id = "", $input_class = "", $img_id = "", $is_required = true, $img_class = "") {
+    $required_status = $is_required ? 'required' : '';
     echo
     "
     <div class=\"file-uploader-container\">
-        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" />
+        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status />
+        <label for=\"$input_id\" class=\"file-uploader-label\">
+            Choose File
+        </label>
+        <span id=\"filename-$input_id\"></span>
         <img id=\"$img_id\" src=\"#\" alt=\"User img\" class=\"image-preview $img_class\" />
     </div>
     ";
