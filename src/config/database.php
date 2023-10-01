@@ -24,13 +24,6 @@ class Database {
         } catch (PDOException $e) {
             error_log('Internal Server Error: ' . $e->getMessage());
         }       
-        
-        // try {
-        //     $this->db_connection->exec(Tables::ROLE_TABLE);
-        //     $this->db_connection->exec(Tables::USER_TABLE);
-        // } catch (PDOException $e) {
-        //     error_log('Internal Server Error: ' . $e->getMessage());
-        // }
     }   
 
     public function query($query) 

@@ -1,0 +1,59 @@
+/*---------- LEFT SIDEBAR ----------*/
+.sidebar {
+  grid-column: span 1 / span 4;
+  grid-row: span 7 / span 8;
+  background-color: var(--clr-background-base-one);
+  overflow-y: hidden;
+  border-radius: var(--rounded-lg);
+}
+
+.top-icons, .mid-icons {
+  display: flex;
+  flex-direction: column;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--clr-background-base-two);
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+}
+
+.link-flex {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.3rem;
+  align-items: center;
+  opacity: 0.7;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--clr-background-highlight-two);
+  padding: 0.5rem 0.5rem;
+  transition: all 0.2s ease-out;
+}
+
+.link-flex:hover, .btn-topbar:hover {
+  opacity: 1;
+  color: var(--clr-text-primary);
+  transition: all 0.2s ease-in;
+}
+
+.link-flex.active {
+  opacity: 1;
+  color: var(--clr-text-primary);
+}
+
+.icon-text {
+  margin-top: 0.3rem;
+}
+
+.mid-icons {
+  flex: 3;
+  overflow-y: auto;
+  height: 90vh;
+}
+
+.flex-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,146 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0rem;
+  align-items: center;
+  z-index: 1000;
+}
+
+.btn-flex {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-topbar {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: var(--clr-background-highlight-one);
+  opacity: 0.7;
+  border: none;
+  border-radius: var(--rounded-full);
+  color: var(--clr-text-primary);
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+}
+
+.profile-img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background-color: var(--clr-background-highlight-one);
+  cursor: pointer;
+  float: right;
+  border-radius: var(--rounded-full);
+  border: none;
+  color: var(--clr-text-primary);
+  font-family: CircularStd;
+  align-items: center;
+  display: inline-flex;
+  font-size: 1rem;
+  transition: all 0.5s;
+  height: 2rem;
+  padding: 0 0.25rem;
+  max-width: 182.5px;
+}
+
+.text-username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-btn:hover {
+  background-color: var(--clr-background-highlight-two);
+}
+
+.dropdown-btn p {
+  font-size: 15px;
+  margin-right: 0.75rem;
+  padding-top: 0.125rem;
+}
+
+.arrow-icon {
+  width: 0.75rem;
+  margin-right: 0.75rem;
+  transition: transform 0.3s ease;
+  padding-bottom: 2px;
+}
+
+.arrow-icon.up {
+  transform: rotate(180deg);
+  padding-bottom: 2px;
+}
+
+/* Dropdown */
+.dropdown-container {
+  position: fixed;
+  top: 4rem;
+  right: 14rem;
+  z-index: 10;
+  display: none;
+}
+
+.dropdown-menu {
+  list-style: none;
+  padding: 0.25rem;
+  margin: 0;
+  background-color: var(--clr-background-highlight-two);
+  border-radius: var(--rounded);
+  position: absolute;
+  top: 100%;
+  z-index: 10;
+  box-shadow: var(--shadow-lg);
+  width: 180px;
+}
+
+.dropdown-link {
+  display: block;
+  padding: 0.75rem;
+  border-radius: var(--rounded-sm);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--clr-text-primary);
+  transition: background-color 0.3s;
+  background-color: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: default;
+}
+
+.dropdown-link:hover {
+  background-color: var(--clr-hover-dropdown);
+}
+
+.dropdown-container.active {
+  display: block;
+}
+
+.logout-link {
+  border-top: 0.5px solid var(--clr-hover-dropdown);
+  background-color: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: default;
+}
