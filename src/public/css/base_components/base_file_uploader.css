@@ -20,6 +20,6 @@
     margin-top: 12px;
     display: none;
     width: 250px;
-    height: 250px;
+    height: auto;
   }
 }

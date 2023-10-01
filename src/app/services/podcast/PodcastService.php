@@ -36,4 +36,16 @@ class PodcastService {
         $episodes = $this->podcast_model->getEpisodesByPodcastId($podcast_id, $limit, $page);
         return $episodes;
     }
+
+    public function createPodcast($title, $description, $creator_name, $image_url) {
+        $this->podcast_model->createPodcast($title, $description, $creator_name, $image_url);
+    }
+
+    public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url) {
+        $this->podcast_model->updatePodcast($podcast_id, $title, $description, $creator_name, $image_url);
+    }
+
+    public function deletePodcast($podcast_id) {
+        $this->podcast_model->deletePodcast($podcast_id);
+    }
 }

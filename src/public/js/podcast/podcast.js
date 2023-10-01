@@ -1,7 +1,7 @@
 // API request
 const PODCAST_BASE_URL = "/podcast";
 
-const get = (url, async = true) => {
+const getPodcast = (url, async = true) => {
   let xhttp = new XMLHttpRequest();
 
   xhttp.open("GET", PODCAST_BASE_URL + url, async);
@@ -29,6 +29,12 @@ const updateWindowUrl = (additionalUrl) => {
   window.history.pushState({ path: newUrl }, "", newUrl);
 };
 
+const addScript = (src) => {
+    let script = document.createElement("script");
+    script.src = src;
+    document.body.appendChild(script);
+}
+
 /**
  * Podcast Page
  */
@@ -47,7 +53,7 @@ const searchPodcast = (all = false) => {
     toggleVisibility(".podcast-box-skeleton", "visible");
     url += "/search?key=" + filter;
   }
-  let xhttp = get(url);
+  let xhttp = getPodcast(url);
 
   xhttp.onload = () => {
     document.getElementById("main-content").innerHTML = xhttp.responseText;
@@ -60,14 +66,12 @@ const searchPodcast = (all = false) => {
 
 const showPodcast = (podcastId) => {
   const URL = "/podcast/" + podcastId;
-  let xhttp = get(URL);
+  let xhttp = getPodcast(URL);
 
   xhttp.onload = () => {
     document.getElementById("main-content").innerHTML = xhttp.responseText;
     // updateWindowUrl("?podcast_id" + podcast_id);
-    let script = document.createElement("script");
-    script.src = "/src/public/js/podcast/pagination.js";
-    document.body.appendChild(script);
+    addScript("/src/public/js/podcast/pagination.js");
   };
 };
 
@@ -76,9 +80,20 @@ const editPodcast = (podcastId, event) => {
   event.stopPropagation();
 
   const URL = "/edit/" + podcastId;
-  let xhttp = get(URL);
+  let xhttp = getPodcast(URL);
 
   xhttp.onload = () => {
     document.getElementById("main-content").innerHTML = xhttp.responseText;
+    addScript("/src/public/js/podcast/handle_upload.js");
   };
 };
+
+const goToAddPodcast = () => {
+    const URL = "/create";
+    let xhttp = getPodcast(URL);
+
+    xhttp.onload = () => {
+        document.getElementById("main-content").innerHTML = xhttp.responseText;
+        addScript("/src/public/js/podcast/handle_upload.js");
+    };
+}
