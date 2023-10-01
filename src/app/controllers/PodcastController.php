@@ -1,4 +1,6 @@
 <?php
+
+require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
 require_once SERVICES_DIR . "/podcast/PodcastService.php";
 require_once SERVICES_DIR . "/upload/UploadService.php";
 require_once BASE_URL . "/src/app/views/components/podcast/episodesList.php";
@@ -27,9 +29,6 @@ class PodcastController extends BaseController
                     // If it"s not an AJAX request, include the full HTML structure
                     $this->view("layouts/default", $data);
                 }
-                break;
-
-            case "POST":
                 return;
 
             default:
@@ -40,51 +39,85 @@ class PodcastController extends BaseController
 
     // /podcast/{id}
     public function podcast($id) {
-        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        try {
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
-        $data["podcast"] = $this->podcast_service->getPodcastById($id);
-        $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
+                    $data["podcast"] = $this->podcast_service->getPodcastById($id);
+                    $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
 
-        $this->view("pages/podcast/podcast_detail", $data);
+                    $this->view("pages/podcast/podcast_detail", $data);
+                    return ResponseHelper::HTTP_STATUS_OK;
+
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
+        }
     }
 
     // /episodes?page=
     public function episodes($id) {
-        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-        $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
+        try {
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+                    $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
 
-        $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, $page);
+                    $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, $page);
 
-        return episodeList($data["episodes"]);
+                    return episodeList($data["episodes"]);
+
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
+        }
     }
 
     // /search?key=
     public function search() {
-        $search_key = isset($_GET["key"]) ? filter_var($_GET["key"], FILTER_SANITIZE_STRING) : "";
+        try {
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    $search_key = isset($_GET["key"]) ? filter_var($_GET["key"], FILTER_SANITIZE_STRING) : "";
 
-        $podcasts = $this->podcast_service->getPodcastBySearch($search_key);
+                    $podcasts = $this->podcast_service->getPodcastBySearch($search_key);
 
-        include VIEWS_DIR . "pages/podcast/index.php";
+                    include VIEWS_DIR . "pages/podcast/index.php";
+                    return ResponseHelper::HTTP_STATUS_OK;
+
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
+        }
     }
 
     // /edit/{id}
     public function edit($id) {
-        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        try {
+            $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
-        switch ($_SERVER["REQUEST_METHOD"]) {
-            case "GET":
-                $data["podcast"] = $this->podcast_service->getPodcastById($id);
-                $data["type"] = "edit";
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    $data["podcast"] = $this->podcast_service->getPodcastById($id);
+                    $data["type"] = "edit";
 
-                $this->view("pages/podcast/podcast_management", $data);
-                break;
+                    $this->view("pages/podcast/podcast_management", $data);
+                    return ResponseHelper::HTTP_STATUS_OK;
 
-            case "PATCH":
-                $is_delete = isset($_GET["delete"]) ? filter_var($_GET["delete"], FILTER_SANITIZE_STRING) : "";
-
-                if ($is_delete == "true") {
-                    $this->podcast_service->deletePodcast($id);
-                } else {
+                case "PATCH":
                     $data = json_decode(file_get_contents('php://input'), true);
 
                     $title = filter_var($data['podcast-name-input'], FILTER_SANITIZE_STRING);
@@ -97,42 +130,66 @@ class PodcastController extends BaseController
                     }
 
                     $this->podcast_service->updatePodcast($id, $title, $description, $creator_name, $image_url);
-                }
-                break;
+                    return ResponseHelper::HTTP_STATUS_OK;
+
+                case "DELETE":
+                    $this->podcast_service->deletePodcast($id);
+                    return;
+
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
         }
     }
 
     // /create
     public function create() {
-        switch ($_SERVER["REQUEST_METHOD"]) {
-            case "GET":
-                $data["type"] = "create";
+        try {
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    $data["type"] = "create";
 
-                $this->view("pages/podcast/podcast_management", $data);
-                break;
+                    $this->view("pages/podcast/podcast_management", $data);
+                    break;
 
-            case "POST":
-                $title = filter_var($_POST['podcast-name-input'], FILTER_SANITIZE_STRING);
-                $creator_name = filter_var($_POST['podcast-creator-input'], FILTER_SANITIZE_STRING);
-                $description = filter_var($_POST['podcast-desc-input'], FILTER_SANITIZE_STRING);
-                $image_url = IMAGES_DIR . filter_var($_POST['preview-image-filename'], FILTER_SANITIZE_STRING);
+                case "POST":
+                    $title = filter_var($_POST['podcast-name-input'], FILTER_SANITIZE_STRING);
+                    $creator_name = filter_var($_POST['podcast-creator-input'], FILTER_SANITIZE_STRING);
+                    $description = filter_var($_POST['podcast-desc-input'], FILTER_SANITIZE_STRING);
+                    $image_url = IMAGES_DIR . filter_var($_POST['preview-image-filename'], FILTER_SANITIZE_STRING);
 
-                $this->podcast_service->createPodcast($title, $description, $creator_name, $image_url);
+                    $this->podcast_service->createPodcast($title, $description, $creator_name, $image_url);
+                    break;
 
-                break;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
         }
     }
 
     // /upload
     public function upload() {
-        switch ($_SERVER["REQUEST_METHOD"]) {
-            case "POST":
-                UploadService::upload();
-                break;
+        try {
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "POST":
+                    UploadService::upload();
+                    break;
 
-            default:
-                ResponseHelper::responseNotAllowedMethod();
-                break;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
         }
     }
 }

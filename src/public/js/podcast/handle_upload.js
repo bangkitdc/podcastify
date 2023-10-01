@@ -17,15 +17,18 @@ const createPodcast = (formData) => {
   return xhttp;
 };
 
-const updatePodcast = (json, podcastId, deletePodcast = false) => {
+const updatePodcast = (json, podcastId) => {
   let xhttp = new XMLHttpRequest();
-  xhttp.open(
-    "PATCH",
-    UPLOAD_BASE_URL + "/edit/" + podcastId + "?delete=" + deletePodcast,
-    true
-  );
+  xhttp.open("PATCH", UPLOAD_BASE_URL + "/edit/" + podcastId, true);
   xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhttp.send(json);
+  return xhttp;
+};
+
+const deletePodcast = (podcastId) => {
+  let xhttp = new XMLHttpRequest();
+  xhttp.open("DELETE", UPLOAD_BASE_URL + "/edit/" + podcastId, true);
+  xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   return xhttp;
 };
 
@@ -105,9 +108,10 @@ handleFormSubmit("update-form", function (form) {
 if (document.getElementById("delete-podcast")) {
   document.getElementById("delete-podcast").addEventListener("click", () => {
     let podcastId = document.getElementById("podcast-id").value;
-    let xhr = updatePodcast(null, podcastId, true);
+    let xhr = deletePodcast(podcastId);
     xhr.onload = () => {
       console.log(xhr.responseText);
+      alert("Success!");
     };
   });
 }
