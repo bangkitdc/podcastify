@@ -19,6 +19,10 @@ class Storage
         return file_exists($this->storageDir . $fileName);
     }
 
+    public static function getFileUrl($PATH, $filename) {
+        return "/src/storage/" . $PATH . $filename;
+    }
+
     public function saveAudio($tempName)
     {
         $filesize = filesize($tempName);

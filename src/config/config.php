@@ -1,4 +1,4 @@
-<?php 
+<?php
 // URL
 define('BASE_URL', $_ENV['PWD']);
 
@@ -38,5 +38,6 @@ define('ALLOWED_AUDIOS', [
 define('ALLOWED_IMAGES', [
   'image/jpeg' => '.jpeg',
   'image/jpg' => '.jpg',
+  'image/webp' => '.jpg',
   'image/png' => '.png'
 ]);
