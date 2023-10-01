@@ -15,8 +15,20 @@ if ($path === '/') {
             include  VIEW_DIR . "pages/" . $path . "/index.php";
             break;
 
-        case 'episode':
-            include  VIEW_DIR . "pages/" . $path . "/index.php";
+        case '/episode':
+            include  VIEW_DIR . "pages" . $path . "/index.php";
+            break;
+
+        case '/episode/episode_detail':
+            include VIEW_DIR . "pages/episode/detail_episode.php";
+            break;
+
+        case '/episode/add':
+            include  VIEW_DIR . "pages/episode/add_episode.php";
+            break;
+
+        case '/episode/edit':
+            include  VIEW_DIR . "pages/episode/edit_episode.php";
             break;
 
         default:
