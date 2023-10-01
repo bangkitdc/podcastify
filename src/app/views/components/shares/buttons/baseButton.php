@@ -19,7 +19,7 @@ function baseButton($label, $id = "", $type = "default", $is_disabled = false, $
             $class = "base-btn $class";
             break;
     }
-    $disable_status = $is_disabled ? 'disabled' : '';
-    $submit_status = $type == "submit" ? "submit" : '';
+    $disable_status = $is_disabled ? "disabled" : "";
+    $submit_status = $type == "submit" ? "submit" : "button";
     echo "<button id=\"$id\" class=\"$class\" $disable_status type=\"$submit_status\">$label</button>";
 }

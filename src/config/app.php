@@ -1,6 +1,7 @@
 <?php
 
 define("BASE_DIR", $_ENV['PWD'] . '/src/app/controllers/');
+require_once BASE_URL . "/src/app/middlewares/Middleware.php";
 
 class App {
     protected $controller;
@@ -18,6 +19,8 @@ class App {
         // [1] : method/ params
         // Example : podcast/1, podcast/add
 
+        Middleware::checkReferer();
+        
         $url = $this->parseURL();
         if (isset($url[0])) {
             if (file_exists(BASE_DIR . ucfirst($url[0]) . 'Controller.php')) {

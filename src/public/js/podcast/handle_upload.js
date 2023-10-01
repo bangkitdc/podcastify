@@ -1,41 +1,38 @@
-UPLOAD_BASE_URL = "/podcast";
-
 const uploadPodcastImage = (url, async = true, data = null) => {
-  let xhttp = new XMLHttpRequest();
-  xhttp.open("POST", UPLOAD_BASE_URL + url, async);
-  xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  xhttp.setRequestHeader("Content-Type", "application/json");
-  xhttp.send(data);
-  return xhttp;
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", PODCAST_BASE_URL + url, async);
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(data);
+  return xhr;
 };
 
 const createPodcast = (formData) => {
-  let xhttp = new XMLHttpRequest();
-  xhttp.open("POST", UPLOAD_BASE_URL + "/create", true);
-  xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  xhttp.send(formData);
-  return xhttp;
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", PODCAST_BASE_URL + "/create", true);
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.send(formData);
+  return xhr;
 };
 
 const updatePodcast = (json, podcastId) => {
-  let xhttp = new XMLHttpRequest();
-  xhttp.open("PATCH", UPLOAD_BASE_URL + "/edit/" + podcastId, true);
-  xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  xhttp.send(json);
-  return xhttp;
+  let xhr = new XMLHttpRequest();
+  xhr.open("PATCH", PODCAST_BASE_URL + "/edit/" + podcastId, true);
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.send(json);
+  return xhr;
 };
 
 const deletePodcast = (podcastId) => {
-  let xhttp = new XMLHttpRequest();
-  xhttp.open("DELETE", UPLOAD_BASE_URL + "/edit/" + podcastId, true);
-  xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  return xhttp;
+  let xhr = new XMLHttpRequest();
+  xhr.open("DELETE", PODCAST_BASE_URL + "/edit/" + podcastId, true);
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.send();
+  return xhr;
 };
 
 document.getElementById("file-upload").addEventListener("change", function () {
-  console.log("Woii");
   if (this.files && this.files[0]) {
-    console.log("inside");
     var reader = new FileReader();
     reader.onload = (e) => {
       document.getElementById("preview-image").src = e.target.result;
@@ -113,5 +110,11 @@ if (document.getElementById("delete-podcast")) {
       console.log(xhr.responseText);
       alert("Success!");
     };
+  });
+}
+
+if (document.getElementById("cancel-change")) {
+  document.getElementById("cancel-change").addEventListener("click", () => {
+    window.location.href = "/podcast";
   });
 }

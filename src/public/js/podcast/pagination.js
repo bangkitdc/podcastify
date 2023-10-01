@@ -32,9 +32,9 @@ const loadEpsList = (
 
   // Load eps list from the server
   const URL = "/episodes/" + podcastId + "?page=" + pageNum;
-  let xhttp = getPodcast(URL);
-  xhttp.onload = () => {
+  let xhr = getPodcast(URL);
+  xhr.onload = () => {
     document.getElementById("podcast-eps-list-container").innerHTML =
-      xhttp.responseText;
+      xhr.responseText;
   };
 };
