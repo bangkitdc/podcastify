@@ -1,7 +1,13 @@
+<head>
+  <title>Podcastify | Podcasts</title>
+  <link rel="stylesheet" href="<?= CSS_DIR ?>podcast/podcast.css">
+</head>
 <div id="template">
   <div>
     <?php
-        require_once VIEW_DIR . "components/podcast/contentBox.php";
+        require_once VIEWS_DIR . "components/podcast/contentBox.php";
+
+        $podcasts = $data['podcasts'];
 
         // Podcasts container view
         $hide_podcast_box_class = count($podcasts) > 0 ? 'visible' : 'hidden';

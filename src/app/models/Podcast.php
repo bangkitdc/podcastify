@@ -50,7 +50,7 @@ class Podcast {
     }
 
     public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url) {
-        if ($image_url != "") {
+        if ($image_url != IMAGES_DIR) {
             $query = "UPDATE podcasts SET title = :title, description = :description, creator_name = :creator_name, image_url = :image_url, updated_at = NOW() WHERE podcast_id = :podcast_id";
             $this->db->query($query);
             $this->db->bind(":image_url", $image_url);

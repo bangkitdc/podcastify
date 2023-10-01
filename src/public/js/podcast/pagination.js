@@ -21,7 +21,7 @@ const loadEpsList = (
       document.getElementById("eps-list-page-num").textContent = pageNum;
     }
   }
-  
+
   if (toEnd) {
     pageNum = totalPages;
   }
@@ -32,7 +32,7 @@ const loadEpsList = (
 
   // Load eps list from the server
   const URL = "/episodes/" + podcastId + "?page=" + pageNum;
-  let xhttp = get(URL);
+  let xhttp = getPodcast(URL);
   xhttp.onload = () => {
     document.getElementById("podcast-eps-list-container").innerHTML =
       xhttp.responseText;
