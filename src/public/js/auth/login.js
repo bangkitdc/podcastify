@@ -4,47 +4,8 @@ const loginForm = document.querySelector(".login-form");
 const usernameAlert = document.querySelector("#username-alert");
 const passwordAlert = document.querySelector("#password-alert");
 
-const usernameRegex = /^\w+$/;
-const passwordRegex = /^\w+$/;
-
 let usernameValid = false;
 let passwordValid = false;
-
-usernameInput &&
-  usernameInput.addEventListener(
-    "keyup",
-    debounce(() => {
-      const username = usernameInput.value;
-
-      if (!usernameRegex.test(username)) {
-        usernameAlert.innerText = "Invalid username format!";
-        usernameAlert.className = "alert-show";
-        usernameValid = false;
-      } else {
-        usernameAlert.innerText = "";
-        usernameAlert.className = "alert-hide";
-        usernameValid = true;
-      }
-    }, DEBOUNCE_TIMEOUT)
-  );
-
-passwordInput &&
-  passwordInput.addEventListener(
-    "keyup",
-    debounce(() => {
-      const password = passwordInput.value;
-
-      if (!passwordRegex.test(password)) {
-        passwordAlert.innerText = "Invalid password format!";
-        passwordAlert.className = "alert-show";
-        passwordValid = false;
-      } else {
-        passwordAlert.innerText = "";
-        passwordAlert.className = "alert-hide";
-        passwordValid = true;
-      }
-    })
-  );
 
 loginForm &&
   loginForm.addEventListener("submit", async (e) => {
@@ -53,30 +14,33 @@ loginForm &&
     const username = usernameInput.value;
     const password = passwordInput.value;
 
+    const usernameParagraph = usernameAlert.querySelector("p");
+    const passwordParagraph = passwordAlert.querySelector("p");
+
     if (!username) {
-      usernameAlert.innerText = "Please fill out your username first!";
-      usernameAlert.className = "alert-show";
-      usernameValid = false;
-    } else if (!usernameRegex.test(username)) {
-      usernameAlert.innerText = "Invalid username format!";
+      if (usernameParagraph) {
+        usernameParagraph.innerText = "Please enter your Podcastify username.";
+      }
       usernameAlert.className = "alert-show";
       usernameValid = false;
     } else {
-      usernameAlert.innerText = "";
+      if (usernameParagraph) {
+        usernameParagraph.innerText = "";
+      }
       usernameAlert.className = "alert-hide";
       usernameValid = true;
     }
 
     if (!password) {
-      passwordAlert.innerText = "Please fill out your password first!";
-      passwordAlert.className = "alert-show";
-      passwordValid = false;
-    } else if (!passwordRegex.test(password)) {
-      passwordAlert.innerText = "Invalid password format!";
+      if (passwordParagraph) {
+        passwordParagraph.innerText = "Please enter your password.";
+      }
       passwordAlert.className = "alert-show";
       passwordValid = false;
     } else {
-      passwordAlert.innerText = "";
+      if (passwordParagraph) {
+        passwordParagraph.innerText = "";
+      }
       passwordAlert.className = "alert-hide";
       passwordValid = true;
     }
@@ -86,23 +50,29 @@ loginForm &&
     }
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/public/user/login");
+    xhr.open("POST", "/login", true);
 
     const formData = new FormData();
     formData.append("username", username);
     formData.append("password", password);
-    formData.append("csrf_token", CSRF_TOKEN);
 
     xhr.send(formData);
-    xhr.onreadystatechange = function () {
-      if (this.readyState === XMLHttpRequest.DONE) {
-        if (this.status === 201) {
-          document.querySelector("#login-alert").className = "alert-hide";
-          const data = JSON.parse(this.responseText);
-          location.replace(data.redirect_url);
-        } else {
-          document.querySelector("#login-alert").className = "alert-show";
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+
+          // TODO: notification
+          if (response.success) {
+            window.location.href = response.redirect_url;
+          } else {
+            console.error(response.error_message);
+          }
+        } catch (error) {
+          console.error("Error parsing JSON response:", error);
         }
+      } else {
+        console.error("Request failed with status:", xhr.status);
       }
     };
   });

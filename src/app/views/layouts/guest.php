@@ -14,7 +14,7 @@
     <div class="header">
       <button class="btn-logo" onclick="window.location.href = '/'">
         <div class="icon">
-          <img src="<?= ICONS_DIR ?>logo-bw.svg" alt="Logo" width="35px">
+          <img src="<?= ICONS_DIR ?>logo-bw.svg" alt="Logo" width="36px">
         </div>
         <h2>Podcastify</h2>
       </button>

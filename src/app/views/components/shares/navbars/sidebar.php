@@ -28,25 +28,25 @@ echo '
 
 if (isset($_SESSION['userId']) && $_SESSION['role'] === 'admin') {
   echo '
-    <div id="podcast-add-nav" class="link-flex">
-      <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Podcast" />
-      <a href="/podcast/add" class="icon-text">Add Podcast</a>
-    </div>
-    <div id="episode-add-nav" class="link-flex">
-      <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Episode" />
-      <a href="/episode/add" class="icon-text">Add Episode</a>
-    </div>
-    <div id="user-nav" class="link-flex">
-      <img src="' . ICONS_DIR . 'user.svg" alt="Users List" />
-      <a href="/user" class="icon-text">Users List </a>
-    </div>
-  ';
-} else {
-  echo '
-    </div>
+      <div id="podcast-add-nav" class="link-flex">
+        <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Podcast" />
+        <a href="/podcast/add" class="icon-text">Add Podcast</a>
+      </div>
+      <div id="episode-add-nav" class="link-flex">
+        <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Episode" />
+        <a href="/episode/add" class="icon-text">Add Episode</a>
+      </div>
+      <div id="user-nav" class="link-flex">
+        <img src="' . ICONS_DIR . 'user.svg" alt="Users List" />
+        <a href="/user" class="icon-text">Users List </a>
       </div>
   ';
 }
+
+echo '
+    </div>
+  </div>
+';
 
 echo '
   <script>

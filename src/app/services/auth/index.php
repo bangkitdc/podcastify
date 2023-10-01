@@ -12,22 +12,22 @@ class AuthService {
         $user = $user->findByUsername($username);
     
         /* if user doesn't exists */
-        if(!isset($user)){
+        if (!$user){
             return "USER NOT FOUND";
         }
 
-        if(!$this->checkPassword($password, $user['password'])){
+        if (!$this->checkPassword($password, $user->password)) {
             return "WRONG PASSWORD";
         }
 
         $role = "user";
         /* if its admin */ 
-        if($user['role_id'] == 1) {
+        if($user->role_id == 1) {
             $role = "admin"; 
         }
 
         $_SESSION['username'] = $username;
-        $_SESSION['userId'] = $user['user_id'];
+        $_SESSION['userId'] = $user->user_id;
         $_SESSION['role'] = $role;
 
         return "SUCCESS";
