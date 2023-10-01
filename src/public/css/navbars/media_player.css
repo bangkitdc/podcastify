@@ -1,0 +1,127 @@
+/*---------- BOTTOM MEDIA ----------*/
+
+.media-player {
+  grid-column: span 4 / span 4;
+  grid-row: span 1 / span 8;
+  background-color: var(--clr-background-base-one);
+  align-items: center;
+
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+.media-cover {
+  grid-column: span 3 / span 10;
+}
+
+.player {
+  grid-column: span 4 / span 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.volume-controls {
+  grid-column: span 3 / span 10;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+}
+
+.play-btn {
+  border: none;
+  border-radius: var(--rounded-full);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Slider */
+.current-time, .total-time {
+  color: var(--clr-background-highlight-three);
+  font-size: 0.7rem;
+  font-weight: 300;
+  padding-top: 0.1rem;
+}
+
+.player-timeline {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.volume-slider {
+  width: 100px;
+  height: 4px;
+}
+
+#range {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: var(--rounded-full);
+  margin: 0 10px;
+  flex: 1;
+}
+
+#range::-webkit-slider-runnable-track {
+  height: 4px;
+  border: none;
+  border-radius: var(--rounded-full);
+}
+
+#range::-moz-range-track {
+  height: 4px;
+  border: none;
+  border-radius: var(--rounded-full);
+}
+
+#range:hover::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: var(--rounded-full);
+  background: var(--clr-text-primary);
+  margin-top: -4px;
+}
+
+#range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  height: 0;
+  width: 0;
+  margin-top: -4px;
+  transition: .2s ease-in-out;
+}
+
+#range::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  height: 0;
+  width: 0;
+  margin-top: -4px;
+  transition: .2s ease-in-out;
+}
+
+#range-container,
+.volume-slider-container {
+  overflow: hidden; /* Hide overflowing parts of the thumb */
+}

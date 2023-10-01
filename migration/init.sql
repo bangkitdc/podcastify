@@ -20,7 +20,7 @@ CREATE TABLE users (
     password            VARCHAR(255)    NOT NULL,
     first_name          VARCHAR(255)    NOT NULL,
     last_name           VARCHAR(255)    NOT NULL,
-    status              SMALLINT        NOT NULL,
+    status              SMALLINT        NOT NULL DEFAULT 1,
     avatar_url          VARCHAR(255),
     last_login          TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
     role_id             INT             NOT NULL,
@@ -29,9 +29,9 @@ CREATE TABLE users (
     FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
-INSERT INTO users (email, username, password, first_name, last_name, status, avatar_url, role_id) VALUES
-    ('admin@podcastify.com', 'admin', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'admin', 'podcastify', 1, NULL, 1),
-    ('user@gmail.com', 'user', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'user', 'podcastify', 1, NULL, 2);
+INSERT INTO users (email, username, password, first_name, last_name, avatar_url, role_id) VALUES
+    ('admin@podcastify.com', 'admin', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'admin', 'podcastify', NULL, 1),
+    ('user@gmail.com', 'user', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'user', 'podcastify', NULL, 2);
 
 CREATE TABLE podcasts (
     podcast_id          INT             AUTO_INCREMENT      PRIMARY KEY,
@@ -73,7 +73,7 @@ CREATE TABLE episodes (
     liked_count         INT             NOT NULL DEFAULT 0,
     created_at          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (podcast_id) REFERENCES podcasts(podcast_id),
+    FOREIGN KEY (podcast_id) REFERENCES podcasts(podcast_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 

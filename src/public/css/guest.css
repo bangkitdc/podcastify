@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--clr-text-black);
+}
+
+.btn-logo {
+  background: transparent;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 0;
+}
+
+.icon {
+  display: block;
+}
+
+.header {
+  padding: 2rem 3rem;
+  align-items: center;
+}
+
+h2 {
+  padding-top: 1px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.content {
+  display: flex;
+  background: linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgb(0, 0, 0) 100%);
+  flex: 3 1 0%;
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+}
+
+.form {
+  max-width: var(--md);
+  width: 100%;
+  display: block;
+  background-color: var(--clr-text-black);
+  border-radius: var(--rounded-lg);
+}

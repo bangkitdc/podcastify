@@ -1,6 +1,7 @@
 <?php
 
 define("BASE_DIR", $_ENV['PWD'] . '/src/app/controllers/');
+require_once BASE_URL . "/src/app/middlewares/Middleware.php";
 
 class App {
     protected $controller;
@@ -8,35 +9,36 @@ class App {
     protected $params = [];
 
     /**
-     * 
      *
-     * 
+     *
+     *
      */
-    public function __construct() { 
+    public function __construct() {
         // Explode URL
         // [0] : controller
         // [1] : method/ params
         // Example : podcast/1, podcast/add
 
+        Middleware::checkReferer();
+        
         $url = $this->parseURL();
         if (isset($url[0])) {
-            if (file_exists(BASE_DIR . $url[0] . 'Controller.php')) {
-                $this->controller = $url[0];
+            if (file_exists(BASE_DIR . ucfirst($url[0]) . 'Controller.php')) {
+                $this->controller = ucfirst($url[0]);
                 unset($url[0]);
             }
         } else {
             $this->controller = 'Home';
         }
 
-        $this->controller = ucfirst($this->controller);
-        $controllerClassName = $this->controller . 'Controller';
-        
-        require_once BASE_DIR . $this->controller . 'Controller.php';
+        // Double check
+        if (!method_exists($this->controller . 'Controller', $this->method)) {
+            $this->controller = "Error";
+        }
 
-        if (class_exists($controllerClassName)) {
-            // require_once BASE_DIR . $this->controller . 'Controller.php';
-            $this->controller = new $controllerClassName;
-        } else {
+        $controllerClassName = $this->controller . 'Controller';
+
+        if (!class_exists($controllerClassName)) {
             require_once BASE_DIR . 'ErrorController.php';
             $controllerClassName = 'ErrorController';
             $this->controller = new $controllerClassName;
@@ -56,6 +58,10 @@ class App {
             $this->params = array_values($url);
         }
 
+        // echo '<pre>';
+        // print_r($this->params);
+        // echo '</pre>';
+
         call_user_func_array([$this->controller, $this->method], $this->params);
     }
 
@@ -72,7 +78,7 @@ class App {
 
             return $url;
         }
-        
+
         return [];
     }
 }

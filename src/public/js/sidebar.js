@@ -4,6 +4,12 @@ var currentPath = window.location.pathname;
 var navItems = [
   {
     id: "home-nav",
+    href: "/home",
+    imgActive: "/home-active.svg",
+    imgInactive: "/home-inactive.svg",
+  },
+  {
+    id: "home-nav",
     href: "/",
     imgActive: "/home-active.svg",
     imgInactive: "/home-inactive.svg",
@@ -49,15 +55,21 @@ var navItems = [
 for (var i = 0; i < navItems.length; i++) {
   var navItem = navItems[i];
 
-  // Check if the currentPath matches the href of the current navItem
-  if (currentPath === navItem.href) {
-    // Add the 'active' class to the corresponding element by id
-    document.getElementById(navItem.id).classList.add("active");
+  var item = document.getElementById(navItem.id);
 
-    // Change the image source to the active version
-    document.getElementById(navItem.id).getElementsByTagName("img")[0].src = ICONS_DIR + navItem.imgActive;
-  } else {
-    // Change the image source to the inactive version for non-active items
-    document.getElementById(navItem.id).getElementsByTagName("img")[0].src = ICONS_DIR + navItem.imgInactive;
+  if (item) {
+    // Check if the currentPath matches the href of the current navItem
+    if (currentPath === navItem.href) {
+      // Add the 'active' class to the corresponding element by id
+      item.classList.add("active");
+
+      // Change the image source to the active version
+      item.getElementsByTagName("img")[0].src =
+        ICONS_DIR + navItem.imgActive;
+    } else {
+      // Change the image source to the inactive version for non-active items
+      item.getElementsByTagName("img")[0].src =
+        ICONS_DIR + navItem.imgInactive;
+    }
   }
 }

@@ -1,0 +1,14 @@
+.base-input {
+    border-radius: 12px;
+    color: black;
+    padding: 4px 8px;
+    outline: none;
+    border: 2px solid;
+    font-size: 1rem;
+    padding-inline: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: white;
+    }
+}

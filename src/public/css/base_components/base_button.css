@@ -1,0 +1,41 @@
+.base-btn {
+  border-radius: 15px;
+  width: 100%;
+  max-width: 100px;
+  padding: 4px 8px;
+  transition: all 0.3s ease;
+  border: none;
+
+  &.positive {
+    background: var(--clr-text-info);
+    color: black;
+
+    &:hover {
+      background: var(--clr-text-info-hover);
+    }
+  }
+
+  &.negative {
+    background: var(--clr-text-danger);
+    color: black;
+
+    &:hover {
+      background: #ff4c4c;
+    }
+  }
+
+  &.default {
+    background: none;
+    color: var(--clr-text-secondary);
+    border: none;
+
+    &:hover {
+      background: var(--clr-text-secondary-darken);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
