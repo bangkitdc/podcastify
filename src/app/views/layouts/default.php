@@ -33,7 +33,7 @@
         </div>
         <div id="podcast-add-nav" class="link-flex">
           <img src="<?= ICONS_DIR ?>add-circle.svg" alt="Library" />
-          <a href="/podcast/add" class="icon-text">Add Podcast</a>
+          <button onclick="goToAddPodcast()" class="icon-text">Add Podcast</button>
         </div>
         <div id="episode-add-nav" class="link-flex">
           <img src="<?= ICONS_DIR ?>add-circle.svg" alt="Library" />

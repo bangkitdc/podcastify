@@ -7,6 +7,6 @@ function baseInputText($placeholder, $value, $id = "", $is_required = true, $cla
     $required_status = $is_required ? 'required' : '';
     echo
     "
-        <input type=\"text\" placeholder=\"$placeholder\" value=\"$value\" class=\"base-input $class\" id=\"$id\" $required_status />
+        <input type=\"text\" placeholder=\"$placeholder\" value=\"$value\" class=\"base-input $class\" id=\"$id\" $required_status name=\"$id\" />
     ";
 }

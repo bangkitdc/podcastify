@@ -8,7 +8,7 @@ function baseFileUploader($input_id = "", $input_class = "", $img_id = "", $is_r
     echo
     "
     <div class=\"file-uploader-container\">
-        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status />
+        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status name=\"$input_id\" />
         <label for=\"$input_id\" class=\"file-uploader-label\">
             Choose File
         </label>
