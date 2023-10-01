@@ -1,44 +1,95 @@
 <?php
+require_once BASE_URL . '/src/app/services/episode/EpisodeService.php';
 
-class EpisodeController extends Controller {
+class EpisodeController extends BaseController {
+  private $episode_service;
+
+  public function __construct() {
+    $this->episode_service = new EpisodeService();
+  }
+
   public function index() {
-    $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
-    
-    $episodes_model = new Episode();
+    switch($_SERVER["REQUEST_METHOD"]) {
+      case 'GET':
 
-    if ($isAjax) {
+        $episodes = $this->episode_service->getAllEpisodeCard();
 
-      $q = isset($_GET['episode_id']) ? filter_var($_GET['episode_id'], FILTER_SANITIZE_URL) : '';
+        $data['episodes'] = $episodes;
 
-      $episodes = array();
-
-      if($q == ''){
-        $episode_data = $episodes_model->findAll();
-      } else {
-        $episode_data = $episodes_model->findById($q);
-      }
-
-      if(is_array($episode_data)) {
-        foreach($episode_data as $data) {
-          array_push($episodes, $data);
-        }
-      } else {
-        $episodes = [];
-      }
-
-      include VIEW_DIR . "components/episode/episode.php";
-    } else {
-
-      $q = isset($_GET['episode_id']) ? filter_var($_GET['episode_id'], FILTER_SANITIZE_URL) : '';
-      
-      $all_episode_data = $episodes_model->findAllEpisodeCard();     
-      $episode_data = $episodes_model->findByIdEpisodeDetail($q);
-
-      $data['episodes'] = $all_episode_data;
-      $data['episode'] = $episode_data;
-
-      $this->view('layouts/default', $data);
-
+        $this->view('layouts/default', $data);
+        break;
     }
   }
-}
+
+  public function episode_detail() {
+    switch($_SERVER["REQUEST_METHOD"]){
+      case 'GET':
+        if (isset($_GET['episode_id'])) {
+          $episodeId = $_GET['episode_id'];
+        } else {
+          $episodeId = null;
+        }
+      
+        if ($episodeId !== null) {
+          $data['episode'] = $this->episode_service->getEpisodeDetail($episodeId);
+
+          $this->view('layouts/default', $data);
+        }
+        break;
+    }
+  }
+
+  public function add () {
+    switch($_SERVER['REQUEST_METHOD']) {
+      case 'POST':
+        $podcast_id = $_POST['podcast_id'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        // $category = $_POST['category'];
+        $image_file = $_POST['image_file'];
+        $audio_file = $_POST['audio_file'];
+
+        $this->episode_service->addEpisode($podcast_id, 1, $title, $description, 60, $image_file, $audio_file);
+        break;
+
+      default:
+        break;
+    }
+
+    $data['podcast_title'] = ['Close the Door', 'PODKESMA', 'Trio Kurnia'];
+
+    $this->view('layouts/default', $data);
+  }
+
+  public function edit() {
+    try{
+
+      if (isset($_GET['episode_id'])) {
+        $episodeId = $_GET['episode_id'];
+      } else {
+        $episodeId = null;
+      }
+
+      switch ($_SERVER["REQUEST_METHOD"]) {
+        case "GET":
+          $data['episode'] = $this->episode_service->getEpisodeById($episodeId);
+
+          $this->view('layouts/default', $data);
+          break;
+
+        case "PATCH":
+          // Todo : Parse data from url
+          break;
+
+        case "DELETE":
+          $this->episode_service->deleteEpisode($episodeId);
+          break;
+        default:
+
+      }
+    } catch (Exception $e) {
+      $this->view('layouts/error');
+      exit;
+    }
+  }
+};
