@@ -6,14 +6,16 @@
   <div>
     <?php
         require_once VIEWS_DIR . "components/podcast/contentBox.php";
+        require_once VIEWS_DIR . "components/podcast/paginationNav.php";
 
+        $MAX_PODCAST_PER_PAGE = 2;
         $podcasts = $data['podcasts'];
+        $total_pages = ceil($data['total_rows'] / $MAX_PODCAST_PER_PAGE);
 
         // Podcasts container view
-        $hide_podcast_box_class = count($podcasts) > 0 ? 'visible' : 'hidden';
-        $hide_info_class = count($podcasts) > 0 ? 'hidden' : 'visible';
-        echo "<div id=\"template\" class=\"podcast-container\">";
-            echo "<div class=\"podcast-box-area $hide_podcast_box_class\">";
+        echo "<div id=\"podcast-container\" class=\"podcast-container\">";
+        if (count($podcasts) > 0) {
+            echo "<div class=\"podcast-box-area\">";
                 foreach ($podcasts as $podcast) {
                     baseContentBox($podcast, false, "showPodcast($podcast->podcast_id)");
                 }
@@ -26,7 +28,12 @@
                 }
             echo "</div>";
 
-            echo "<h1 class=\"no-podcast-info\" style=\"visibility: $hide_info_class;\">No Podcast Available</h1>";
+            echo "<div class=\"podcast-nav-box\">";
+                paginationPodcastNav($podcasts, $total_pages);
+            echo "</div>";
+        } else {
+            echo "<div class=\"podcast-info-wrapper\"><h1 class=\"no-podcast-info\">No Podcast Available</h1></div>";
+        }
         echo "</div>";
     ?>
   </div>

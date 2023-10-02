@@ -21,9 +21,8 @@ class PodcastController extends BaseController
             case "GET":
                 $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
 
-                $podcasts = $this->podcast_service->getAllPodcast();
-
-                $data["podcasts"] = $podcasts;
+                $data["podcasts"] = $this->podcast_service->getPodcast(2, 1);
+                $data["total_rows"] = $this->podcast_service->getTotalRows();
 
                 if ($isAjax) {
                     $this->view("pages/podcast/index", $data);
@@ -73,6 +72,28 @@ class PodcastController extends BaseController
                     $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, $page);
 
                     return episodeList($data["episodes"]);
+
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
+        }
+    }
+
+    public function podcasts() {
+        try {
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
+
+                    $data["podcasts"] = $this->podcast_service->getPodcast(2, $page);
+                    $data["total_rows"] = $this->podcast_service->getTotalRows();
+
+                    $this->view('pages/podcast/index', $data);
+                    return;
 
                 default:
                     ResponseHelper::responseNotAllowedMethod();
@@ -184,7 +205,7 @@ class PodcastController extends BaseController
     // /upload
     public function upload() {
         if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
-        
+
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "POST":

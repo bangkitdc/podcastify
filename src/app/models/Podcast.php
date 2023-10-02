@@ -39,6 +39,26 @@ class Podcast {
         return $result;
     }
 
+    public function getTotalRows() {
+        $query = "SELECT COUNT(*) as count FROM podcasts";
+        $this->db->query($query);
+        $result = $this->db->fetch();
+        return $result->count;
+    }
+
+    public function getPodcast($limit, $page) {
+        $query = "SELECT * FROM podcasts LIMIT :limit OFFSET :offset";
+        $this->db->query($query);
+
+        $offset = ($page - 1) * $limit;
+        $this->db->bind(":limit", $limit);
+        $this->db->bind(":offset", $offset);
+
+        $result = $this->db->fetchAll();
+
+        return $result;
+    }
+
     public function createPodcast($title, $description, $creator_name, $image_url) {
         $query = "INSERT INTO podcasts (title, description, creator_name, image_url, created_at, updated_at) VALUES (:title, :description, :creator_name, :image_url, NOW(), NOW())";
         $this->db->query($query);

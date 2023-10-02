@@ -3,10 +3,9 @@
 require_once BASE_URL . '/src/config/storage.php';
 
 function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") {
-    $title = $podcast ? $podcast->title : '';
-    $creator_name = $podcast ? $podcast->creator_name : '';
-    $content_box_class = $is_skeleton ? 'podcast-content-skeleton' : 'base-content-box';
-    $img_url = $podcast ?  Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url) : '';
+    $title = !$is_skeleton ? $podcast->title : '';
+    $creator_name = !$is_skeleton ? $podcast->creator_name : '';
+    $img_url = !$is_skeleton ?  Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url) : '';
     echo
     "
         <div class=\"podcast-content-container\" onclick=\"$click_evt\">
@@ -18,7 +17,11 @@ function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") 
             </div>
             ";
     } else {
-        echo "<div class=\"{$content_box_class}\"></div>";
+        echo "
+            <div class=\"podcast-skeleton-placeholder\">
+                <div class=\"podcast-content-skeleton\"></div>
+            </div>
+            ";
     }
     echo
     "
@@ -28,7 +31,7 @@ function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") 
                     {$creator_name}
                 </p>
     ";
-                if (Middleware::isAdmin() && Middleware::isLoggedIn()) {
+                if (Middleware::isAdmin() && !$is_skeleton) {
                     echo
                     "
                     <span class=\"podcast-edit-box\" onclick=\"editPodcast($podcast->podcast_id, event)\">
