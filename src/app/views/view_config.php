@@ -14,6 +14,8 @@ if ($path === '/') {
         case '/home':
             include VIEWS_DIR . "pages/home/index.php";
             break;
+            
+        // Podcast route
         case '/podcast':
             include  VIEWS_DIR . "pages/" . $path . "/index.php";
             break;

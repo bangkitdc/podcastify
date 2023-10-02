@@ -8,10 +8,10 @@
         require_once VIEWS_DIR . "components/podcast/contentBox.php";
         require_once VIEWS_DIR . "components/podcast/paginationNav.php";
 
-        $MAX_PODCAST_PER_PAGE = 2;
+        $MAX_PODCAST_PER_PAGE = 4;
         $podcasts = $data['podcasts'];
         $total_pages = ceil($data['total_rows'] / $MAX_PODCAST_PER_PAGE);
-
+        
         // Podcasts container view
         echo "<div id=\"podcast-container\" class=\"podcast-container\">";
         if (count($podcasts) > 0) {

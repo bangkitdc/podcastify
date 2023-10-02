@@ -21,7 +21,7 @@ class PodcastController extends BaseController
             case "GET":
                 $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
 
-                $data["podcasts"] = $this->podcast_service->getPodcast(2, 1);
+                $data["podcasts"] = $this->podcast_service->getPodcast(4, 1);
                 $data["total_rows"] = $this->podcast_service->getTotalRows();
 
                 if ($isAjax) {
@@ -89,7 +89,7 @@ class PodcastController extends BaseController
                 case "GET":
                     $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
 
-                    $data["podcasts"] = $this->podcast_service->getPodcast(2, $page);
+                    $data["podcasts"] = $this->podcast_service->getPodcast(4, $page);
                     $data["total_rows"] = $this->podcast_service->getTotalRows();
 
                     $this->view('pages/podcast/index', $data);
