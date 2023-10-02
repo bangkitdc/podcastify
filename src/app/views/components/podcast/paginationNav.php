@@ -1,5 +1,7 @@
 <?php
 
+echo '<link rel="stylesheet" href="' . CSS_DIR . 'podcast/pagination.css">';
+
 function paginationEpsNav($podcast, $total_pages) {
     echo
     "
@@ -15,6 +17,27 @@ function paginationEpsNav($podcast, $total_pages) {
             <img src=\"". ICONS_DIR . "/right-arrow.svg\" />
         </button>
         <button id=\"eps-list-prev\" onclick=\"loadEpsList($podcast->podcast_id, false, true)\">
+            <img src=\"". ICONS_DIR . "/skip_next.svg\" />
+        </button>
+    </div>
+    ";
+}
+
+function paginationPodcastNav($podcasts, $total_pages) {
+    echo
+    "
+    <div class=\"pod-list-nav\">
+        <button id=\"pod-list-prev\" onclick=\"loadPodcastList(false, false, true)\">
+            <img src=\"". ICONS_DIR . "/skip_previous.svg\" />
+        </button>
+        <button id=\"pod-list-prev\" onclick=\"loadPodcastList(false)\">
+            <img src=\"". ICONS_DIR . "/left-arrow.svg\" />
+        </button>
+        <span id=\"pod-list-page-num\">1</span> of <span id=\"pod-list-total-pages\">$total_pages</span>
+        <button id=\"pod-list-next\" onclick=\"loadPodcastList()\">
+            <img src=\"". ICONS_DIR . "/right-arrow.svg\" />
+        </button>
+        <button id=\"pod-list-prev\" onclick=\"loadPodcastList(false, true)\">
             <img src=\"". ICONS_DIR . "/skip_next.svg\" />
         </button>
     </div>
