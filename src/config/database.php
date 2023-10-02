@@ -22,7 +22,7 @@ class Database {
         try {
             $this->db_connection = new PDO($dsn, $this->user, $this->password, $option);
         } catch (PDOException $e) {
-            error_log('Internal Server Error: ' . $e->getMessage());
+            throw new Exception('Database error: ' . $e->getMessage());
         }       
     }   
 
@@ -31,7 +31,7 @@ class Database {
         try {
             $this->statement = $this->db_connection->prepare($query);
         } catch (PDOException $e) {
-            error_log('Internal Server Error: ' . $e->getMessage());
+            throw new Exception('Database error: ' . $e->getMessage());
         }
     }
 
@@ -44,7 +44,7 @@ class Database {
 
             $this->statement->bindValue($param, $value, $type);
         } catch (PDOException $e) {
-            error_log('Internal Server Error: ' . $e->getMessage());
+            throw new Exception('Database error: ' . $e->getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ class Database {
         try {
             $this->statement->execute();
         } catch (PDOException $e) {
-            error_log('Internal Server Error: ' . $e->getMessage());
+            throw new Exception('Database error: ' . $e->getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ class Database {
             $this->execute();
             return $this->statement->fetch(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
-            error_log('Internal Server Error: ' . $e->getMessage());
+            throw new Exception('Database error: ' . $e->getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ class Database {
             $this->execute();
             return $this->statement->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
-            error_log('Internal Server Error: ' . $e->getMessage());
+            throw new Exception('Database error: ' . $e->getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ class Database {
         try {
             return $this->statement->rowCount();
         } catch (PDOException $e) {
-            error_log('Internal Server Error: ' . $e->getMessage());
+            throw new Exception('Database error: ' . $e->getMessage());
         }
     }
 }

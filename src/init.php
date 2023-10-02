@@ -8,5 +8,6 @@ require_once 'app/controllers/BaseController.php';
 require_once 'app/controllers/ErrorController.php';
 require_once 'app/controllers/HomeController.php';
 require_once 'app/controllers/LoginController.php';
+require_once 'app/controllers/RegisterController.php';
 require_once 'app/controllers/UserController.php';
 require_once 'app/controllers/PodcastController.php';

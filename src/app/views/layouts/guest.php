@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="<?= CSS_DIR ?>global.css">
   <link rel="stylesheet" href="<?= CSS_DIR ?>guest.css">
   <title></title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
     <div class="content">
       <div class="form">
         <?php
-          $included = include VIEWS_DIR . "pages/auth/login.php";
+        $included = include VIEWS_DIR . "view_config.php";
         ?>
       </div>
     </div>
