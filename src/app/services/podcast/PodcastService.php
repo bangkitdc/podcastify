@@ -18,6 +18,14 @@ class PodcastService {
         return $podcasts;
     }
 
+    public function getPodcast($limit = 10, $page = 1) {
+        return $this->podcast_model->getPodcast($limit, $page);
+    }
+
+    public function getTotalRows() {
+        return $this->podcast_model->getTotalRows();
+    }
+
     public function getPodcastById($podcast_id) {
         $podcast_data = $this->podcast_model->findSome($podcast_id);
         return $podcast_data;
