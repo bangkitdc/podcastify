@@ -6,17 +6,17 @@
     <form action="POST" class="register-form">
       <?php
         require_once VIEWS_DIR . "/components/shares/inputs/text.php";
-        echoInputText("email");
+        echoInputText("email", 1);
 
-        echoInputText("username");
+        echoInputText("username", 2);
 
-        echoInputText("first-name");
+        echoInputText("first-name", 3);
 
-        echoInputText("last-name");
+        echoInputText("last-name", 4);
 
-        echoInputText("password", true, true);
+        echoInputText("password", 5, true, true);
 
-        echoInputText("confirm-password", true);
+        echoInputText("confirm-password", 6, true);
 
         echoJsFile();
       ?>

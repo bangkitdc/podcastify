@@ -15,7 +15,7 @@ function baseInputText($placeholder, $value, $id = "", $is_required = true, $cla
 /**
  * $name will become id and this will be used in js file
  */
-function echoInputText($name, $isPassword = false, $eyeIcon = false)
+function echoInputText($name, $tabIndex, $isPassword = false, $eyeIcon = false)
 {
     $capitalizedName = ucwords(str_replace('-', ' ', $name));
 
@@ -28,7 +28,7 @@ function echoInputText($name, $isPassword = false, $eyeIcon = false)
         if ($eyeIcon) {
             echo '
                 <div class="relative-container">
-                    <input type="password" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '" class="password-input" autocomplete="on">
+                    <input type="password" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '" class="password-input" autocomplete="on" tabindex="' . $tabIndex . '">
                     <button class="btn-eye">
                         <img class="eye-icon" src="' . ICONS_DIR . 'eye-closed.svg" alt="Hide ' . $capitalizedName . '">
                     </button>
@@ -36,7 +36,7 @@ function echoInputText($name, $isPassword = false, $eyeIcon = false)
             ';
         } else {
             echo '
-                <input type="password" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '" class="password-input" autocomplete="on">
+                <input type="password" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '" class="password-input" autocomplete="on" tabindex="' . $tabIndex . '">
             ';
         }
 
@@ -51,7 +51,7 @@ function echoInputText($name, $isPassword = false, $eyeIcon = false)
         echo '
             <div class="form-group">
                 <label for="' . $name . '">' . $capitalizedName . '</label>
-                <input type="text" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '">
+                <input type="text" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '" tabindex="' . $tabIndex . '">
                 <div id="' . $name . '-alert" class="alert-hide">
                     <img src="' . ICONS_DIR . 'warning.svg" alt="Warning No ' . $capitalizedName . '" width="14px">
                     <p></p>
