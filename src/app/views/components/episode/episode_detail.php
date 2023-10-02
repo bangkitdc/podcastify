@@ -1,28 +1,37 @@
 <?php
-function episode_detail($episode = null)
+function episode_detail($episode = null, $category = null)
 {
   $id = $episode ? $episode->episode_id : '';
-  $poster = $episode ? $episode->image_url : '';
+  $poster = $episode ? IMAGES_DIR . $episode->image_url : '';
   $title = $episode ? $episode->title : '';
   $duration = $episode ? $episode->duration / 60 : '';
   $upload_date = $episode ? formatDate($episode->created_at) : '';
   $description = $episode ? $episode->description : '';
-  // $categories = $episode ? $episode->category_name : '';
-  $creator_img = $episode ? $episode->creator_img : '';
+
+  $category_name = '';
+  if($episode) {
+    foreach($category as $c){
+      if($episode->category_id == $c->category_id){
+        $category_name = $c->name;
+      }
+    }
+  }
+
+  $creator_img = $episode ? IMAGES_DIR . $episode->creator_img : '';
   $creator_name = $episode ? $episode->creator_name : '';
 
   if ($poster) {
     echo "
       <div class=\"episode-detail-head\">
         <div class=\"\">
-          <img class=\"episode-detail-head-image\" src=\"/$poster\">
+          <img class=\"episode-detail-head-image\" src=\"$poster\">
         </div>
         <p class=\"episode-detail-head-title\">$title</p>
         <p class=\"episode-detail-head-duration\">$duration minutes</p>
         <button class=\"episode-detail-head-button\">
           <img src=\"/src/public/assets/icons/play_circle.png\">
         </button>
-        <button type=\"button\" onclick=\"window.location.href = '/episode/edit?episode_id=$id'\">Edit</button>
+        <button type=\"button\" onclick=\"window.location.href = '/episode/edit/$id'\">Edit</button>
       </div>
 
       <div class=\"episode-detail-line\">
@@ -31,13 +40,11 @@ function episode_detail($episode = null)
 
       <div class=\"episode-detail-foot\">
         <p class=\"episode-detail-foot-date\">$upload_date</p>
+        <p class=\"episode-detail-foot-category\">$category_name</p>
         <p class=\"episode-detail-foot-description\">$description</p>
-        <div class=\"episode-detail-foot-categories\">
-
-        </div>
 
         <div class=\"episode-detail-foot-creator\">
-          <img class=\"episode-detail-foot-creator-image\" src=\"/$creator_img\">
+          <img class=\"episode-detail-foot-creator-image\" src=\"$creator_img\">
           <p class=\"episode-detail-foot-creator-name\">$creator_name</p>
         </div>
 
@@ -52,9 +59,9 @@ function episode_detail($episode = null)
         <p class=\"episode-detail-head-title\">$title</p>
         <p class=\"episode-detail-head-duration\">$duration minutes</p>
         <button class=\"episode-detail-head-button\">
-          <img src=\"src/public/assets/icons/play_circle.png\">
+          <img src=\"/src/public/assets/icons/play_circle.png\">
         </button>
-        <button type=\"button\" onclick=\"window.location.href = '/episode/edit?episode_id=$id'\">Edit</button>
+        <button type=\"button\" onclick=\"window.location.href = '/episode/edit/$id'\">Edit</button>
       </div>
 
       <div class=\"episode-detail-line\">
@@ -63,13 +70,11 @@ function episode_detail($episode = null)
 
       <div class=\"episode-detail-foot\">
         <p class=\"episode-detail-foot-date\">$upload_date</p>
+        <p class=\"episode-detail-foot-category\">$category_name</p>
         <p class=\"episode-detail-foot-description\">$description</p>
-        <div class=\"episode-detail-foot-categories\">
-
-        </div>
 
         <div class=\"episode-detail-foot-creator\">
-          <img class=\"episode-detail-foot-creator-image\" src=\"/$creator_img\">
+          <img class=\"episode-detail-foot-creator-image\" src=\"$creator_img\">
           <p class=\"episode-detail-foot-creator-name\">$creator_name</p>
         </div>
 

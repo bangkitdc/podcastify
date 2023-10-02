@@ -5,7 +5,7 @@ function episode_card($episode = null)
   $title = $episode ? $episode->title : '';
   $creator = $episode ? $episode->creator_name : '';
   $duration = $episode ? $episode->duration / 60 : '';
-  $card_type = $episode->image_url ?? false;
+  $card_type = $episode->image_url ? IMAGES_DIR . $episode->image_url : '';
 
   if ($card_type) {
     echo "
@@ -14,7 +14,7 @@ function episode_card($episode = null)
         <img class=\"card-image\" src=\"$card_type\"/>
       </div>
       <div class=\"episode-card-description\">
-        <a class=\"episode-card-title\" href=\"/episode/episode_detail?episode_id=$id\">
+        <a class=\"episode-card-title\" href=\"/episode/episode_detail/$id\">
          $title
         </a>
         <p class=\"episode-card-creator\">$creator</p>
@@ -29,7 +29,7 @@ function episode_card($episode = null)
         <div class=\"no-card-image\"></div>
       </div>
       <div class=\"episode-card-description\">
-        <a class=\"episode-card-title\" href=\"/episode/episode_detail?episode_id=$id\">
+        <a class=\"episode-card-title\" href=\"/episode/episode_detail/$id\">
           $title
         </a>
         <p class=\"episode-card-creator\">$creator</p>
