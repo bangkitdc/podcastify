@@ -46,3 +46,4 @@
     ?>
   </div>
 </div>
+<script src="<?= JS_DIR ?>/podcast/pagination.js"></script>

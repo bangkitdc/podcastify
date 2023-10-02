@@ -109,6 +109,8 @@ class PodcastController extends BaseController
     // /edit/{id}
     public function edit($id) {
         try {
+            if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+
             $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
             switch ($_SERVER["REQUEST_METHOD"]) {
@@ -151,6 +153,8 @@ class PodcastController extends BaseController
     // /create
     public function create() {
         try {
+            if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     $data["type"] = "create";
@@ -179,6 +183,8 @@ class PodcastController extends BaseController
 
     // /upload
     public function upload() {
+        if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+        
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "POST":

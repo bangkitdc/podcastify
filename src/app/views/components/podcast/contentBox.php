@@ -27,11 +27,17 @@ function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") 
                 <p class=\"podcast-creator\">
                     {$creator_name}
                 </p>
-                <span class=\"podcast-edit-box\" onclick=\"editPodcast($podcast->podcast_id, event)\">
-                    <button class=\"podcast-edit-icon\"><img src=\"". ICONS_DIR . "/edit.svg\" /></button>
-                    <span class=\"podcast-edit-tooltip\">Edit Podcast</span>
-                </span>
-            </div>
+    ";
+                if (Middleware::isAdmin() && Middleware::isLoggedIn()) {
+                    echo
+                    "
+                    <span class=\"podcast-edit-box\" onclick=\"editPodcast($podcast->podcast_id, event)\">
+                        <button class=\"podcast-edit-icon\"><img src=\"". ICONS_DIR . "/edit.svg\" /></button>
+                        <span class=\"podcast-edit-tooltip\">Edit Podcast</span>
+                    </span>
+                    ";
+                }
+    echo"   </div>
         </div>
     ";
 }

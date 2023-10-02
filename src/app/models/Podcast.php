@@ -20,6 +20,9 @@ class Podcast {
         $this->db->bind(":offset", $offset);
 
         $result = $this->db->fetchAll();
+        if (!$result) {
+            throw new Exception("No podcast in database.");
+        }
         return $result;
     }
 
@@ -30,6 +33,9 @@ class Podcast {
         $this->db->bind(":podcast_id", $podcast_id);
 
         $result = $this->db->fetch();
+        if (!$result) {
+            throw new Exception("Podcast with ID $podcast_id not found.");
+        }
         return $result;
     }
 
@@ -43,6 +49,10 @@ class Podcast {
         $this->db->bind(":image_url", $image_url);
 
         $this->db->execute();
+
+        if ($this->db->rowCount() == 0) {
+            throw new Exception("Failed to create podcast.");
+        }
     }
 
     public function deletePodcast($podcast_id) {
@@ -56,6 +66,10 @@ class Podcast {
         $this->db->bind(":podcast_id", $podcast_id);
 
         $this->db->execute();
+
+        if ($this->db->rowCount() == 0) {
+            throw new Exception("Podcast with ID $podcast_id not found.");
+        }
     }
 
     public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url) {
@@ -75,6 +89,10 @@ class Podcast {
         $this->db->bind(":podcast_id", $podcast_id);
 
         $this->db->execute();
+
+        if ($this->db->rowCount() == 0) {
+            throw new Exception("Podcast with ID $podcast_id not found.");
+        }
     }
 
     public function getPodcastBySearch($search_key) {
@@ -85,6 +103,7 @@ class Podcast {
         $this->db->bind(':search_key', $search_key);
 
         $result = $this->db->fetchAll();
+
         return $result;
     }
 
@@ -98,6 +117,7 @@ class Podcast {
         $this->db->bind(":offset", $offset);
 
         $result = $this->db->fetchAll();
+
         return $result;
     }
 }
