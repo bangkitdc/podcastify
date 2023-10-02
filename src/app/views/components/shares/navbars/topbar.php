@@ -23,7 +23,7 @@ echo '
       <ul class="dropdown-menu" aria-labelledby="dropdownDefaultButton">
 ';
 
-if (isset($_SESSION['userId'])) {
+if (Middleware::isLoggedIn()) {
   echo '
         <li>
           <form method="GET" action="/profile">

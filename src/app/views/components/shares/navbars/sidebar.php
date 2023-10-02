@@ -26,7 +26,7 @@ echo '
       </div>
 ';
 
-if (isset($_SESSION['userId']) && $_SESSION['role'] === 'admin') {
+if (Middleware::isAdmin() && Middleware::isLoggedIn()) {
   echo '
       <div id="podcast-add-nav" class="link-flex">
         <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Podcast" />
