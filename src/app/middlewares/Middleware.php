@@ -22,7 +22,7 @@ class Middleware {
         return false;
     }
 
-    public static function isLogin() 
+    public static function isLoggedIn() 
     {
         if (isset($_SESSION['username']) && isset($_SESSION['userId'])) {
             return true;
