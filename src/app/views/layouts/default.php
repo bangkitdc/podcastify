@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="<?= CSS_DIR ?>global.css">
   <link rel="stylesheet" href="<?= CSS_DIR ?>default.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -14,7 +15,7 @@
     <div id="content" class="content">
       <div class="background-container"></div>
       <?php include_once COMPONENTS_SHARES_DIR . "/navbars/topbar.php" ?>
-      <div id="main-content"  class="main-content">
+      <div id="main-content" class="main-content">
         <?php
         $included = include VIEWS_DIR . "view_config.php";
         ?>

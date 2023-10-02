@@ -21,11 +21,11 @@ CREATE TABLE users (
     first_name          VARCHAR(255)    NOT NULL,
     last_name           VARCHAR(255)    NOT NULL,
     status              SMALLINT        NOT NULL DEFAULT 1,
-    avatar_url          VARCHAR(255),
+    avatar_url          VARCHAR(255)    DEFAULT NULL,
     last_login          TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
     role_id             INT             NOT NULL,
     created_at          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP,
+    updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE podcasts (
     image_url           VARCHAR(255),
     liked_count         INT             NOT NULL DEFAULT 0,
     created_at          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP
+    updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO podcasts (title, description, creator_name) VALUES
@@ -72,7 +72,7 @@ CREATE TABLE episodes (
     audio_url           VARCHAR(255)    NOT NULL,
     liked_count         INT             NOT NULL DEFAULT 0,
     created_at          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP,
+    updated_at          TIMESTAMP       ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (podcast_id) REFERENCES podcasts(podcast_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
