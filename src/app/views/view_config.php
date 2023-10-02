@@ -11,14 +11,21 @@ if ($path === '/') {
     include VIEWS_DIR . "pages/home/index.php";
 } else {
     switch ($path) {
-        case '/podcast':
-            include  VIEWS_DIR . "pages/" . $path . "/index.php";
-            break;
         case '/home':
             include VIEWS_DIR . "pages/home/index.php";
             break;
-        case '/podcast/manage':
+        case '/podcast':
+            include  VIEWS_DIR . "pages/" . $path . "/index.php";
+            break;
+        case (preg_match('/^\/podcast\/show\/.+$/', $path) ? true : false):
+            include  VIEWS_DIR . "pages/podcast/podcast_detail.php";
+            break;
+        case (preg_match('/^\/podcast\/edit\/.+$/', $path) ? true : false):
+        case '/podcast/add':
             include VIEWS_DIR . "pages/podcast/podcast_management.php";
+            break;
+        case (preg_match('/^\/podcast\/search\?key=[a-zA-Z0-9%]+$/', $path) ? true : false):
+            include  VIEWS_DIR . "pages/podcast/index.php";
             break;
 
         default:

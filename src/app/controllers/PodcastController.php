@@ -39,8 +39,8 @@ class PodcastController extends BaseController
         }
     }
 
-    // /podcast/{id}
-    public function podcast($id) {
+    // /show/{id}
+    public function show($id) {
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
@@ -49,7 +49,7 @@ class PodcastController extends BaseController
                     $data["podcast"] = $this->podcast_service->getPodcastById($id);
                     $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
 
-                    $this->view("pages/podcast/podcast_detail", $data);
+                    $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 default:
@@ -91,9 +91,9 @@ class PodcastController extends BaseController
                 case "GET":
                     $search_key = isset($_GET["key"]) ? filter_var($_GET["key"], FILTER_SANITIZE_STRING) : "";
 
-                    $podcasts = $this->podcast_service->getPodcastBySearch($search_key);
+                    $data['podcasts'] = $this->podcast_service->getPodcastBySearch($search_key);
 
-                    include VIEWS_DIR . "pages/podcast/index.php";
+                    $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 default:
@@ -116,7 +116,7 @@ class PodcastController extends BaseController
                     $data["podcast"] = $this->podcast_service->getPodcastById($id);
                     $data["type"] = "edit";
 
-                    $this->view("pages/podcast/podcast_management", $data);
+                    $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 case "PATCH":
@@ -155,7 +155,7 @@ class PodcastController extends BaseController
                 case "GET":
                     $data["type"] = "create";
 
-                    $this->view("pages/podcast/podcast_management", $data);
+                    $this->view("layouts/default", $data);
                     break;
 
                 case "POST":
