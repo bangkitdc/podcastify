@@ -49,12 +49,6 @@ document.getElementById("file-upload").addEventListener("change", function () {
       formData.append("filename", fileField.files[0].name);
       formData.append("data", fileField.files[0]);
 
-      //   let data = JSON.stringify({
-      //     filename: document.getElementById("file-upload").files[0].name,
-      //     data: base64String,
-      //   });
-
-
       let xhr = uploadPodcastImage(url, true, formData);
       xhr.onload = () => {
         console.log(xhr.responseText);
