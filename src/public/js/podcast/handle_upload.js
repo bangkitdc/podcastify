@@ -1,15 +1,16 @@
+const PODCAST_MANAGE_BASE_URL = "/podcast";
+
 const uploadPodcastImage = (url, async = true, data = null) => {
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", PODCAST_BASE_URL + url, async);
+  xhr.open("POST", PODCAST_MANAGE_BASE_URL + url, async);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(data);
   return xhr;
 };
 
 const createPodcast = (formData) => {
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", PODCAST_BASE_URL + "/create", true);
+  xhr.open("POST", PODCAST_MANAGE_BASE_URL + "/create", true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(formData);
   return xhr;
@@ -17,7 +18,7 @@ const createPodcast = (formData) => {
 
 const updatePodcast = (json, podcastId) => {
   let xhr = new XMLHttpRequest();
-  xhr.open("PATCH", PODCAST_BASE_URL + "/edit/" + podcastId, true);
+  xhr.open("PATCH", PODCAST_MANAGE_BASE_URL + "/edit/" + podcastId, true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(json);
   return xhr;
@@ -25,7 +26,7 @@ const updatePodcast = (json, podcastId) => {
 
 const deletePodcast = (podcastId) => {
   let xhr = new XMLHttpRequest();
-  xhr.open("DELETE", PODCAST_BASE_URL + "/edit/" + podcastId, true);
+  xhr.open("DELETE", PODCAST_MANAGE_BASE_URL + "/edit/" + podcastId, true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send();
   return xhr;
@@ -39,17 +40,20 @@ document.getElementById("file-upload").addEventListener("change", function () {
       document.getElementById("preview-image").style.display = "block";
       document.getElementById("filename-file-upload").innerText =
         document.getElementById("file-upload").files[0].name;
-      document.getElementById("preview-image-filename").value =
-        document.getElementById("file-upload").files[0].name;
+
       var base64String = e.target.result.replace(/^data:(.*;base64,)?/, "");
 
-      let url = "/upload?type=image";
+      let url = "/upload";
+      let fileField = document.getElementById("file-upload");
+      let formData = new FormData();
+      formData.append("filename", fileField.files[0].name);
+      formData.append("data", fileField.files[0]);
 
-      let data = JSON.stringify({
-        filename: document.getElementById("file-upload").files[0].name,
-        data: base64String,
-      });
-      uploadPodcastImage(url, true, data);
+      let xhr = uploadPodcastImage(url, true, formData);
+      xhr.onload = () => {
+        console.log(xhr.responseText);
+        document.getElementById("preview-image-filename").value = xhr.responseText;
+      };
     };
     reader.readAsDataURL(this.files[0]);
   }
@@ -79,6 +83,7 @@ handleFormSubmit("create-podcast", function (form) {
   xhr.onload = () => {
     console.log(xhr.responseText);
     alert("Success!");
+    window.location.href = "/podcast";
   };
 });
 
@@ -99,6 +104,7 @@ handleFormSubmit("update-form", function (form) {
   xhr.onload = () => {
     console.log(xhr.responseText);
     alert("Success!");
+    window.location.href = "/podcast";
   };
 });
 
@@ -109,6 +115,7 @@ if (document.getElementById("delete-podcast")) {
     xhr.onload = () => {
       console.log(xhr.responseText);
       alert("Success!");
+      window.location.href = "/podcast";
     };
   });
 }

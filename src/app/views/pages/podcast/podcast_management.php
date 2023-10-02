@@ -59,3 +59,4 @@
     ?>
   </div>
 </div>
+<script src="<?= JS_DIR ?>/podcast/handle_upload.js"></script>
