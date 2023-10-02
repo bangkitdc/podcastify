@@ -41,19 +41,24 @@ class LoginController extends BaseController {
                     return;
                 } 
 
-                $auth_service = new AuthService();
-                $username = $_POST['username']; $password = $_POST['password'];
-                $status = $auth_service->login($username, $password);
+                $authService = new AuthService();
+                $status = $authService->login($username, $password);
 
-                if($status == "SUCCESS"){
-                    RedirectHelper::redirectHome();
+                if ($status == "SUCCESS") {
+                    $response = array("success" => true, "redirect_url" => "/");
                 } else {
-                    $this->view("layouts/guest", ["status_message" => $status]);
+                    $response = array("success" => false, "error_message" => "Login failed");
                 }
+
+                // Set the Content-Type header to indicate JSON
+                header('Content-Type: application/json');
+
+                // Return the JSON response
+                echo json_encode($response);
                 return;
             default:
                 ResponseHelper::responseNotAllowedMethod();
                 return;
         }
-  }
+    }
 }

@@ -11,7 +11,7 @@ h1 {
   text-align: center;
 }
 
-.form-wrapper {
+.login-form {
   display: flex;
   gap: 1.25rem;
   flex-direction: column;
@@ -27,7 +27,7 @@ h1 {
 }
 
 .form-group label {
-  font-size: 14px;
+  font-size: 1rem;
   display: block;
   width: min-content;
 }
@@ -46,7 +46,7 @@ h1 {
 }
 
 .form-button {
-  margin: 1.5rem 0;
+  margin-top: 1.5rem;
 }
 
 .btn-submit {
@@ -62,4 +62,33 @@ h1 {
 
 .btn-submit:hover {
   transform: scale(1.05);
+}
+
+.form-hyperlink {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.form-hyperlink span {
+  color: var(--clr-background-highlight-three);
+}
+
+.form-hyperlink a {
+  color: var(--clr-text-primary);
+  text-decoration: underline;
+}
+
+.form-hyperlink a:hover {
+  color: var(--clr-text-info);
+  text-decoration: underline;
+}
+
+hr {
+  margin: 3rem 100px;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  border-image: initial;
+  border-top: 1px solid rgb(41, 41, 41);
 }

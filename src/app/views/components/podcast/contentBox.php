@@ -1,11 +1,12 @@
 <?php
 // Podcast box component
+require_once BASE_URL . '/src/config/storage.php';
+
 function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") {
     $title = $podcast ? $podcast->title : '';
     $creator_name = $podcast ? $podcast->creator_name : '';
     $content_box_class = $is_skeleton ? 'podcast-content-skeleton' : 'base-content-box';
-    $img_url = $podcast ? $podcast->image_url : '';
-
+    $img_url = $podcast ?  Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url) : '';
     echo
     "
         <div class=\"podcast-content-container\" onclick=\"$click_evt\">

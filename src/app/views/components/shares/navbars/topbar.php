@@ -23,7 +23,7 @@ echo '
       <ul class="dropdown-menu" aria-labelledby="dropdownDefaultButton">
 ';
 
-if (isset($_SESSION['userId'])) {
+if (Middleware::isLoggedIn()) {
   echo '
         <li>
           <form method="GET" action="/profile">
@@ -31,7 +31,7 @@ if (isset($_SESSION['userId'])) {
           </form>
         </li>
         <li class="logout-link">
-          <form method="POST" action="/logout">
+          <form method="POST" action="/user/logout">
             <button class="dropdown-link">Log out</button>
           </form>
         </li>

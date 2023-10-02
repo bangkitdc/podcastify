@@ -230,6 +230,11 @@ a {
 }
 
 .alert-show {
-  display: block;
-  color: var(--red);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.alert-show p{
+  padding-top: 0.15rem;
+  color: var(--clr-text-danger);
 }

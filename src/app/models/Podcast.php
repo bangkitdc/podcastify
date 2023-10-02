@@ -1,9 +1,14 @@
 <?php
+
+require_once BASE_URL . '/src/config/storage.php';
+
 class Podcast {
     private $db;
+    private $podcast_storage;
 
     public function __construct() {
         $this->db = new Database();
+        $this->podcast_storage = new Storage(Storage::PODCAST_IMAGE_PATH);
     }
 
     public function findAll($page = 1, $limit = 10) {
@@ -41,7 +46,11 @@ class Podcast {
     }
 
     public function deletePodcast($podcast_id) {
+        $image_url = $this->findSome($podcast_id)->image_url;
+        $this->podcast_storage->deleteFile($image_url);
+
         $query = "DELETE FROM podcasts WHERE podcast_id = :podcast_id";
+
         $this->db->query($query);
 
         $this->db->bind(":podcast_id", $podcast_id);
@@ -50,7 +59,7 @@ class Podcast {
     }
 
     public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url) {
-        if ($image_url != IMAGES_DIR) {
+        if ($image_url != "") {
             $query = "UPDATE podcasts SET title = :title, description = :description, creator_name = :creator_name, image_url = :image_url, updated_at = NOW() WHERE podcast_id = :podcast_id";
             $this->db->query($query);
             $this->db->bind(":image_url", $image_url);
