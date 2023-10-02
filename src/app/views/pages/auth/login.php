@@ -6,9 +6,9 @@
     <form action="POST" class="login-form">
       <?php
         require_once VIEWS_DIR . "/components/shares/inputs/text.php";
-        echoInputText("username");
+        echoInputText("username", 1);
 
-        echoInputText("password", true, true);
+        echoInputText("password", 1, true, true);
 
         echoJsFile();
       ?>
