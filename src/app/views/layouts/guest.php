@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="<?= CSS_DIR ?>global.css">
   <link rel="stylesheet" href="<?= CSS_DIR ?>guest.css">
   <title></title>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>

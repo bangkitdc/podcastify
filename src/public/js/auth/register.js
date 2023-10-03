@@ -158,58 +158,57 @@ const submitRegisterForm = async (e) => {
     return;
   }
 
-  try {
-    $.ajax({
-      url: "/register",
-      method: "POST",
-      data: new FormData(document.querySelector(".register-form")),
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        // TODO: notifications
-        if (data.success) {
-          location.replace(data.redirect_url);
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/register", true);
+
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("username", username);
+  formData.append("first-name", first-name);
+  formData.append("last-name", lastName);
+  formData.append("password", password);
+
+  xhr.send(formData);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      try {
+        const response = JSON.parse(xhr.responseText);
+
+        // TODO: notification
+        if (response.success) {
+          location.replace(response.redirect_url);
         } else {
-          console.error(data.error_message);
+          console.error(response.error_message);
         }
-      },
-      error: function (xhr, status, error) {
-        console.error("Request failed with status:", status);
-      },
+      } catch (error) {
+        console.error("Error parsing JSON response:", error);
+      }
+    } else {
+      console.error("Request failed with status:", xhr.status);
+    }
+  };
+
+  try {
+    const response = await fetch("/register", {
+      method: "POST",
+      body: new FormData(document.querySelector(".register-form")),
     });
+
+    if (response.ok) {
+      const responseData = await response.json();
+
+      // TODO: notification
+      if (responseData.success) {
+        location.replace(responseData.redirect_url);
+      } else {
+        console.error(responseData.error_message);
+      }
+    } else {
+      console.error("Request failed with status:", response.status);
+    }
   } catch (error) {
-    console.error("Error during AJAX request:", error);
+    console.error("Error during fetch:", error);
   }
-
-  // const xhr = new XMLHttpRequest();
-  // xhr.open("POST", "/register", true);
-
-  // const formData = new FormData();
-  // formData.append("email", email);
-  // formData.append("username", username);
-  // formData.append("first-name", first-name);
-  // formData.append("last-name", lastName);
-  // formData.append("password", password);
-
-  // xhr.send(formData);
-  // xhr.onload = function () {
-  //   if (xhr.status === 200) {
-  //     try {
-  //       const response = JSON.parse(xhr.responseText);
-
-  //       // TODO: notification
-  //       if (response.success) {
-  //         location.replace(response.redirect_url);
-  //       } else {
-  //         console.error(response.error_message);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error parsing JSON response:", error);
-  //     }
-  //   } else {
-  //     console.error("Request failed with status:", xhr.status);
-  //   }
-  // };
 };
 
 document.querySelector(".register-form").onsubmit = submitRegisterForm;
