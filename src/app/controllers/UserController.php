@@ -8,15 +8,15 @@ class UserController extends BaseController {
     {
         try {
             switch ($_SERVER['REQUEST_METHOD']) {
-                    case "GET":
-                        Middleware::checkIsLoggedIn();
-                        Middleware::checkIsAdmin();
+                case "GET":
+                    Middleware::checkIsLoggedIn();
+                    Middleware::checkIsAdmin();
 
-                        $this->list();
-                        return;
-                    case "POST":
-                        // $this->logout();
+                    $this->list();
                     return;
+                case "POST":
+                    // $this->logout();
+                return;
                 default:
                     // response_not_allowed_method();
                     return;
@@ -48,7 +48,8 @@ class UserController extends BaseController {
                     return;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
+            echo $e->getMessage();
+            // $this->view('layouts/error');
             exit;
         }
     }

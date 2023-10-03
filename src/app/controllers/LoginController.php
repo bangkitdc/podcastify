@@ -1,6 +1,7 @@
 <?php
 
 require_once SERVICES_DIR . 'auth/index.php';
+require_once SERVICES_DIR . 'user/index.php';
 
 class LoginController extends BaseController {
     public function index(){
@@ -60,7 +61,7 @@ class LoginController extends BaseController {
             }
         } catch (Exception $e) {
             http_response_code($e->getCode());
-            $response = array("success" => false, "error_message" => "Register Failed");
+            $response = array("success" => false, "error_message" => "Login failed");
             echo json_encode($response);
         }
     }

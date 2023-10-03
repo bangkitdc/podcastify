@@ -1,6 +1,5 @@
 <head>
     <link rel="stylesheet" href="<?= CSS_DIR ?>base_components/base_input_text.css">
-
 </head>
 <?php
 

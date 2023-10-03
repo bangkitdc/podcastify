@@ -1,0 +1,13 @@
+p {
+  padding-top: 4px;
+  font-size: 14px;
+  color: var(--clr-background-highlight-three);
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.title {
+  padding: 1rem 0;
+}

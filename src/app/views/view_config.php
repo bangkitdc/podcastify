@@ -21,6 +21,9 @@ if (!$pathArray[0]) {
         case 'home':
             include VIEWS_DIR . "pages/home/index.php";
             break;
+        case 'user':
+            include VIEWS_DIR . "pages/user/list.php";
+            break;
         case 'podcast':
             // Reconstruct the path from the array
             $reconstructedPath = '/' . implode('/', $pathArray);

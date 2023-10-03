@@ -32,4 +32,9 @@ class UserService {
     {
         return $this->user->getTotalRows();
     }
+
+    public function updateLastLogin($userId)
+    {
+        $this->user->updateLastLogin($userId);
+    }
 }

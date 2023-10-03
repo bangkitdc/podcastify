@@ -5,41 +5,59 @@ echo '<link rel="stylesheet" href="' . CSS_DIR . 'navbars/sidebar.css">';
 echo '
   <div class="sidebar">
     <div class="top-icons">
-      <div id="home-nav" class="link-flex">
-        <img src="' . ICONS_DIR . 'home-active.svg" alt="Home" />
-        <a href="/" class="icon-text">Home</a>
-      </div>
-      <div id="search-nav" class="link-flex">
-        <img src="' . ICONS_DIR . 'search-inactive.svg" alt="Search" />
-        <a href="/search" class="icon-text">Search</a>
-      </div>
+      <a href="/" class="icon-text">
+        <div id="home-nav" class="link-flex">
+          <img src="' . ICONS_DIR . 'home-active.svg" alt="Home" />
+          <div class="icon-text">
+            Home
+          </div>
+        </div>
+      </a>
+      <a href="/search">
+        <div id="search-nav" class="link-flex">
+          <img src="' . ICONS_DIR . 'search-inactive.svg" alt="Search" />
+          <div class="icon-text">
+            Search
+          </div>
+        </div>
+      </a>
     </div>
 
     <div class="mid-icons">
-      <div id="podcast-nav" class="link-flex">
-        <img src="' . ICONS_DIR . 'podcast.svg" alt="Podcast" />
-        <a href="/podcast" class="icon-text">Podcast</a>
-      </div>
-      <div id="episode-nav" class="link-flex">
-        <img src="' . ICONS_DIR . 'episode.svg" alt="Episode" />
-        <a href="/episode" class="icon-text">Episode</a>
-      </div>
+      <a href="/podcast" class="icon-text">
+        <div id="podcast-nav" class="link-flex">
+          <img src="' . ICONS_DIR . 'podcast.svg" alt="Podcast" />
+          <div>Podcast</div>
+        </div>
+      </a>
+      <a href="/episode" class="icon-text">
+        <div id="episode-nav" class="link-flex">
+          <img src="' . ICONS_DIR . 'episode.svg" alt="Episode" />
+          <div>Episode</div>
+        </div>
+      </a>
 ';
 
 if (Middleware::isAdmin() && Middleware::isLoggedIn()) {
   echo '
-      <div id="podcast-add-nav" class="link-flex">
-        <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Podcast" />
-        <a href="/podcast/add" class="icon-text">Add Podcast</a>
-      </div>
-      <div id="episode-add-nav" class="link-flex">
-        <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Episode" />
-        <a href="/episode/add" class="icon-text">Add Episode</a>
-      </div>
+      <a href="/podcast/add" class="icon-text">
+        <div id="podcast-add-nav" class="link-flex">
+          <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Podcast" />
+          <div>Add Podcast</div>
+        </div>
+      </a>
+      <a href="/episode/add" class="icon-text">
+        <div id="episode-add-nav" class="link-flex">
+          <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Episode" />
+          <div>Add Episode</div>
+        </div>
+      </a>
+      <a href="/user" class="icon-text">
       <div id="user-nav" class="link-flex">
         <img src="' . ICONS_DIR . 'user.svg" alt="Users List" />
-        <a href="/user" class="icon-text">Users List </a>
+        <div>Users List</div>
       </div>
+      </a>
   ';
 }
 
