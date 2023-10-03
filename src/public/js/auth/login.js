@@ -17,26 +17,39 @@ const submitLoginForm = async (e) => {
   }
   
   try {
-    const response = await fetch("/login", {
-      method: "POST",
-      body: new FormData(document.querySelector(".login-form")),
-    });
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/login", true);
 
-    if (response.ok) {
-      const data = await response.json();
+    const formData = new FormData(document.querySelector(".login-form"));
 
-      // TODO: notifications
-      if (data.success) {
-        location.replace(data.redirect_url);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+
+          // TODO: notifications
+          if (data.success) {
+            location.replace(data.redirect_url);
+          } else {
+            console.error(data.error_message);
+          }
+        } catch (parseError) {
+          console.error("Error parsing JSON response:", parseError);
+        }
       } else {
-        console.error(data.error_message);
+        console.error("Request failed with status:", xhr.status);
       }
-    } else {
-      console.error("Request failed with status:", response.status);
-    }
+    };
+
+    xhr.onerror = function () {
+      console.error("Error during XMLHttpRequest");
+    };
+
+    xhr.send(formData);
   } catch (error) {
-    console.error("Error during fetch:", error);
+    console.error("Error during XMLHttpRequest:", error);
   }
+
 };
 
 document.querySelector(".login-form").onsubmit = submitLoginForm;

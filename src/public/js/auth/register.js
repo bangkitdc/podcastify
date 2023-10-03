@@ -21,7 +21,7 @@ debounceInputValidation(
 
 const firstNameValidation = { value: true }; // Initial state
 debounceInputValidation(
-  "first-name",
+  "first_name",
   nameRegex, 
   "First name must consist of letters only.",
   firstNameValidation
@@ -29,7 +29,7 @@ debounceInputValidation(
 
 const lastNameValidation = { value: true }; // Initial state
 debounceInputValidation(
-  "last-name",
+  "last_name",
   nameRegex,
   "Last name must consist of letters only.",
   lastNameValidation
@@ -40,8 +40,8 @@ const passwordValidation = { value: true }; // Initial state
 const inputPassword = document.querySelector('#password');
 const alertPassword = document.querySelector('#password-alert');
 
-const inputConfirmPassword = document.querySelector("#confirm-password");
-const alertConfirmPassword = document.querySelector("#confirm-password-alert");
+const inputConfirmPassword = document.querySelector("#confirm_password");
+const alertConfirmPassword = document.querySelector("#confirm_password-alert");
 
 inputPassword &&
   inputPassword.addEventListener(
@@ -87,7 +87,7 @@ inputPassword &&
 
 const confirmPasswordValidation = { value: true }; // Initial state
 debounceInputValidationExact(
-  "confirm-password",
+  "confirm_password",
   "password",
   "Your passwords doesn't match.",
   confirmPasswordValidation
@@ -107,7 +107,7 @@ const submitRegisterForm = async (e) => {
   // Urutan reverse dari atas ke bawah agar focus() dapat ke atas duluan
   if (confirmPasswordValidation.value) {
     confirmPasswordValid = handleInputValidation(
-      "confirm-password",
+      "confirm_password",
       "Your passwords doesn't match."
     ); 
   }
@@ -121,14 +121,14 @@ const submitRegisterForm = async (e) => {
 
   if (lastNameValidation.value) {
     lastNameValid = handleInputValidation(
-      "last-name",
+      "last_name",
       "Please enter your last name."
     );
   }
 
   if (firstNameValidation.value) {
     firstNameValid = handleInputValidation(
-      "first-name",
+      "first_name",
       "Please enter your first name."
     );
   }
@@ -159,57 +159,39 @@ const submitRegisterForm = async (e) => {
   }
 
   try {
-    $.ajax({
-      url: "/register",
-      method: "POST",
-      data: new FormData(document.querySelector(".register-form")),
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        // TODO: notifications
-        if (data.success) {
-          location.replace(data.redirect_url);
-        } else {
-          console.error(data.error_message);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/register", true);
+
+    const formData = new FormData(document.querySelector(".register-form"));
+    formData.delete("confirm_password");
+
+    xhr.onload = function () {
+      if (xhr.status === 201) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+
+          // TODO: notification
+          if (response.success) {
+            location.replace(response.redirect_url);
+          } else {
+            console.error(response.error_message);
+          }
+        } catch (error) {
+          console.error("Error parsing JSON response:", error);
         }
-      },
-      error: function (xhr, status, error) {
-        console.error("Request failed with status:", status);
-      },
-    });
+      } else {
+        console.error("Request failed with status:", xhr.status);
+      }
+    };
+
+    xhr.onerror = function () {
+      console.error("Error during XMLHttpRequest");
+    };
+
+    xhr.send(formData);
   } catch (error) {
-    console.error("Error during AJAX request:", error);
+    console.error("Error during XMLHttpRequest:", error);
   }
-
-  // const xhr = new XMLHttpRequest();
-  // xhr.open("POST", "/register", true);
-
-  // const formData = new FormData();
-  // formData.append("email", email);
-  // formData.append("username", username);
-  // formData.append("first-name", first-name);
-  // formData.append("last-name", lastName);
-  // formData.append("password", password);
-
-  // xhr.send(formData);
-  // xhr.onload = function () {
-  //   if (xhr.status === 200) {
-  //     try {
-  //       const response = JSON.parse(xhr.responseText);
-
-  //       // TODO: notification
-  //       if (response.success) {
-  //         location.replace(response.redirect_url);
-  //       } else {
-  //         console.error(response.error_message);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error parsing JSON response:", error);
-  //     }
-  //   } else {
-  //     console.error("Request failed with status:", xhr.status);
-  //   }
-  // };
 };
 
 document.querySelector(".register-form").onsubmit = submitRegisterForm;

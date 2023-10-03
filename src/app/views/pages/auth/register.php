@@ -10,13 +10,13 @@
 
         echoInputText("username", 2);
 
-        echoInputText("first-name", 3);
+        echoInputText("first_name", 3);
 
-        echoInputText("last-name", 4);
+        echoInputText("last_name", 4);
 
         echoInputText("password", 5, true, true);
 
-        echoInputText("confirm-password", 6, true);
+        echoInputText("confirm_password", 6, true);
 
         echoJsFile();
       ?>

@@ -8,7 +8,7 @@
         require_once VIEWS_DIR . "/components/shares/inputs/text.php";
         echoInputText("username", 1);
 
-        echoInputText("password", 1, true, true);
+        echoInputText("password", 2, true, true);
 
         echoJsFile();
       ?>
@@ -23,4 +23,4 @@
   </div>
 </div>
 
-<script type="module" src="<?= JS_DIR ?>auth/login.js"></script>
+<script src="<?= JS_DIR ?>auth/login.js"></script>

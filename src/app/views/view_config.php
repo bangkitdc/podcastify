@@ -38,19 +38,21 @@ if (!$pathArray[0]) {
             }
             break;
         case 'episode':
-            // Check if there is a second segment (e.g., "3")
-            $secArg = isset($pathArray[1]) ? $pathArray[1] : '';
-
-            if ($secArg === 'add') {
-                include VIEWS_DIR . "pages/episode/add_episode.php";
-            } elseif ($secArg === 'edit') {
-                include VIEWS_DIR . "pages/episode/edit_episode.php";
-            } elseif (!empty($secArg)) {
-                include VIEWS_DIR . "pages/episode/detail_episode.php";
+            if (isset($pathArray[1])) {
+                switch ($pathArray[1]) {
+                    case 'add':
+                        include VIEWS_DIR . "pages/episode/add_episode.php";
+                        break;
+                    case 'edit':
+                        include VIEWS_DIR . "pages/episode/edit_episode.php";
+                    default:
+                        include VIEWS_DIR . "pages/episode/detail_episode.php";
+                        break;
+                }
             } else {
                 include VIEWS_DIR . "pages" . $path . "/index.php";
+                break;
             }
-            break;
         default:
             include VIEWS_DIR . "pages/errors/404.php";
             break;
