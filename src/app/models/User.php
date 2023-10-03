@@ -150,4 +150,13 @@ class User {
 
         $this->db->execute();
     }
+
+    public function getTotalRows()
+    {
+        $query = "SELECT * FROM users";
+        $this->db->query($query);
+        $this->db->fetch();
+
+        return $this->db->rowCount();
+    }
 }
