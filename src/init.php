@@ -12,3 +12,4 @@ require_once 'app/controllers/RegisterController.php';
 require_once 'app/controllers/UserController.php';
 require_once 'app/controllers/PodcastController.php';
 require_once 'app/controllers/LoginController.php';
+require_once 'app/controllers/EpisodeController.php';

@@ -11,7 +11,7 @@
     ?>
     <p class="add-episode-container-title">Add Episode</p>
 
-    <form class="add-episode-form" method="POST" action="/episode/add">
+    <form id="add-episode-form" class="add-episode-form">
 
       <div>
         <p>Select Podcast: </p>
@@ -34,11 +34,6 @@
         <?php baseInputText("Enter Episode Description", '', "episode-description-input") ?>
       </div>
 
-      <div>
-        <p>Categories</p>
-        <?php baseInputText("Enter Episode Category", '', "episode-category-input") ?>
-      </div>
-
       <div class="add-episode-file">
         <p>Choose the poster file : </p>
         <?php baseFileUploader("poster-file-upload", '', 'preview-image', false)?>
@@ -46,7 +41,7 @@
 
       <div class="add-episode-file">
         <p>Choose the audio file : </p>
-        <?php baseFileUploader("audio-file-upload", '', 'preview-image', true)?>
+        <?php baseFileUploader("audio-file-upload", '', 'preview-image', false)?>
       </div>
 
       <div class="add-episode-buttons">
@@ -57,5 +52,5 @@
     </form>
   </div>
 </div>
-
-<!-- Todo : Get podcasts data -->
+<script src="<?= JS_DIR ?>/components/inputText.js"></script>
+<script src="<?= JS_DIR ?>/episode/handle_upload.js"></script>

@@ -1,5 +1,5 @@
 <?php
-function episode_detail($episode = null, $category = null)
+function episode_detail($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
   $poster = $episode ? IMAGES_DIR . $episode->image_url : '';
@@ -7,15 +7,6 @@ function episode_detail($episode = null, $category = null)
   $duration = $episode ? $episode->duration / 60 : '';
   $upload_date = $episode ? formatDate($episode->created_at) : '';
   $description = $episode ? $episode->description : '';
-
-  $category_name = '';
-  if($episode) {
-    foreach($category as $c){
-      if($episode->category_id == $c->category_id){
-        $category_name = $c->name;
-      }
-    }
-  }
 
   $creator_img = $episode ? IMAGES_DIR . $episode->creator_img : '';
   $creator_name = $episode ? $episode->creator_name : '';
@@ -31,7 +22,7 @@ function episode_detail($episode = null, $category = null)
         <button class=\"episode-detail-head-button\">
           <img src=\"/src/public/assets/icons/play_circle.png\">
         </button>
-        <button type=\"button\" onclick=\"window.location.href = '/episode/edit/$id'\">Edit</button>
+        <button type=\"button\" onclick=\"window.location.href = '/episode/$id?edit=true'\">Edit</button>
       </div>
 
       <div class=\"episode-detail-line\">
@@ -40,7 +31,6 @@ function episode_detail($episode = null, $category = null)
 
       <div class=\"episode-detail-foot\">
         <p class=\"episode-detail-foot-date\">$upload_date</p>
-        <p class=\"episode-detail-foot-category\">$category_name</p>
         <p class=\"episode-detail-foot-description\">$description</p>
 
         <div class=\"episode-detail-foot-creator\">
@@ -61,7 +51,7 @@ function episode_detail($episode = null, $category = null)
         <button class=\"episode-detail-head-button\">
           <img src=\"/src/public/assets/icons/play_circle.png\">
         </button>
-        <button type=\"button\" onclick=\"window.location.href = '/episode/edit/$id'\">Edit</button>
+        <button type=\"button\" onclick=\"window.location.href = '/episode/$id/?edit=true'\">Edit</button>
       </div>
 
       <div class=\"episode-detail-line\">
@@ -70,7 +60,6 @@ function episode_detail($episode = null, $category = null)
 
       <div class=\"episode-detail-foot\">
         <p class=\"episode-detail-foot-date\">$upload_date</p>
-        <p class=\"episode-detail-foot-category\">$category_name</p>
         <p class=\"episode-detail-foot-description\">$description</p>
 
         <div class=\"episode-detail-foot-creator\">

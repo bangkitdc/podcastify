@@ -44,7 +44,7 @@ class App {
             $this->controller = new $controllerClassName;
         }
 
-        // $this->controller = new $controllerClassName;
+        $this->controller = new $controllerClassName;
 
         // Check if url[1] is a method or params
         if (isset($url[1])) {
