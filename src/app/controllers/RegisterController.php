@@ -41,7 +41,7 @@ class RegisterController extends BaseController {
     //             else if (!empty($_POST['email']) && !empty($user->find_user_by_email($_POST['email']))) {
     //                 $email_validate = 'Email already exists';
     //             }
-    //             if (!empty($_POST['password']) && !empty($_POST['confirm-password']) && $_POST['password'] != $_POST['confirm-password']) {
+    //             if (!empty($_POST['password']) && !empty($_POST['confirm_password']) && $_POST['password'] != $_POST['confirm_password']) {
     //                 $password_validate = 'Password does not match';
     //                 $confirm_password_validate = 'Password does not match';
     //             }
@@ -49,7 +49,7 @@ class RegisterController extends BaseController {
     //                 "username" => $username_validate,
     //                 "email" => $email_validate,
     //                 "password" => $password_validate,
-    //                 "confirm-password" => $confirm_password_validate
+    //                 "confirm_password" => $confirm_password_validate
     //             ));
     //             return;
     //         default:
@@ -65,7 +65,8 @@ class RegisterController extends BaseController {
                     $user = new User();
 
                     $hashedPassword = $this->hashPassword($_POST['password']);
-                    $user->create($_POST['email'], $_POST['username'], $hashedPassword, $_POST['first-name'], $_POST['last-name']);
+
+                    $user->create($_POST['email'], $_POST['username'], $hashedPassword, $_POST['first_name'], $_POST['last_name']);
 
                     $response = array("success" => true, "redirect_url" => "/login", "status_message" => "Register Successful");
 

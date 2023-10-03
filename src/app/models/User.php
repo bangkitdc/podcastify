@@ -87,7 +87,7 @@ class User {
     // Check if the email already exists
     private function emailExists($email)
     {
-        $query = "SELECT COUNT(*) FROM users WHERE email = :email";
+        $query = "SELECT * FROM users WHERE email = :email";
         $this->db->query($query);
         $this->db->bind('email', $email);
         $this->db->fetch();
