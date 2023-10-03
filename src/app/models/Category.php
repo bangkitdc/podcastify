@@ -14,6 +14,10 @@ class Category {
 
     $result = $this->db->fetchAll();
 
+    if (!$result) {
+        throw new Exception("No category in database.");
+    }
+
     return $result;
   }
 
@@ -23,6 +27,10 @@ class Category {
     $this->db->bind(":category_id", $id);
 
     $result = $this->db->fetch();
+
+    if ($this->db->rowCount() == 0) {
+        throw new Exception("Category with ID $id not found.");
+    }
     return $result;
   }
 
@@ -32,6 +40,11 @@ class Category {
     $this->db->bind(":name", $name);
 
     $result = $this->db->fetch();
+
+    if ($this->db->rowCount() == 0) {
+        throw new Exception("Category with name $name not found.");
+    }
+
     return $result;
   }
 }
