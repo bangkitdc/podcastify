@@ -1,8 +1,8 @@
 <?php
 
 require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
-require_once SERVICES_DIR . "/podcast/PodcastService.php";
-require_once SERVICES_DIR . "/upload/UploadService.php";
+require_once SERVICES_DIR . "/podcast/index.php";
+require_once SERVICES_DIR . "/upload/index.php";
 require_once BASE_URL . "/src/app/views/components/podcast/episodesList.php";
 
 class PodcastController extends BaseController

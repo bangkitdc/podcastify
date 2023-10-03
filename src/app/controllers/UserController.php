@@ -1,6 +1,7 @@
 <?php
 
 require_once SERVICES_DIR . 'auth/index.php';
+require_once SERVICES_DIR . 'user/index.php';
 
 class UserController extends BaseController {
     public function index()
@@ -11,7 +12,7 @@ class UserController extends BaseController {
                         Middleware::checkIsLoggedIn();
                         Middleware::checkIsAdmin();
 
-                        // $this->list();
+                        $this->list();
                         return;
                     case "POST":
                         // $this->logout();
@@ -30,6 +31,28 @@ class UserController extends BaseController {
 
     }
 
+    public function list()
+    {
+        try {
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case "GET":
+                    $userService = new UserService();
+                    $page = 1;
+                    $data["users"] = $userService->getUsers($page, 10);
+                    $data["totalUsers"] = $userService->getTotalUsers();
+
+                    $this->view('layouts/default', $data);
+                    return;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
+        }
+    }
+
     public function logout()
     {
         switch ($_SERVER['REQUEST_METHOD']) {
@@ -39,8 +62,8 @@ class UserController extends BaseController {
                     return;
                 }
 
-                $auth_service = new AuthService();
-                $auth_service->logout();
+                $authService = new AuthService();
+                $authService->logout();
                 RedirectHelper::redirectHome();
                 return;
             default:
