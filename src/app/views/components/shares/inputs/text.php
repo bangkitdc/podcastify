@@ -29,9 +29,9 @@ function echoInputText($name, $tabIndex, $isPassword = false, $eyeIcon = false)
             echo '
                 <div class="relative-container">
                     <input type="password" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '" class="password-input" autocomplete="on" tabindex="' . $tabIndex . '">
-                    <button class="btn-eye">
+                    <div class="btn-eye">
                         <img class="eye-icon" src="' . ICONS_DIR . 'eye-closed.svg" alt="Hide ' . $capitalizedName . '">
-                    </button>
+                    </div>
                 </div>
             ';
         } else {
