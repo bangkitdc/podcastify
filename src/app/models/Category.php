@@ -14,20 +14,37 @@ class Category {
 
     $result = $this->db->fetchAll();
 
+    if (!$result) {
+        throw new Exception("No category in database.");
+    }
+
     return $result;
   }
 
   public function findById($id) {
-    $query = "SELECT * FROM categories where category_id = $id";
+    $query = "SELECT * FROM categories WHERE category_id = :category_id";
     $this->db->query($query);
-    $result = $this->db->fetchAll();
+    $this->db->bind(":category_id", $id);
+
+    $result = $this->db->fetch();
+
+    if ($this->db->rowCount() == 0) {
+        throw new Exception("Category with ID $id not found.");
+    }
     return $result;
   }
 
-  public function getCategoryOfEpisode($episodeId){
-    $query = "SELECT categories.name FROM episodes, categories WHERE episodes.episode_id = $episodeId and episodes.category_id = categories.category_id";
+  public function findByName($name) {
+    $query = "SELECT * FROM categories WHERE name = :name";
     $this->db->query($query);
-    $result = $this->db->fetchAll();
+    $this->db->bind(":name", $name);
+
+    $result = $this->db->fetch();
+
+    if ($this->db->rowCount() == 0) {
+        throw new Exception("Category with name $name not found.");
+    }
+
     return $result;
   }
 }
