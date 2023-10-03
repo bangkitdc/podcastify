@@ -4,8 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="<?= CSS_DIR ?>global.css">
-  <link rel="stylesheet" href="<?= CSS_DIR ?>default.css">
+  <link rel="stylesheet" href="<?= CSS_DIR ?>/global.css">
+  <link rel="stylesheet" href="<?= CSS_DIR ?>/default.css">
+  <link rel="stylesheet" href="<?= CSS_DIR ?>/episode/episode_card.css">
+  <link rel="stylesheet" href="<?= CSS_DIR ?>/episode/episode_detail.css">
+  <link rel="stylesheet" href="<?= CSS_DIR ?>/episode/add_episode.css">
 </head>
 
 <body>
