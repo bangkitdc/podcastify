@@ -59,14 +59,15 @@ class Podcast {
         return $result;
     }
 
-    public function createPodcast($title, $description, $creator_name, $image_url) {
-        $query = "INSERT INTO podcasts (title, description, creator_name, image_url, created_at, updated_at) VALUES (:title, :description, :creator_name, :image_url, NOW(), NOW())";
+    public function createPodcast($title, $description, $creator_name, $image_url, $category_id) {
+        $query = "INSERT INTO podcasts (title, description, creator_name, image_url, category_id, created_at, updated_at) VALUES (:title, :description, :creator_name, :image_url, :category_id, NOW(), NOW())";
         $this->db->query($query);
 
         $this->db->bind(":title", $title);
         $this->db->bind(":description", $description);
         $this->db->bind(":creator_name", $creator_name);
         $this->db->bind(":image_url", $image_url);
+        $this->db->bind(":category_id", $category_id);
 
         $this->db->execute();
 
@@ -92,20 +93,20 @@ class Podcast {
         }
     }
 
-    public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url) {
+    public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url, $category_id) {
         if ($image_url != "") {
-            $query = "UPDATE podcasts SET title = :title, description = :description, creator_name = :creator_name, image_url = :image_url, updated_at = NOW() WHERE podcast_id = :podcast_id";
+            $query = "UPDATE podcasts SET title = :title, description = :description, creator_name = :creator_name, image_url = :image_url, category_id = :category_id, updated_at = NOW() WHERE podcast_id = :podcast_id";
             $this->db->query($query);
             $this->db->bind(":image_url", $image_url);
         } else {
-            $query = "UPDATE podcasts SET title = :title, description = :description, creator_name = :creator_name, updated_at = NOW() WHERE podcast_id = :podcast_id";
+            $query = "UPDATE podcasts SET title = :title, description = :description, creator_name = :creator_name, category_id = :category_id, updated_at = NOW() WHERE podcast_id = :podcast_id";
             $this->db->query($query);
         }
 
         $this->db->bind(":title", $title);
         $this->db->bind(":description", $description);
         $this->db->bind(":creator_name", $creator_name);
-
+        $this->db->bind(":category_id", $category_id);
         $this->db->bind(":podcast_id", $podcast_id);
 
         $this->db->execute();

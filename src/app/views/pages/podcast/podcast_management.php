@@ -5,11 +5,15 @@
   <div>
     <?php
         require_once VIEWS_DIR . "/components/shares/inputs/text.php";
+        require_once VIEWS_DIR . "/components/shares/inputs/select.php";
         require_once VIEWS_DIR . "/components/shares/upload/baseFileUploader.php";
         require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
+        require_once VIEWS_DIR . "/components/shares/modals/baseModal.php";
 
         $type = isset($data['type']) ? $data['type'] : '';
         $podcast = $type == 'edit' ? $data['podcast'] : null;
+        $category_opt = $data['categories'];
+        $podcast_category = isset($data['podcast_category']) ? $data['podcast_category'] : $category_opt[0];
 
         $podcast_name = $type == 'edit' ? $podcast->title : '';
         $podcast_creator = $type == 'edit' ? $podcast->creator_name : '';
@@ -19,6 +23,13 @@
         $management_heading = $type == 'edit' ? 'Edit Podcast' : 'Add Podcast';
         $edit_extra_text = $type == 'edit' ? 'Change ' : '';
         $form_id = $type == 'edit' ? 'update-form' : 'create-podcast';
+
+        if ($type != 'edit') {
+            infoModal("manage-modal-file", "Please Upload Poster Image!", "manage-modal-ok");
+        }
+        actionModal("manage-modal-create", "Are you sure to create this podcast ?", "create-modal-ok", "create-modal-cancel");
+        actionModal("manage-modal-save", "Are you sure to save changes ?", "save-modal-ok", "save-modal-cancel");
+        actionModal("manage-modal-delete", "Are you sure to delete this podcast ?", "delete-modal-ok", "delete-modal-cancel");
 
         echo
         "
@@ -37,8 +48,13 @@
         ";
         baseInputText("Enter a description", $podcast_desc, "podcast-desc-input");
         echo "
+            <p>$edit_extra_text Category</p>
+        ";
+        baseSelect($category_opt, $podcast_category, 'podcast-category-selection');
+        echo "
             <p>Upload New Poster</p>
         ";
+
         if ($type == "edit") {
             baseFileUploader("file-upload", "", "preview-image", false);
         } else {
@@ -56,6 +72,10 @@
             }
         echo "</div>";
         echo "</div></form>";
+
+        echoJsFile();
+        echoModalJS();
+        echoSelectJS();
     ?>
   </div>
 </div>

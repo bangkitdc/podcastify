@@ -40,7 +40,7 @@ function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") 
                     </span>
                     ";
                 }
-    echo"   </div>
+    echo "  </div>
         </div>
     ";
 }

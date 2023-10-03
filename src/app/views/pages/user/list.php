@@ -25,35 +25,61 @@
   </div>
 
   <?php
-    require_once VIEWS_DIR . "/components/shares/tables/primary.php";
-    require_once COMPONENTS_SHARES_DIR . 'utility/utility.php';
+  require_once VIEWS_DIR . "/components/shares/tables/primary.php";
+  require_once COMPONENTS_SHARES_DIR . 'utility/utility.php';
 
-    $users = $data['users'];
-    $totalUsers = $data['totalUsers'];
+  $users = $data['users'];
+  $totalUsers = $data['totalUsers'];
 
-    $totalPages = ceil($totalUsers / 10);
+  $totalPages = ceil($totalUsers / 10);
 
-    $dataHeader = ["Username", "Email", "Last Login", "Status"];
-    echoTableHeader($dataHeader);
+  $dataHeader = ["Username", "Email", "Last Login", "Status"];
+  echoTableHeader($dataHeader);
 
-    $index = 1;
+  $index = 1;
 
-    foreach ($users as $user) {
-      $data = [
-        $index,
-        $user->avatar_url ? STORAGE::getFileUrl(STORAGE::USER_AVATAR_PATH, $user->avatar_url) : IMAGES_DIR . "avatar-template.png",
-        $user->username, 
-        $user->first_name . " " . $user->last_name,
-        $user->email,
-        timeAgo($user->last_login),
-        $user->status == 1 ? "Active" : "Inactive"
-      ];
+  foreach ($users as $user) {
+    $data = [
+      $index,
+      $user->avatar_url ? STORAGE::getFileUrl(STORAGE::USER_AVATAR_PATH, $user->avatar_url) : IMAGES_DIR . "avatar-template.png",
+      $user->username,
+      $user->first_name . " " . $user->last_name,
+      $user->email,
+      timeAgo($user->last_login),
+      $user->status == 1 ? "Active" : "Inactive"
+    ];
 
-      echoTableContent($data);
+    echoTableContent($data);
 
-      $index ++;
-    }
+    $index++;
+  }
 
-    echoClosingTag();
+  echoClosingTag();
   ?>
+
+  <div class="modal" id="myModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-title">
+        User details
+        <div class="close-button-modal">
+          <img src="<?= ICONS_DIR ?>close.svg" alt="Close Button">
+        </div>
+      </div>
+      <div class="modal-body">
+        <img class="modal-image" src="<?= IMAGES_DIR ?>avatar-template.png" alt="Profile Image">
+        <div class="modal-form">
+          <?php
+            require_once VIEWS_DIR . "/components/shares/inputs/text.php";
+            echoInputText("email", 1);
+
+            echoJsFile();
+          ?>
+        </div>
+      </div>
+      <div class="modal-footer">
+        By proceeding, you agree to change Podcastify users's status. Please make sure you have the rights.
+      </div>
+    </div>
+  </div>
 </div>
