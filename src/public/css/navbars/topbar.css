@@ -137,10 +137,6 @@
   display: block;
 }
 
-.logout-link {
+.bottom-link {
   border-top: 0.5px solid var(--clr-hover-dropdown);
-  background-color: transparent;
-  width: 100%;
-  text-align: left;
-  cursor: default;
 }

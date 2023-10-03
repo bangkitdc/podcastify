@@ -30,7 +30,7 @@ if (Middleware::isAdmin() && Middleware::isLoggedIn()) {
   echo '
       <div id="podcast-add-nav" class="link-flex">
         <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Podcast" />
-        <a href="/podcast/manage" class="icon-text">Add Podcast</a>
+        <a href="/podcast/add" class="icon-text">Add Podcast</a>
       </div>
       <div id="episode-add-nav" class="link-flex">
         <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Episode" />

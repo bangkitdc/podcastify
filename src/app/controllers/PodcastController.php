@@ -1,8 +1,8 @@
 <?php
 
 require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
-require_once SERVICES_DIR . "/podcast/PodcastService.php";
-require_once SERVICES_DIR . "/upload/UploadService.php";
+require_once SERVICES_DIR . "/podcast/index.php";
+require_once SERVICES_DIR . "/upload/index.php";
 require_once BASE_URL . "/src/app/views/components/podcast/episodesList.php";
 
 class PodcastController extends BaseController
@@ -21,9 +21,8 @@ class PodcastController extends BaseController
             case "GET":
                 $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
 
-                $podcasts = $this->podcast_service->getAllPodcast();
-
-                $data["podcasts"] = $podcasts;
+                $data["podcasts"] = $this->podcast_service->getPodcast(4, 1);
+                $data["total_rows"] = $this->podcast_service->getTotalRows();
 
                 if ($isAjax) {
                     $this->view("pages/podcast/index", $data);
@@ -39,8 +38,8 @@ class PodcastController extends BaseController
         }
     }
 
-    // /podcast/{id}
-    public function podcast($id) {
+    // /show/{id}
+    public function show($id) {
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
@@ -49,7 +48,7 @@ class PodcastController extends BaseController
                     $data["podcast"] = $this->podcast_service->getPodcastById($id);
                     $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
 
-                    $this->view("pages/podcast/podcast_detail", $data);
+                    $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 default:
@@ -84,6 +83,28 @@ class PodcastController extends BaseController
         }
     }
 
+    public function podcasts() {
+        try {
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case "GET":
+                    $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
+
+                    $data["podcasts"] = $this->podcast_service->getPodcast(4, $page);
+                    $data["total_rows"] = $this->podcast_service->getTotalRows();
+
+                    $this->view('pages/podcast/index', $data);
+                    return;
+
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    return;
+            }
+        } catch (Exception $e) {
+            $this->view('layouts/error');
+            exit;
+        }
+    }
+
     // /search?key=
     public function search() {
         try {
@@ -91,9 +112,9 @@ class PodcastController extends BaseController
                 case "GET":
                     $search_key = isset($_GET["key"]) ? filter_var($_GET["key"], FILTER_SANITIZE_STRING) : "";
 
-                    $podcasts = $this->podcast_service->getPodcastBySearch($search_key);
+                    $data['podcasts'] = $this->podcast_service->getPodcastBySearch($search_key);
 
-                    include VIEWS_DIR . "pages/podcast/index.php";
+                    $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 default:
@@ -109,6 +130,8 @@ class PodcastController extends BaseController
     // /edit/{id}
     public function edit($id) {
         try {
+            if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+
             $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
             switch ($_SERVER["REQUEST_METHOD"]) {
@@ -116,7 +139,7 @@ class PodcastController extends BaseController
                     $data["podcast"] = $this->podcast_service->getPodcastById($id);
                     $data["type"] = "edit";
 
-                    $this->view("pages/podcast/podcast_management", $data);
+                    $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 case "PATCH":
@@ -151,11 +174,13 @@ class PodcastController extends BaseController
     // /create
     public function create() {
         try {
+            if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     $data["type"] = "create";
 
-                    $this->view("pages/podcast/podcast_management", $data);
+                    $this->view("layouts/default", $data);
                     break;
 
                 case "POST":
@@ -179,6 +204,8 @@ class PodcastController extends BaseController
 
     // /upload
     public function upload() {
+        if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "POST":

@@ -1,6 +1,6 @@
 <?php
 
-require_once MODELS_DIR . '/Podcast.php';
+require_once MODELS_DIR . 'Podcast.php';
 
 class PodcastService {
     private $podcast_model;
@@ -16,6 +16,14 @@ class PodcastService {
           array_push($podcasts, $data);
         }
         return $podcasts;
+    }
+
+    public function getPodcast($limit = 10, $page = 1) {
+        return $this->podcast_model->getPodcast($limit, $page);
+    }
+
+    public function getTotalRows() {
+        return $this->podcast_model->getTotalRows();
     }
 
     public function getPodcastById($podcast_id) {

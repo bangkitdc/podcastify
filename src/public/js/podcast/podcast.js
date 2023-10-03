@@ -49,43 +49,61 @@ const searchPodcast = (all = false) => {
   let xhr = getPodcast(url);
 
   xhr.onload = () => {
-    document.getElementById("main-content").innerHTML = xhr.responseText;
-    if (!all) {
-      toggleVisibility(".podcast-box-skeleton", "hidden");
-      toggleVisibility(".podcast-box-area", "visible");
-    }
+    toggleVisibility(".podcast-box-skeleton", "hidden");
+    toggleVisibility(".podcast-box-area", "visible");
   };
 };
 
 const showPodcast = (podcastId) => {
-  const URL = "/podcast/" + podcastId;
-  let xhr = getPodcast(URL);
-
-  xhr.onload = () => {
-    document.getElementById("main-content").innerHTML = xhr.responseText;
-    addScript("/src/public/js/podcast/pagination.js");
-  };
+  window.location.href = "/podcast/show/" + podcastId;
 };
 
 const editPodcast = (podcastId, event) => {
   // stop propagating click event to parent component
   event.stopPropagation();
-
-  const URL = "/edit/" + podcastId;
-  let xhr = getPodcast(URL);
-
-  xhr.onload = () => {
-    document.getElementById("main-content").innerHTML = xhr.responseText;
-    addScript("/src/public/js/podcast/handle_upload.js");
-  };
+  window.location.href = "/podcast/edit/" + podcastId;
 };
 
-const goToAddPodcast = () => {
-  const URL = "/create";
-  let xhr = getPodcast(URL);
+/**
+ * Podcast Page
+ */
+let currPageNum = 1;
+
+const loadPodcastList = (next = true, toEnd = false, toStart = false) => {
+  let totalPodPages = parseInt(
+    document.getElementById("pod-list-total-pages").textContent
+  );
+  if (next) {
+    if (currPageNum >= totalPodPages) return;
+    currPageNum++;
+  } else if (toEnd) {
+    if (currPageNum >= totalPodPages) return;
+    currPageNum = totalPodPages;
+  } else if (toStart) {
+    if (currPageNum <= 1) return;
+    currPageNum = 1;
+  } else {
+    if (currPageNum <= 1) return;
+    currPageNum--;
+  }
+
+  document.getElementById("pod-list-page-num").textContent = currPageNum;
+
+  // Load podcasts list from the server
+  const URL = "/podcasts?page=" + currPageNum;
+  toggleVisibility(".podcast-box-area", "hidden");
+  toggleVisibility(".podcast-nav-box", "hidden");
+  toggleVisibility(".podcast-box-skeleton", "visible");
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "/podcast" + URL);
+  xhr.send();
 
   xhr.onload = () => {
-    document.getElementById("main-content").innerHTML = xhr.responseText;
-    addScript("/src/public/js/podcast/handle_upload.js");
+    toggleVisibility(".podcast-box-skeleton", "hidden");
+    toggleVisibility(".podcast-box-area", "visible");
+    toggleVisibility(".podcast-nav-box", "visible");
+    document.getElementById("podcast-container").outerHTML = xhr.responseText;
+    document.getElementById("pod-list-page-num").textContent = currPageNum;
   };
 };

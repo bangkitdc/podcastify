@@ -16,6 +16,7 @@
 
 .icon {
   display: block;
+  height: 36px;
 }
 
 .header {
@@ -24,7 +25,7 @@
 }
 
 h2 {
-  padding-top: 1px;
+  padding-top: 4px;
   margin: 0;
   font-weight: 700;
 }

@@ -30,7 +30,7 @@ if (Middleware::isLoggedIn()) {
             <button class="dropdown-link">Profile</button>
           </form>
         </li>
-        <li class="logout-link">
+        <li class="bottom-link">
           <form method="POST" action="/user/logout">
             <button class="dropdown-link">Log out</button>
           </form>
@@ -42,6 +42,9 @@ if (Middleware::isLoggedIn()) {
 } else {
   echo '
         <li>
+          <a href="/register" class="dropdown-link">Sign up</a>
+        </li>
+        <li class="bottom-link">
           <a href="/login" class="dropdown-link">Log in</a>
         </li>
       </ul>

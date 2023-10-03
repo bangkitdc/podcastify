@@ -31,7 +31,7 @@
   --fs-mobile-title: 1.125rem;
 
   /* Font Family  */
-  --ff-main: CircularSpotifyText;
+  --ff-main: CircularStd;
 
   /* Breakpoint  */
   --xs: 324px;
@@ -63,66 +63,82 @@
 
 /* Book weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-Book.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Book.otf") format("opentype");
   font-weight: 200;
 }
 
 /* Book Italic weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-BookItalic.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-BookItalic.otf") format("opentype");
   font-weight: 200;
   font-style: italic;
 }
 
 /* Light weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-Light.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Light.otf") format("opentype");
   font-weight: 300;
+}
+
+/* Light weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
 }
 
 /* Medium weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-Medium.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Medium.otf") format("opentype");
   font-weight: 500;
 }
 
 /* Medium Italic weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-MediumItalic.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-MediumItalic.otf") format("opentype");
   font-weight: 500;
   font-style: italic;
 }
 
 /* Bold weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-Bold.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Bold.otf") format("opentype");
   font-weight: 700;
+}
+
+/* Bold Italic weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
 }
 
 /* Black weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-Black.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Black.otf") format("opentype");
   font-weight: 800;
 }
 
 /* BlackItalic weight */
 @font-face {
-  font-family: CircularSpotifyText;
-  src: url("/src/public/assets/fonts/CircularSpotifyText-BlackItalic.otf") format("opentype");
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-BlackItalic.otf") format("opentype");
   font-weight: 800;
   font-style: italic;
 }
 
 body {
   background-color: var(--clr-background-base-one);
-  font-family: CircularSpotifyText;
+  font-family: CircularStd;
 }
 
 * {
@@ -161,7 +177,6 @@ h3 {
 
 p {
   font-weight: 500;
-  font-size: 12px;
 }
 
 /* Button  */
@@ -176,7 +191,7 @@ button {
   border-radius: var(--rounded-full);
   background-color: var(--clr-background-base-two);
   color: var(--clr-text-primary);
-  font-family: CircularSpotifyText;
+  font-family: CircularStd;
   font-size: 1rem;
   transition: var(--transition);
 }

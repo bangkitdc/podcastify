@@ -54,9 +54,24 @@ class User {
         return $result;
     }
 
-    public function create($email, $username, $hashedPassword, $firstName, $lastName, $avatarURL, $roleId)
+    public function create($email, $username, $hashedPassword, $firstName, $lastName)
     {
-        $query = "INSERT INTO users (email, username, password, first_name, last_name, avatar_url, role_id) VALUES (:email, :username, :password, :first_name, :last_name, :avatar_url, :role_id)";
+        // Check if the email, username already exists
+        if ($this->emailExists($email) && $this->usernameExists($username)) {
+            throw new Exception('This email and username are already connected to an account.');
+        }
+
+        // Check if the email already exists
+        if ($this->emailExists($email)) {
+            throw new Exception('This email is already connected to an account.');
+        }
+
+        // Check if the username already exists
+        if ($this->usernameExists($username)) {
+            throw new Exception('This username is already connected to an account');
+        }
+        
+        $query = "INSERT INTO users (email, username, password, first_name, last_name, role_id) VALUES (:email, :username, :password, :first_name, :last_name, :role_id)";
 
         $this->db->query($query);
         $this->db->bind('email', $email);
@@ -64,10 +79,31 @@ class User {
         $this->db->bind('password', $hashedPassword);
         $this->db->bind('first_name', $firstName);
         $this->db->bind('last_name', $lastName);
-        $this->db->bind('avatar_url', $avatarURL);
-        $this->db->bind('role_id', $roleId);
+        $this->db->bind('role_id', 2); // User role
 
         $this->db->execute();
+    }
+
+    // Check if the email already exists
+    private function emailExists($email)
+    {
+        $query = "SELECT * FROM users WHERE email = :email";
+        $this->db->query($query);
+        $this->db->bind('email', $email);
+        $this->db->fetch();
+
+        return $this->db->rowCount() > 0;
+    }
+
+    // Check if the username already exists
+    private function usernameExists($username)
+    {
+        $query = "SELECT * FROM users WHERE username = :username";
+        $this->db->query($query);
+        $this->db->bind('username', $username);
+        $this->db->fetch();
+        
+        return $this->db->rowCount() > 0;
     }
 
     public function update($email, $username, $hashedPassword, $firstName, $lastName, $status, $avatarURL, $roleId)
@@ -113,5 +149,14 @@ class User {
         $this->db->bind('user_id', $userId);
 
         $this->db->execute();
+    }
+
+    public function getTotalRows()
+    {
+        $query = "SELECT * FROM users";
+        $this->db->query($query);
+        $this->db->fetch();
+
+        return $this->db->rowCount();
     }
 }

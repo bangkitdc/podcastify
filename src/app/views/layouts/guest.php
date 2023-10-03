@@ -22,7 +22,7 @@
     <div class="content">
       <div class="form">
         <?php
-          $included = include VIEWS_DIR . "pages/auth/login.php";
+        $included = include VIEWS_DIR . "view_config.php";
         ?>
       </div>
     </div>
