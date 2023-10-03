@@ -22,16 +22,21 @@ if (!$pathArray[0]) {
             include VIEWS_DIR . "pages/home/index.php";
             break;
         case 'podcast':
-            if (!$pathArray[1]) {
-                include  VIEWS_DIR . "pages/" . $path . "/index.php";
-                break;
-            } else {
-                switch ($pathArray[1]) {
-                    case 'manage':
-                        include VIEWS_DIR . "pages/podcast/podcast_management.php";
-                        break;
-                }
+            // Reconstruct the path from the array
+            $reconstructedPath = '/' . implode('/', $pathArray);
+            switch ($reconstructedPath) {
+                case '/podcast':
+                    include  VIEWS_DIR . "pages/" . $reconstructedPath . "/index.php";
+                    break;
+                case (preg_match('/^\/podcast\/show\/.+$/', $reconstructedPath) ? true : false):
+                    include  VIEWS_DIR . "pages/podcast/podcast_detail.php";
+                    break;
+                case (preg_match('/^\/podcast\/edit\/.+$/', $reconstructedPath) ? true : false):
+                case '/podcast/add':
+                    include VIEWS_DIR . "pages/podcast/podcast_management.php";
+                    break;
             }
+            break;
         case 'episode':
             // Check if there is a second segment (e.g., "3")
             $secArg = isset($pathArray[1]) ? $pathArray[1] : '';
@@ -51,3 +56,4 @@ if (!$pathArray[0]) {
             break;
     }
 }
+
