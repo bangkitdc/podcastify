@@ -116,16 +116,42 @@ class Podcast {
         }
     }
 
-    public function getPodcastBySearch($search_key) {
-        $query = "SELECT * FROM podcasts WHERE title LIKE :search_key";
+    public function getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, $limit) {
+        $query = "SELECT * FROM podcasts LIMIT :limit OFFSET :offset WHERE (title LIKE :q OR creator_name LIKE :q)";
+
+        if (!empty($filter_names)) {
+            $query .= " AND creator_name IN (" . implode(',', array_fill(0, count($filter_names), '?')) . ")";
+        }
+
+        if (!empty($filter_categories)) {
+            $query .= " AND category_id IN (" . implode(',', array_fill(0, count($filter_categories), '?')) . ")";
+        }
+
+        if (!empty($sort_key) && !empty($sort_method)) {
+            $query .= " ORDER BY $sort_key $sort_method";
+        }
+
         $this->db->query($query);
 
-        $search_key = "%" . $search_key . "%";
-        $this->db->bind(':search_key', $search_key);
+        $this->db->bind(":q", "%$q%");
+        
+        $offset = ($page - 1) * $limit;
+        $this->db->bind(":limit", $limit);
+        $this->db->bind(":offset", $offset);
 
-        $result = $this->db->fetchAll();
+        if (!empty($filter_names)) {
+            foreach ($filter_names as $index => $name) {
+                $this->db->bind(":filter_name$index", $name);
+            }
+        }
 
-        return $result;
+        if (!empty($filter_categories)) {
+            foreach ($filter_categories as $index => $category) {
+                $this->db->bind(":filter_category$index", $category);
+            }
+        }
+
+        return $this->db->fetchAll();
     }
 
     public function getEpisodesByPodcastId($podcast_id, $limit, $page) {

@@ -31,8 +31,9 @@ class PodcastService {
         return $podcast_data;
     }
 
-    public function getPodcastBySearch($search_key) {
-        $podcasts_data = $this->podcast_model->getPodcastBySearch($search_key);
+    public function getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page = 1, $limit = 10) {
+
+        $podcasts_data = $this->podcast_model->getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, $limit);
         $podcasts = array();
         foreach ($podcasts_data as $data) {
           array_push($podcasts, $data);

@@ -1,6 +1,7 @@
 <?php
 
 require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
+require_once BASE_URL . "/src/app/helpers/SanitizeHelper.php";
 require_once SERVICES_DIR . "/podcast/index.php";
 require_once SERVICES_DIR . "/upload/index.php";
 require_once SERVICES_DIR . "/category/index.php";
@@ -71,7 +72,7 @@ class PodcastController extends BaseController
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-                    $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
+                    $page = Sanitizer::sanitizeIntParam("page");
 
                     $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, $page);
 
@@ -91,7 +92,7 @@ class PodcastController extends BaseController
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
-                    $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
+                    $page = Sanitizer::sanitizeIntParam("page");
 
                     $data["podcasts"] = $this->podcast_service->getPodcast(4, $page);
                     $data["total_rows"] = $this->podcast_service->getTotalRows();
@@ -109,16 +110,36 @@ class PodcastController extends BaseController
         }
     }
 
-    // /search?key=
+    // TODO: check
     public function search() {
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
-                    $search_key = isset($_GET["key"]) ? filter_var($_GET["key"], FILTER_SANITIZE_STRING) : "";
+                    $q = Sanitizer::sanitizeStringParam("q");
 
-                    $data['podcasts'] = $this->podcast_service->getPodcastBySearch($search_key);
+                    if ($q == "") {
+                        $this->index();
+                        return ResponseHelper::HTTP_STATUS_OK;
+                    }
 
-                    $this->view("layouts/default", $data);
+                    $sort_method = Sanitizer::sanitizeStringParam("sort");
+                    $sort_key = Sanitizer::sanitizeStringParam("key");
+                    $filter_names = Sanitizer::sanitizeStringArrayParam("filter_name");
+                    $filter_categories_name = Sanitizer::sanitizeStringArrayParam("filter_category");
+                    $page_requested = Sanitizer::sanitizeIntParam("page");
+                    $page = $page_requested == "" ? 1 : $page_requested;
+
+                    if (!empty($filter_categories_name)) {
+                        $filter_categories = array();
+                        foreach ($filter_categories_name as $name) {
+                            $cat_id = $this->category_service->getCategoryIdByName($name);
+                            array_push($filter_categories, $cat_id);
+                        }
+                    }
+
+                    $data['podcasts'] = $this->podcast_service->getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, 4);
+
+                    $this->view('pages/podcast/index', $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 default:
