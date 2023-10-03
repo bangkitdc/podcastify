@@ -3,16 +3,19 @@
 require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
 require_once SERVICES_DIR . "/podcast/index.php";
 require_once SERVICES_DIR . "/upload/index.php";
+require_once SERVICES_DIR . "/category/index.php";
 require_once BASE_URL . "/src/app/views/components/podcast/episodesList.php";
 
 class PodcastController extends BaseController
 {
     private $podcast_service;
     private $upload_service;
+    private $category_service;
 
     public function __construct() {
         $this->podcast_service = new PodcastService();
         $this->upload_service = new UploadService();
+        $this->category_service = new CategoryService();
     }
 
     public function index()
@@ -47,6 +50,7 @@ class PodcastController extends BaseController
 
                     $data["podcast"] = $this->podcast_service->getPodcastById($id);
                     $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
+                    $data["category"] = $this->category_service->getCategoryNameById($data["podcast"]->category_id);
 
                     $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
@@ -138,6 +142,8 @@ class PodcastController extends BaseController
                 case "GET":
                     $data["podcast"] = $this->podcast_service->getPodcastById($id);
                     $data["type"] = "edit";
+                    $data["categories"] = $this->category_service->getAllCategoryNames();
+                    $data["podcast_category"] = $this->category_service->getCategoryNameById($data["podcast"]->category_id);
 
                     $this->view("layouts/default", $data);
                     return ResponseHelper::HTTP_STATUS_OK;
@@ -148,13 +154,17 @@ class PodcastController extends BaseController
                     $title = filter_var($data['podcast-name-input'], FILTER_SANITIZE_STRING);
                     $creator_name = filter_var($data['podcast-creator-input'], FILTER_SANITIZE_STRING);
                     $description = filter_var($data['podcast-desc-input'], FILTER_SANITIZE_STRING);
+                    $category_name = filter_var($data['podcast-category-selection'], FILTER_SANITIZE_STRING);
+
+                    $category_id = $this->category_service->getCategoryIdByName($category_name);
+
                     if (isset($data['preview-image-filename'])) {
                         $image_url = filter_var($data['preview-image-filename'], FILTER_SANITIZE_STRING);
                     } else {
                         $image_url = "";
                     }
 
-                    $this->podcast_service->updatePodcast($id, $title, $description, $creator_name, $image_url);
+                    $this->podcast_service->updatePodcast($id, $title, $description, $creator_name, $image_url, $category_id);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 case "DELETE":
@@ -171,15 +181,14 @@ class PodcastController extends BaseController
         }
     }
 
-    // /create
-    public function create() {
+    // /add
+    public function add() {
         try {
             if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
-
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     $data["type"] = "create";
-
+                    $data["categories"] = $this->category_service->getAllCategoryNames();
                     $this->view("layouts/default", $data);
                     break;
 
@@ -188,8 +197,11 @@ class PodcastController extends BaseController
                     $creator_name = filter_var($_POST['podcast-creator-input'], FILTER_SANITIZE_STRING);
                     $description = filter_var($_POST['podcast-desc-input'], FILTER_SANITIZE_STRING);
                     $image_url = filter_var($_POST['preview-image-filename'], FILTER_SANITIZE_STRING);
+                    $category_name = filter_var($_POST['podcast-category-selection'], FILTER_SANITIZE_STRING);
 
-                    $this->podcast_service->createPodcast($title, $description, $creator_name, $image_url);
+                    $category_id = $this->category_service->getCategoryIdByName($category_name);
+
+                    $this->podcast_service->createPodcast($title, $description, $creator_name, $image_url, $category_id);
                     break;
 
                 default:

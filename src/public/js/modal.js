@@ -9,7 +9,6 @@ const setupModal = (modalId, cancelId, okayId = "") => {
 
   if (okayBtn) {
     okayBtn.addEventListener("click", () => {
-      console.log("OKAAAY");
       // Custom event for modal
       let event = new CustomEvent("okayClicked", {
         detail: { message: "Okay button clicked" },
