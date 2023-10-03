@@ -10,7 +10,7 @@ const uploadPodcastImage = (url, async = true, data = null) => {
 
 const createPodcast = (formData) => {
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", PODCAST_MANAGE_BASE_URL + "/create", true);
+  xhr.open("POST", PODCAST_MANAGE_BASE_URL + "/add", true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(formData);
   return xhr;
@@ -69,6 +69,10 @@ let createModal = document.getElementById("manage-modal-create");
 setupModal("manage-modal-create", "create-modal-cancel", "create-modal-ok");
 setupModal("manage-modal-save", "save-modal-cancel", "save-modal-ok");
 setupModal("manage-modal-delete", "delete-modal-cancel", "delete-modal-ok");
+
+if (document.getElementById("podcast-category-selection")) {
+    setupSelect("podcast-category-selection");
+}
 
 const handleFormSubmit = (formId, callback) => {
   let formElement = document.getElementById(formId);
@@ -129,6 +133,10 @@ handleFormSubmit("create-podcast", function () {
       "podcast-desc-input",
       document.getElementById("podcast-desc-input").value
     );
+    formData.append(
+      "podcast-category-selection",
+      document.getElementById("podcast-category-selection").value
+    );
 
     let xhr = createPodcast(formData);
     xhr.onload = () => {
@@ -158,6 +166,10 @@ handleFormSubmit("update-form", function () {
     formData.append(
       "podcast-desc-input",
       document.getElementById("podcast-desc-input").value
+    );
+    formData.append(
+      "podcast-category-selection",
+      document.getElementById("podcast-category-selection").value
     );
 
     let data = {};

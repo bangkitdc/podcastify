@@ -5,12 +5,15 @@
   <div>
     <?php
         require_once VIEWS_DIR . "/components/shares/inputs/text.php";
+        require_once VIEWS_DIR . "/components/shares/inputs/select.php";
         require_once VIEWS_DIR . "/components/shares/upload/baseFileUploader.php";
         require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
         require_once VIEWS_DIR . "/components/shares/modals/baseModal.php";
 
         $type = isset($data['type']) ? $data['type'] : '';
         $podcast = $type == 'edit' ? $data['podcast'] : null;
+        $category_opt = $data['categories'];
+        $podcast_category = isset($data['podcast_category']) ? $data['podcast_category'] : $category_opt[0];
 
         $podcast_name = $type == 'edit' ? $podcast->title : '';
         $podcast_creator = $type == 'edit' ? $podcast->creator_name : '';
@@ -45,8 +48,13 @@
         ";
         baseInputText("Enter a description", $podcast_desc, "podcast-desc-input");
         echo "
+            <p>$edit_extra_text Category</p>
+        ";
+        baseSelect($category_opt, $podcast_category, 'podcast-category-selection');
+        echo "
             <p>Upload New Poster</p>
         ";
+
         if ($type == "edit") {
             baseFileUploader("file-upload", "", "preview-image", false);
         } else {
@@ -67,6 +75,7 @@
 
         echoJsFile();
         echoModalJS();
+        echoSelectJS();
     ?>
   </div>
 </div>

@@ -1,0 +1,45 @@
+.base-select-box {
+  display: flex;
+  position: relative;
+  width: fit-content;
+  align-items: center;
+
+  .base-select {
+    border-radius: 12px;
+    color: black;
+    padding: 4px 8px;
+    outline: none;
+    border: 2px solid;
+    font-size: 1rem;
+    padding-inline-end: 40px;
+    appearance: none;
+    font-size: 1.2rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+
+    &:hover {
+      border-color: white;
+    }
+
+    > option {
+      color: black;
+    }
+  }
+
+  .base-select-arrow-icon {
+    width: fit-content;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 12px;
+    position: absolute;
+    z-index: 0;
+    cursor: pointer;
+  }
+}
+
+.rotate {
+  transform: rotate(180deg);
+}

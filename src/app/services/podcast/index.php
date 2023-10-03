@@ -45,12 +45,12 @@ class PodcastService {
         return $episodes;
     }
 
-    public function createPodcast($title, $description, $creator_name, $image_url) {
-        $this->podcast_model->createPodcast($title, $description, $creator_name, $image_url);
+    public function createPodcast($title, $description, $creator_name, $image_url, $category_id) {
+        $this->podcast_model->createPodcast($title, $description, $creator_name, $image_url, $category_id);
     }
 
-    public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url) {
-        $this->podcast_model->updatePodcast($podcast_id, $title, $description, $creator_name, $image_url);
+    public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url, $category_id) {
+        $this->podcast_model->updatePodcast($podcast_id, $title, $description, $creator_name, $image_url, $category_id);
     }
 
     public function deletePodcast($podcast_id) {
