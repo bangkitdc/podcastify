@@ -1,0 +1,94 @@
+@keyframes grow {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.info-modal,
+.action-modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 30px 20px;
+    border: 1px solid #888;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    gap: 12px;
+    border-radius: 24px;
+    animation: grow 0.5s forwards;
+
+    > p,
+    .close-btn,
+    .okay-btn {
+      color: black;
+    }
+
+    > p {
+      font-size: 1.5rem;
+    }
+
+    > div {
+      display: flex;
+      gap: 12px;
+    }
+
+    .close-btn,
+    .okay-btn {
+      width: fit-content;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+
+.info-modal {
+  .close-btn {
+    background-color: var(--clr-text-info);
+
+    &:hover {
+      background-color: var(--clr-text-info-hover);
+    }
+  }
+}
+
+.action-modal {
+  .okay-btn {
+    background-color: var(--clr-text-info);
+
+    &:hover {
+      background-color: var(--clr-text-info-hover);
+    }
+  }
+
+  .close-btn {
+    background-color: var(--clr-text-danger);
+
+    &:hover {
+      background-color: #ff4c4c;
+    }
+  }
+}

@@ -7,9 +7,13 @@
 function baseInputText($placeholder, $value, $id = "", $is_required = true, $class = "") {
     $required_status = $is_required ? 'required' : '';
     echo
-    "
-        <input type=\"text\" placeholder=\"$placeholder\" value=\"$value\" class=\"base-input $class\" id=\"$id\" $required_status name=\"$id\" />
-    ";
+    '
+        <input type="text" placeholder="'. $placeholder .'" value="' . $value . '" class="base-input ' . $class . '" id="' . $id . '"' . $required_status . 'name="' . $id . '" />
+        <div id="' . $id . '-alert" class="alert-hide">
+            <img src="' . ICONS_DIR . 'warning.svg" alt="Warning No ' . $id . '" width="14px">
+            <p></p>
+        </div>
+    ';
 }
 
 /**
@@ -24,7 +28,7 @@ function echoInputText($name, $tabIndex, $isPassword = false, $eyeIcon = false)
             <div class="form-group">
                 <label for="' . $name . '">' . $capitalizedName . '</label>
             ';
-        
+
         if ($eyeIcon) {
             echo '
                 <div class="relative-container">

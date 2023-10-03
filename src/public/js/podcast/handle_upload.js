@@ -41,8 +41,6 @@ document.getElementById("file-upload").addEventListener("change", function () {
       document.getElementById("filename-file-upload").innerText =
         document.getElementById("file-upload").files[0].name;
 
-      var base64String = e.target.result.replace(/^data:(.*;base64,)?/, "");
-
       let url = "/upload";
       let fileField = document.getElementById("file-upload");
       let formData = new FormData();
@@ -52,12 +50,25 @@ document.getElementById("file-upload").addEventListener("change", function () {
       let xhr = uploadPodcastImage(url, true, formData);
       xhr.onload = () => {
         console.log(xhr.responseText);
-        document.getElementById("preview-image-filename").value = xhr.responseText;
+        document.getElementById("preview-image-filename").value =
+          xhr.responseText;
       };
     };
     reader.readAsDataURL(this.files[0]);
   }
 });
+
+if (document.getElementById("manage-modal-file")) {
+  var fileInfoModal = document.getElementById("manage-modal-file");
+  setupModal("manage-modal-file", "manage-modal-ok");
+}
+
+let deleteModal = document.getElementById("manage-modal-delete");
+let saveChangesModal = document.getElementById("manage-modal-save");
+let createModal = document.getElementById("manage-modal-create");
+setupModal("manage-modal-create", "create-modal-cancel", "create-modal-ok");
+setupModal("manage-modal-save", "save-modal-cancel", "save-modal-ok");
+setupModal("manage-modal-delete", "delete-modal-cancel", "delete-modal-ok");
 
 const handleFormSubmit = (formId, callback) => {
   let formElement = document.getElementById(formId);
@@ -69,54 +80,116 @@ const handleFormSubmit = (formId, callback) => {
   }
 };
 
-handleFormSubmit("create-podcast", function (form) {
+handleFormSubmit("create-podcast", function () {
+  let podcastNameValid = false;
+  let creatorNameValid = false;
+  let descriptionValid = false;
+
+  podcastNameValid = handleInputValidation(
+    "podcast-name-input",
+    "Please enter a podcast name"
+  );
+
+  creatorNameValid = handleInputValidation(
+    "podcast-creator-input",
+    "Please enter a creator name"
+  );
+
+  descriptionValid = handleInputValidation(
+    "podcast-desc-input",
+    "Please enter a description"
+  );
+
+  if (!podcastNameValid || !creatorNameValid || !descriptionValid) return;
+
   let fileInput = document.getElementById("file-upload");
   if (!fileInput.files.length) {
-    // TODO: replace this with appropriate modal
-    alert("Please choose a file!");
+    fileInfoModal.style.display = "flex";
     return;
   }
 
-  let formData = new FormData(form);
+  // trigger modal confirmation
+  createModal.style.display = "flex";
 
-  let xhr = createPodcast(formData);
-  xhr.onload = () => {
-    console.log(xhr.responseText);
-    alert("Success!");
-    window.location.href = "/podcast";
-  };
+  // Send form when okay button is clicked
+  createModal.addEventListener("okayClicked", () => {
+    let form = document.getElementById("create-podcast");
+    let formData = new FormData(form);
+
+    // reappend values
+    formData.append(
+      "podcast-name-input",
+      document.getElementById("podcast-name-input").value
+    );
+    formData.append(
+      "podcast-creator-input",
+      document.getElementById("podcast-creator-input").value
+    );
+    formData.append(
+      "podcast-desc-input",
+      document.getElementById("podcast-desc-input").value
+    );
+
+    let xhr = createPodcast(formData);
+    xhr.onload = () => {
+      console.log(xhr.responseText);
+      window.location.href = "/podcast";
+    };
+  });
 });
 
-handleFormSubmit("update-form", function (form) {
-  let formData = new FormData(form);
+handleFormSubmit("update-form", function () {
+  // trigger modal confirmation
+  saveChangesModal.style.display = "flex";
 
-  let data = {};
-  let podcastId = 0;
-  for (let [key, value] of formData.entries()) {
-    data[key] = value;
-    if (key == "podcast-id") {
-      podcastId = value;
+  // Send form when okay button is clicked
+  saveChangesModal.addEventListener("okayClicked", () => {
+    let form = document.getElementById("update-form");
+    let formData = new FormData(form);
+    // reappend values
+    formData.append(
+      "podcast-name-input",
+      document.getElementById("podcast-name-input").value
+    );
+    formData.append(
+      "podcast-creator-input",
+      document.getElementById("podcast-creator-input").value
+    );
+    formData.append(
+      "podcast-desc-input",
+      document.getElementById("podcast-desc-input").value
+    );
+
+    let data = {};
+    let podcastId = 0;
+    for (let [key, value] of formData.entries()) {
+      data[key] = value;
+      if (key == "podcast-id") {
+        podcastId = value;
+      }
     }
-  }
-  let json = JSON.stringify(data);
+    let json = JSON.stringify(data);
 
-  let xhr = updatePodcast(json, podcastId);
-  xhr.onload = () => {
-    console.log(xhr.responseText);
-    alert("Success!");
-    window.location.href = "/podcast";
-  };
+    let xhr = updatePodcast(json, podcastId);
+    xhr.onload = () => {
+      console.log(xhr.responseText);
+      window.location.href = "/podcast";
+    };
+  });
 });
 
 if (document.getElementById("delete-podcast")) {
   document.getElementById("delete-podcast").addEventListener("click", () => {
-    let podcastId = document.getElementById("podcast-id").value;
-    let xhr = deletePodcast(podcastId);
-    xhr.onload = () => {
-      console.log(xhr.responseText);
-      alert("Success!");
-      window.location.href = "/podcast";
-    };
+    deleteModal.style.display = "flex";
+
+    deleteModal.addEventListener("okayClicked", () => {
+      let podcastId = document.getElementById("podcast-id").value;
+      let xhr = deletePodcast(podcastId);
+      xhr.onload = () => {
+        console.log(xhr.responseText);
+        window.location.href = "/podcast";
+      };
+    });
   });
 }
 
