@@ -7,6 +7,7 @@
         require_once VIEWS_DIR . "/components/shares/inputs/text.php";
         require_once VIEWS_DIR . "/components/shares/upload/baseFileUploader.php";
         require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
+        require_once VIEWS_DIR . "/components/shares/modals/baseModal.php";
 
         $type = isset($data['type']) ? $data['type'] : '';
         $podcast = $type == 'edit' ? $data['podcast'] : null;
@@ -19,6 +20,13 @@
         $management_heading = $type == 'edit' ? 'Edit Podcast' : 'Add Podcast';
         $edit_extra_text = $type == 'edit' ? 'Change ' : '';
         $form_id = $type == 'edit' ? 'update-form' : 'create-podcast';
+
+        if ($type != 'edit') {
+            infoModal("manage-modal-file", "Please Upload Poster Image!", "manage-modal-ok");
+        }
+        actionModal("manage-modal-create", "Are you sure to create this podcast ?", "create-modal-ok", "create-modal-cancel");
+        actionModal("manage-modal-save", "Are you sure to save changes ?", "save-modal-ok", "save-modal-cancel");
+        actionModal("manage-modal-delete", "Are you sure to delete this podcast ?", "delete-modal-ok", "delete-modal-cancel");
 
         echo
         "
@@ -56,6 +64,9 @@
             }
         echo "</div>";
         echo "</div></form>";
+
+        echoJsFile();
+        echoModalJS();
     ?>
   </div>
 </div>
