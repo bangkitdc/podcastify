@@ -30,4 +30,18 @@ class Middleware {
 
         return false;
     }
+
+    public static function checkIsAdmin()
+    {
+        if (!isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
+            throw new Exception('Unauthorized', ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
+        }
+    }
+
+    public static function checkIsLoggedIn()
+    {
+        if (!isset($_SESSION['username']) && !isset($_SESSION['userId'])) {
+            throw new Exception('Unauthorized', ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
+        }
+    }
 }
