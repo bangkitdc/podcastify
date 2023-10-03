@@ -5,8 +5,8 @@
 <div id="template">
   <div>
     <?php
-        require_once VIEWS_DIR . "components/podcast/contentBox.php";
-        require_once VIEWS_DIR . "components/podcast/paginationNav.php";
+        require_once VIEWS_DIR . "components/privates/podcast/contentBox.php";
+        require_once VIEWS_DIR . "components/privates/podcast/paginationNav.php";
 
         $MAX_PODCAST_PER_PAGE = 4;
         $podcasts = $data['podcasts'];
