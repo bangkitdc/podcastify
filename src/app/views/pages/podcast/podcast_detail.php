@@ -5,9 +5,9 @@
   <div>
     <?php
         require_once BASE_URL . '/src/config/storage.php';
-        require_once VIEWS_DIR . "components/podcast/contentBox.php";
-        require_once VIEWS_DIR . "components/podcast/episodesList.php";
-        require_once VIEWS_DIR . "components/podcast/paginationNav.php";
+        require_once VIEWS_DIR . "components/privates/podcast/contentBox.php";
+        require_once VIEWS_DIR . "components/privates/podcast/episodesList.php";
+        require_once VIEWS_DIR . "components/privates/podcast/paginationNav.php";
 
         $MAX_EPS_PER_PAGE = 2;
 
