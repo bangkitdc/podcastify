@@ -53,7 +53,7 @@ CREATE TABLE episodes (
     podcast_id          INT             NOT NULL,
     category_id         INT             NOT NULL,
     title               VARCHAR(255)    UNIQUE NOT NULL,
-    description         VARCHAR(255)     NOT NULL,
+    description         VARCHAR(255)    NOT NULL,
     duration            INT             NOT NULL,
     image_url           VARCHAR(255),
     audio_url           VARCHAR(255)    NOT NULL,
@@ -70,9 +70,24 @@ INSERT INTO categories (name) VALUES
     ('Entertainment'),
     ('Business');
 
-INSERT INTO users (email, username, password, first_name, last_name, avatar_url, role_id) VALUES
-    ('admin@podcastify.com', 'admin', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'admin', 'podcastify', NULL, 1),
-    ('user@gmail.com', 'user', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'user', 'podcastify', NULL, 2);
+INSERT INTO users (email, username, password, first_name, last_name, role_id) VALUES
+    ('admin@podcastify.com', 'admin', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'admin', 'podcastify', 1),
+    ('user@gmail.com', 'user', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'user', 'podcastify', 2),
+    ('user1@gmail.com', 'user1', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'John', 'Doe', 2),
+    ('user2@gmail.com', 'user2', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Jane', 'Smith', 2),
+    ('user3@gmail.com', 'user3', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Alice', 'Johnson', 2),
+    ('user4@gmail.com', 'user4', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Bob', 'Anderson', 2),
+    ('user5@gmail.com', 'user5', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Eva', 'Miller', 2),
+    ('user6@gmail.com', 'user6', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'David', 'Brown', 2),
+    ('user7@gmail.com', 'user7', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Megan', 'Taylor', 2),
+    ('user8@gmail.com', 'user8', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Alex', 'White', 2),
+    ('user9@gmail.com', 'user9', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Sophia', 'Lee', 2),
+    ('user10@gmail.com', 'user10', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Daniel', 'Wang', 2),
+    ('user11@gmail.com', 'user11', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Michael', 'Johnson', 2),
+    ('user12@gmail.com', 'user12', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Emma', 'Davis', 2),
+    ('user13@gmail.com', 'user13', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Matthew', 'Wilson', 2),
+    ('user14@gmail.com', 'user14', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Olivia', 'Thompson', 2),
+    ('user15@gmail.com', 'user15', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Christopher', 'Hill', 2);
 
 INSERT INTO podcasts (title, description, creator_name, category_id, total_eps) VALUES
     ('Close The Door Podcast', '3 2 1 Close the door!', 'Deddy Corbuzier', 1, 9),
