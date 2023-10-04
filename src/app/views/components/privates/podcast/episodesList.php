@@ -6,7 +6,7 @@ function episodeList($episodes = null, $is_skeleton = false, $click_evt = "") {
     require_once VIEWS_DIR . "/components/shares/tables/primary.php";
     $dataHeader = ["Episode Title", "Description", "Duration", "Created At"];
 
-    echoTableHeader($dataHeader);
+    echoTableHeader($dataHeader, [35, 30, 15, 15]);
 
     $index = 1;
 
