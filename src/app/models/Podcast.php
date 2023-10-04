@@ -59,6 +59,14 @@ class Podcast {
         return $result;
     }
 
+    public function getAllCreatorName() {
+        $query = "SELECT DISTINCT creator_name FROM podcasts";
+
+        $this->db->query($query);
+
+        return $this->db->fetchAll();
+    }
+
     public function createPodcast($title, $description, $creator_name, $image_url, $category_id) {
         $query = "INSERT INTO podcasts (title, description, creator_name, image_url, category_id, created_at, updated_at) VALUES (:title, :description, :creator_name, :image_url, :category_id, NOW(), NOW())";
         $this->db->query($query);
@@ -116,16 +124,65 @@ class Podcast {
         }
     }
 
-    public function getPodcastBySearch($search_key) {
-        $query = "SELECT * FROM podcasts WHERE title LIKE :search_key";
+    public function getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, $limit) {
+        $query = "SELECT DISTINCT * FROM podcasts WHERE (title LIKE :q OR creator_name LIKE :q)";
+
+        if (!empty($filter_names)) {
+            $keys = array_map(function($key) { return "filter_name$key"; }, range(0, count($filter_names) - 1));
+            $query .= " AND creator_name IN (:" . implode(', :', $keys) . ")";
+        }
+
+        if (!empty($filter_categories)) {
+            $keys = array_map(function($key) { return "filter_category$key"; }, range(0, count($filter_categories) - 1));
+            $query .= " AND category_id IN (:" . implode(', :', $keys) . ")";
+        }
+
+        if (!empty($sort_key) && !empty($sort_method)) {
+            $query .= " ORDER BY $sort_key $sort_method";
+        }
+
+        $countQuery = "SELECT COUNT(*) as total_rows FROM ($query) as subquery";
+
+        $this->db->query($countQuery);
+        $this->db->bind(":q", "%$q%");
+
+        if (!empty($filter_names)) {
+            foreach ($filter_names as $index => $name) {
+                $this->db->bind(":filter_name$index", $name);
+            }
+        }
+
+        if (!empty($filter_categories)) {
+            foreach ($filter_categories as $index => $category) {
+                $this->db->bind(":filter_category$index", $category);
+            }
+        }
+
+        $total_row = $this->db->fetch();
+
+        $query .= " LIMIT :limit OFFSET :offset";
         $this->db->query($query);
 
-        $search_key = "%" . $search_key . "%";
-        $this->db->bind(':search_key', $search_key);
+        $this->db->bind(":q", "%$q%");
 
-        $result = $this->db->fetchAll();
+        $offset = ($page - 1) * $limit;
+        $this->db->bind(":limit", $limit);
+        $this->db->bind(":offset", $offset);
 
-        return $result;
+        if (!empty($filter_names)) {
+            foreach ($filter_names as $index => $name) {
+                $this->db->bind(":filter_name$index", $name);
+            }
+        }
+
+        if (!empty($filter_categories)) {
+            foreach ($filter_categories as $index => $category) {
+                $this->db->bind(":filter_category$index", $category);
+            }
+        }
+        $results = $this->db->fetchAll();
+
+        return array($total_row->total_rows, $results);
     }
 
     public function getEpisodesByPodcastId($podcast_id, $limit, $page) {

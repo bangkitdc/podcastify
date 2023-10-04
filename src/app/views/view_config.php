@@ -38,6 +38,9 @@ if (!$pathArray[0]) {
                 case '/podcast/add':
                     include VIEWS_DIR . "pages/podcast/podcast_management.php";
                     break;
+                case (preg_match('/^\/podcast\/search(\?q=(.*))?$/', $reconstructedPath) ? true : false):
+                    include  VIEWS_DIR . "pages/podcast/index.php";
+                    break;
             }
             break;
         case 'episode':

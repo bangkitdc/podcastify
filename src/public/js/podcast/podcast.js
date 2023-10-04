@@ -32,26 +32,8 @@ const addScript = (src) => {
  * Podcast Page
  */
 const toggleVisibility = (selector, visibility) => {
-  document.querySelector(selector).style.visibility = visibility;
-};
-
-const searchPodcast = (all = false) => {
-  let input = document.getElementById("search-bar");
-  let filter = input.value.toUpperCase();
-
-  let url = "";
-  if (!all) {
-    toggleVisibility(".podcast-box-area", "hidden");
-    toggleVisibility(".no-podcast-info", "hidden");
-    toggleVisibility(".podcast-box-skeleton", "visible");
-    url += "/search?key=" + filter;
-  }
-  let xhr = getPodcast(url);
-
-  xhr.onload = () => {
-    toggleVisibility(".podcast-box-skeleton", "hidden");
-    toggleVisibility(".podcast-box-area", "visible");
-  };
+  if (document.querySelector(selector))
+    document.querySelector(selector).style.visibility = visibility;
 };
 
 const showPodcast = (podcastId) => {
@@ -69,7 +51,15 @@ const editPodcast = (podcastId, event) => {
  */
 let currPageNum = 1;
 
-const loadPodcastList = (next = true, toEnd = false, toStart = false) => {
+const loadPodcastList = (
+  fromSearchBar = false,
+  next = true,
+  toEnd = false,
+  toStart = false
+) => {
+  if (document.getElementById("pod-list-page-num").textContent != currPageNum) {
+    currPageNum = document.getElementById("pod-list-page-num").textContent;
+  }
   let totalPodPages = parseInt(
     document.getElementById("pod-list-total-pages").textContent
   );
@@ -95,15 +85,18 @@ const loadPodcastList = (next = true, toEnd = false, toStart = false) => {
   toggleVisibility(".podcast-nav-box", "hidden");
   toggleVisibility(".podcast-box-skeleton", "visible");
 
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", "/podcast" + URL);
-  xhr.send();
-
-  xhr.onload = () => {
-    toggleVisibility(".podcast-box-skeleton", "hidden");
-    toggleVisibility(".podcast-box-area", "visible");
-    toggleVisibility(".podcast-nav-box", "visible");
-    document.getElementById("podcast-container").outerHTML = xhr.responseText;
-    document.getElementById("pod-list-page-num").textContent = currPageNum;
-  };
+  if (fromSearchBar) {
+    searchPodcast(currPageNum);
+  } else {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/podcast" + URL);
+    xhr.send();
+    xhr.onload = () => {
+      toggleVisibility(".podcast-box-skeleton", "hidden");
+      toggleVisibility(".podcast-box-area", "visible");
+      toggleVisibility(".podcast-nav-box", "visible");
+      document.getElementById("podcast-container").outerHTML = xhr.responseText;
+      document.getElementById("pod-list-page-num").textContent = currPageNum;
+    };
+  }
 };

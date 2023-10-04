@@ -18,6 +18,15 @@ class PodcastService {
         return $podcasts;
     }
 
+    public function getAllCreatorName() {
+        $creator_names_data = $this->podcast_model->getAllCreatorName();
+        $creator_names = array();
+        foreach($creator_names_data as $creator_name) {
+            array_push($creator_names, $creator_name->creator_name);
+        }
+        return $creator_names;
+    }
+
     public function getPodcast($limit = 10, $page = 1) {
         return $this->podcast_model->getPodcast($limit, $page);
     }
@@ -31,8 +40,9 @@ class PodcastService {
         return $podcast_data;
     }
 
-    public function getPodcastBySearch($search_key) {
-        $podcasts_data = $this->podcast_model->getPodcastBySearch($search_key);
+    public function getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page = 1, $limit = 10) {
+
+        $podcasts_data = $this->podcast_model->getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, $limit);
         $podcasts = array();
         foreach ($podcasts_data as $data) {
           array_push($podcasts, $data);

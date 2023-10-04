@@ -1,6 +1,7 @@
 <?php
 
 require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
+require_once BASE_URL . "/src/app/helpers/SanitizeHelper.php";
 require_once SERVICES_DIR . "/podcast/index.php";
 require_once SERVICES_DIR . "/upload/index.php";
 require_once SERVICES_DIR . "/category/index.php";
@@ -26,6 +27,8 @@ class PodcastController extends BaseController
 
                 $data["podcasts"] = $this->podcast_service->getPodcast(4, 1);
                 $data["total_rows"] = $this->podcast_service->getTotalRows();
+                $data['categories'] = $this->category_service->getAllCategoryNames();
+                $data['creators'] = $this->podcast_service->getAllCreatorName();
 
                 if ($isAjax) {
                     $this->view("pages/podcast/index", $data);
@@ -71,7 +74,7 @@ class PodcastController extends BaseController
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-                    $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
+                    $page = Sanitizer::sanitizeIntParam("page");
 
                     $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, $page);
 
@@ -91,10 +94,11 @@ class PodcastController extends BaseController
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
-                    $page = isset($_GET["page"]) ? filter_var($_GET["page"], FILTER_SANITIZE_NUMBER_INT) : 1;
+                    $page = Sanitizer::sanitizeIntParam("page");
 
                     $data["podcasts"] = $this->podcast_service->getPodcast(4, $page);
                     $data["total_rows"] = $this->podcast_service->getTotalRows();
+                    $data["is_ajax"] = true;
 
                     $this->view('pages/podcast/index', $data);
                     return;
@@ -109,16 +113,36 @@ class PodcastController extends BaseController
         }
     }
 
-    // /search?key=
+    // for search bar
     public function search() {
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
-                    $search_key = isset($_GET["key"]) ? filter_var($_GET["key"], FILTER_SANITIZE_STRING) : "";
+                    $q = Sanitizer::sanitizeStringParam("q");
 
-                    $data['podcasts'] = $this->podcast_service->getPodcastBySearch($search_key);
 
-                    $this->view("layouts/default", $data);
+                    $sort_method = Sanitizer::sanitizeStringParam("sort");
+                    $sort_key = Sanitizer::sanitizeStringParam("key");
+                    $filter_names = Sanitizer::sanitizeStringArrayParam("filter_name");
+                    $filter_categories_name = Sanitizer::sanitizeStringArrayParam("filter_category");
+                    $page_requested = Sanitizer::sanitizeIntParam("page");
+                    $page = $page_requested == "" ? 1 : $page_requested;
+
+                    $filter_categories = array();
+                    if (!empty($filter_categories_name)) {
+                        foreach ($filter_categories_name as $name) {
+                            $cat_id = $this->category_service->getCategoryIdByName($name);
+                            array_push($filter_categories, $cat_id);
+                        }
+                    } else {
+                        $filter_categories = [];
+                    }
+
+                    list($data['total_rows'], $data['podcasts']) = $this->podcast_service->getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, 4);
+
+                    $data['is_ajax'] = true;
+
+                    $this->view('pages/podcast/index', $data);
                     return ResponseHelper::HTTP_STATUS_OK;
 
                 default:
@@ -133,9 +157,9 @@ class PodcastController extends BaseController
 
     // /edit/{id}
     public function edit($id) {
-        try {
-            if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+        Middleware::checkIsAdmin();
 
+        try {
             $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
             switch ($_SERVER["REQUEST_METHOD"]) {
@@ -183,8 +207,9 @@ class PodcastController extends BaseController
 
     // /add
     public function add() {
+        Middleware::checkIsAdmin();
+
         try {
-            if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     $data["type"] = "create";
@@ -216,7 +241,7 @@ class PodcastController extends BaseController
 
     // /upload
     public function upload() {
-        if (!Middleware::isAdmin()) throw new Exception("Unauthorized");
+        Middleware::checkIsAdmin();
 
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {

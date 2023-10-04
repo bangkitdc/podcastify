@@ -22,6 +22,38 @@ function baseSelect($options, $selected_value, $id = "", $is_required = true, $c
     ';
 }
 
+function baseCheckbox($options, $selected_values, $id = "", $label = "", $is_required = true, $class = "") {
+    $checkboxes_options = $options;
+    array_unshift($checkboxes_options, "All");
+
+    echo '
+    <div class="base-checkbox-box" id="' . $id . '">
+
+        <input class="base-checkbox-blank-field" type="text" value="' . $label . '" id="checkbox-blank-field-' . $id . '" disabled />
+        <div class="base-checkbox ' . $class . '" name="' . $id . '">
+        ';
+        $checked = ($selected_values == "All") ? 'checked' : '';
+        foreach ($checkboxes_options as $opt) {
+            echo
+            '
+                <div class="checkboxes-box">
+                    <input type="checkbox" value="' . $opt . '" id="checkbox-' . $id . '" ' . $checked . '/>
+                    <label for="checkbox-' . $id . '">' . $opt . '</label>
+                </div>
+
+            ';
+        }
+
+    echo
+    '
+        </div>
+        <div class="base-checkbox-arrow-icon" id="base-checkbox-arrow-' . $id . '">
+            <img src="' . ICONS_DIR . 'down-arrow-black.svg" />
+        </div>
+    </div>
+    ';
+}
+
 function echoSelectJS()
 {
     echo '
