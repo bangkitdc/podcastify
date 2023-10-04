@@ -49,7 +49,6 @@ document.getElementById("file-upload").addEventListener("change", function () {
 
       let xhr = uploadPodcastImage(url, true, formData);
       xhr.onload = () => {
-        console.log(xhr.responseText);
         document.getElementById("preview-image-filename").value =
           xhr.responseText;
       };
@@ -71,7 +70,7 @@ setupModal("manage-modal-save", "save-modal-cancel", "save-modal-ok");
 setupModal("manage-modal-delete", "delete-modal-cancel", "delete-modal-ok");
 
 if (document.getElementById("podcast-category-selection")) {
-    setupSelect("podcast-category-selection");
+  setupSelect("podcast-category-selection");
 }
 
 const handleFormSubmit = (formId, callback) => {
@@ -140,7 +139,6 @@ handleFormSubmit("create-podcast", function () {
 
     let xhr = createPodcast(formData);
     xhr.onload = () => {
-      console.log(xhr.responseText);
       window.location.href = "/podcast";
     };
   });
@@ -184,7 +182,6 @@ handleFormSubmit("update-form", function () {
 
     let xhr = updatePodcast(json, podcastId);
     xhr.onload = () => {
-      console.log(xhr.responseText);
       window.location.href = "/podcast";
     };
   });
@@ -198,7 +195,6 @@ if (document.getElementById("delete-podcast")) {
       let podcastId = document.getElementById("podcast-id").value;
       let xhr = deletePodcast(podcastId);
       xhr.onload = () => {
-        console.log(xhr.responseText);
         window.location.href = "/podcast";
       };
     });
