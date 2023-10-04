@@ -9,17 +9,17 @@ class UserController extends BaseController {
         try {
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
-                    Middleware::checkIsLoggedIn();
-                    Middleware::checkIsAdmin();
-
                     $this->list();
-                    return;
+                    break;
                 case "POST":
-                    // $this->logout();
-                return;
+                    $this->logout();
+                    break;
+                // case "PATCH":
+                //     $this->status();
+                //     break;
                 default:
                     // response_not_allowed_method();
-                    return;
+                    break;
             }
         } catch (Exception $e) {
             if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
@@ -34,6 +34,9 @@ class UserController extends BaseController {
     public function list()
     {
         try {
+            Middleware::checkIsLoggedIn();
+            Middleware::checkIsAdmin();
+
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
                     $userService = new UserService();
@@ -42,34 +45,116 @@ class UserController extends BaseController {
                     $data["totalUsers"] = $userService->getTotalUsers();
 
                     $this->view('layouts/default', $data);
-                    return;
+                    break;
                 default:
                     ResponseHelper::responseNotAllowedMethod();
-                    return;
+                    break;
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
-            // $this->view('layouts/error');
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+            http_response_code($e->getCode());
+            exit;
+        }
+    }
+
+    public function edit($id)
+    {
+        try {
+            Middleware::checkIsLoggedIn();
+            Middleware::checkIsAdmin();
+
+            $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case "GET":
+                    $userService = new UserService();
+
+                    $data = $userService->getUser($id);
+
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                    header('Content-Type: application/json');
+                    echo json_encode($data);
+                    break;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+            }
+        } catch (Exception $e) {
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+            http_response_code($e->getCode());
+            exit;
+        }
+    }
+
+    public function status()
+    {
+        try {
+            Middleware::checkIsLoggedIn();
+            Middleware::checkIsAdmin();
+
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case "PATCH":
+                    $data = json_decode(file_get_contents('php://input'), true);
+
+                    $userId = filter_var($data['user_id'], FILTER_VALIDATE_INT);
+
+                    $allowedStatus = [0, 1];
+                    if (!in_array($data['status'], $allowedStatus)) {
+                        throw new Exception('Invalid user status value', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+                    }
+                    $userStatus = $data['status'];
+
+                    $userService = new UserService();
+                    $userService->updateStatus($userId, $userStatus);
+
+                    $response = array("success" => true, "status_message" => "User status updated successfully.");
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+                    // Set the Content-Type header to indicate JSON
+                    header('Content-Type: application/json');
+
+                    // Return the JSON response
+                    echo json_encode($response);
+                    break;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+            }
+        } catch (Exception $e) {
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+            http_response_code($e->getCode());
             exit;
         }
     }
 
     public function logout()
     {
-        switch ($_SERVER['REQUEST_METHOD']) {
-            case "POST":
-                if (!(isset($_SESSION['username']) && isset($_SESSION['userId']))) {
-                    RedirectHelper::redirectHome();
-                    return;
-                }
+        try {
+            Middleware::checkIsLoggedIn();
 
-                $authService = new AuthService();
-                $authService->logout();
-                RedirectHelper::redirectHome();
-                return;
-            default:
-                ResponseHelper::responseNotAllowedMethod();
-                return;
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case "POST":
+
+                    $authService = new AuthService();
+                    $authService->logout();
+                    RedirectHelper::redirectHome();
+                    break;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+            }
+        } catch (Exception $e) {
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+            http_response_code($e->getCode());
+            exit;
         }
     }
 }

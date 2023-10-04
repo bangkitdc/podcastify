@@ -24,7 +24,7 @@ class User {
 
     public function findById($userId) 
     {
-        $query = "SELECT * From users WHERE user_id = :userId AND role_id = 2";
+        $query = "SELECT * From users WHERE user_id = :userId";
 
         $this->db->query($query);
         $this->db->bind("userId", $userId);
@@ -35,7 +35,7 @@ class User {
 
     public function findByUsername($username) 
     {
-        $query = "SELECT * FROM users WHERE username = :username AND role_id = 2";
+        $query = "SELECT * FROM users WHERE username = :username";
         $this->db->query($query);
         $this->db->bind('username', $username);
         $result = $this->db->fetch();
@@ -45,7 +45,7 @@ class User {
 
     public function findByEmail($email) 
     {
-        $query = "SELECT * FROM User WHERE email = :email AND role_id = 2";
+        $query = "SELECT * FROM User WHERE email = :email";
 
         $this->db->query($query);
         $this->db->bind('email', $email);
@@ -87,7 +87,7 @@ class User {
     // Check if the email already exists
     private function emailExists($email)
     {
-        $query = "SELECT * FROM users WHERE email = :email AND role_id = 2";
+        $query = "SELECT * FROM users WHERE email = :email";
         $this->db->query($query);
         $this->db->bind('email', $email);
         $this->db->fetch();
@@ -98,7 +98,7 @@ class User {
     // Check if the username already exists
     private function usernameExists($username)
     {
-        $query = "SELECT * FROM users WHERE username = :username AND role_id = 2";
+        $query = "SELECT * FROM users WHERE username = :username";
         $this->db->query($query);
         $this->db->bind('username', $username);
         $this->db->fetch();
@@ -116,7 +116,7 @@ class User {
                                 status = :status, 
                                 avatar_url = :avatar_url, 
                                 role_id = :role_id 
-                            WHERE user_id = :user_id AND role_id = 2";
+                            WHERE user_id = :user_id";
 
         $this->db->query($query);
         $this->db->bind('email', $email);
@@ -142,29 +142,16 @@ class User {
         $this->db->execute();
     }
 
-    public function activateUser($userId)
+    public function updateStatus($userId, $status)
     {
         $query = "
             UPDATE users 
-            SET status = 1
-            WHERE user_id = :user_id AND role_id = 2
+            SET status = :status
+            WHERE user_id = :user_id
         ";
 
         $this->db->query($query);
-        $this->db->bind('user_id', $userId);
-
-        $this->db->execute();
-    }
-
-    public function deactivateUser($userId)
-    {
-        $query = "
-            UPDATE users 
-            SET status = 0
-            WHERE user_id = :user_id AND role_id = 2
-        ";
-
-        $this->db->query($query);
+        $this->db->bind('status', $status);
         $this->db->bind('user_id', $userId);
 
         $this->db->execute();

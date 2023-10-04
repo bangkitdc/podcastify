@@ -20,9 +20,17 @@ class UserService {
     //     }
     // }
 
-    // public function register($email, $username, $password) {
-    //     $user = new User();
-    // }
+    public function getUser($userId)
+    {
+        $data = $this->user->findById($userId);
+
+        if (!isset($data)) {
+            throw new Exception("User not found", ResponseHelper::HTTP_STATUS_NOT_FOUND);
+        }
+
+        return $data;
+    }
+
     public function getUsers($page = 1, $limit = 10)
     {
         return $this->user->findAll($page, $limit);
@@ -36,5 +44,10 @@ class UserService {
     public function updateLastLogin($userId)
     {
         $this->user->updateLastLogin($userId);
+    }
+
+    public function updateStatus($userId, $status)
+    {
+        $this->user->updateStatus($userId, $status);
     }
 }

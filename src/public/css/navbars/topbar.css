@@ -5,6 +5,7 @@
   justify-content: space-between;
   padding: 1rem 0rem;
   align-items: center;
+  z-index: 2;
 }
 
 .btn-flex {
@@ -97,6 +98,7 @@
   position: fixed;
   top: 4rem;
   right: 14rem;
+  z-index: 2;
   display: none;
 }
 
@@ -108,6 +110,7 @@
   border-radius: var(--rounded);
   position: absolute;
   top: 100%;
+  z-index: 2;
   box-shadow: var(--shadow-lg);
   width: 180px;
 }

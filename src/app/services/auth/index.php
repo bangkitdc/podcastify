@@ -32,7 +32,7 @@ class AuthService {
         $userService->updateLastLogin($user->user_id);
 
         $_SESSION['username'] = $username;
-        $_SESSION['userId'] = $user->user_id;
+        $_SESSION['user_id'] = $user->user_id;
         $_SESSION['role'] = $role;
 
         return "SUCCESS";

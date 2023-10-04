@@ -21,7 +21,7 @@
 
   <div class="title">
     <h2>Users List</h2>
-    <p>Manage Podcastify user</p>
+    <p>Manage Podcastify Users</p>
   </div>
 
   <?php
@@ -39,47 +39,58 @@
   $index = 1;
 
   foreach ($users as $user) {
+    $dataContext = [
+      "number",
+      "user_avatar",
+      "username",
+      "fulllname",
+      "email",
+      "last_login",
+      "status"
+    ];
+
     $data = [
       $index,
       $user->avatar_url ? STORAGE::getFileUrl(STORAGE::USER_AVATAR_PATH, $user->avatar_url) : IMAGES_DIR . "avatar-template.png",
       $user->username,
       $user->first_name . " " . $user->last_name,
       $user->email,
-      timeAgo($user->last_login),
+      timeAgo($user->last_login), // utility function
       $user->status == 1 ? "Active" : "Inactive"
     ];
 
-    echoTableContent($data);
+    echoTableContent($dataContext, $data, "showModalEditStatusUser(" . $user->user_id . ", 'userModalUpdate')", "_user_" . $user->user_id);
 
     $index++;
   }
 
   echoClosingTag();
+
+  require_once COMPONENTS_SHARES_DIR . 'modals/updateModal.php';
+
+  echoUpdateModalTop("userModalUpdate")
   ?>
 
-  <div class="modal" id="myModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-      <div class="modal-title">
-        User details
-        <div class="close-button-modal">
-          <img src="<?= ICONS_DIR ?>close.svg" alt="Close Button">
-        </div>
-      </div>
-      <div class="modal-body">
-        <img class="modal-image" src="<?= IMAGES_DIR ?>avatar-template.png" alt="Profile Image">
-        <div class="modal-form">
-          <?php
-            require_once VIEWS_DIR . "/components/shares/inputs/text.php";
-            echoInputText("email", 1);
-
-            echoJsFile();
-          ?>
-        </div>
-      </div>
-      <div class="modal-footer">
-        By proceeding, you agree to change Podcastify users's status. Please make sure you have the rights.
+  <form method="" class="modal-body" id="userModalUpdate-form">
+    <img class="modal-image" src="" alt="Profile Image">
+    <div class="modal-form">
+      <input type="hidden" name="user_id" id="userModalUpdate-user_id" value="">
+      <select class="option-bar" name="status" id="userModalUpdate-status">
+        <option value="1" selected>Active</option>
+        <option value="0">Inactive</option>
+      </select>
+      <div class="btn-wrapper">
+        <button type="submit" class="btn secondary btn-save">Save</button>
       </div>
     </div>
-  </div>
+  </form>
+
+  <?php
+    $description = "By proceeding, you agree to change Podcastify users's status. Please make sure you have the rights.";
+    echoUpdateModalBottom($description);
+  ?>
+
 </div>
+
+<script src="<?= JS_DIR ?>/components/modal.js"></script>
+<script src="<?= JS_DIR ?>/user/list.js"></script>

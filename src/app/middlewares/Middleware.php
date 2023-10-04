@@ -24,7 +24,7 @@ class Middleware {
 
     public static function isLoggedIn() 
     {
-        if (isset($_SESSION['username']) && isset($_SESSION['userId'])) {
+        if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
             return true;
         }
 
@@ -40,7 +40,7 @@ class Middleware {
 
     public static function checkIsLoggedIn()
     {
-        if (!isset($_SESSION['username']) && !isset($_SESSION['userId'])) {
+        if (!isset($_SESSION['username']) && !isset($_SESSION['user_id'])) {
             throw new Exception('Unauthorized', ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
         }
     }
