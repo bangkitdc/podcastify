@@ -42,7 +42,7 @@
                         baseCheckbox($creator_opt, $podcast_creator, 'podcast-search-creator-selection', "Filter Creator");
                     echo '</div>';
                     echo '<div><p>Sort By</p>';
-                    baseSelect($sort_opt, $sort_by, 'podcast-search-sort-selection');
+                        baseSelect($sort_opt, $sort_by, 'podcast-search-sort-selection');
                     echo '</div>';
                 echo '</div>';
                 echo '
