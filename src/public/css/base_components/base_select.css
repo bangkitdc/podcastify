@@ -5,25 +5,25 @@
   align-items: center;
 
   .base-select {
+    background-color: var(--clr-background-highlight-one);
     border-radius: 12px;
-    color: black;
-    padding: 4px 8px;
+    color: white;
+    padding: 8px 12px;
     outline: none;
-    border: 2px solid;
     font-size: 1rem;
     padding-inline-end: 40px;
     appearance: none;
-    font-size: 1.2rem;
     -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
 
     &:hover {
-      border-color: white;
+      box-shadow: 0 0 0 2px #fff;
     }
 
     > option {
-      color: black;
+      background-color: var(--clr-background-highlight-two);
+      color: white;
     }
   }
 
@@ -54,16 +54,20 @@
   }
 
   .base-checkbox-blank-field {
-    background-color: white;
-    color: black;
+    background-color: var(--clr-background-highlight-one);
+    color: white;
     border: none;
     border-radius: 15px;
     padding: 8px 12px;
-    font-size: 1.2rem;
+    font-size: 1rem;
+
+    &:hover {
+      box-shadow: 0 0 0 2px #fff;
+    }
   }
 
   .base-checkbox {
-    background-color: white;
+    background-color: var(--clr-background-highlight-two);
     position: absolute;
     z-index: 100;
     display: none;
@@ -73,8 +77,8 @@
     border-radius: 5px;
     .checkboxes-box {
       > label {
-        color: black;
-        font-size: 1.2rem;
+        color: white;
+        font-size: 1rem;
       }
     }
   }
