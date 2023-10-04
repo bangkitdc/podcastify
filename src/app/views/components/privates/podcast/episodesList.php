@@ -27,7 +27,7 @@ function episodeList($episodes = null, $is_skeleton = false, $click_evt = "") {
 
         $data = [
         $index,
-        Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $episode->image_url),
+        Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url),
         $episode->title,
         "",
         $episode->description,
