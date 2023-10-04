@@ -42,6 +42,18 @@
       display: flex;
       align-items: center;
       padding: 10px 0px;
+      transition: all 0.3s ease;
+      border-radius: 15px;
+      cursor: pointer;
+      padding: 4px 8px;
+
+      &:hover {
+        background-color: var(--clr-background-highlight-one);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
 
       .eps-data {
         margin-left: 12px;
