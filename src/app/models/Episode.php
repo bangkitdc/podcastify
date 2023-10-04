@@ -57,6 +57,14 @@ class Episode {
     $this->db->bind(":audio_url", $audio_url);
 
     $this->db->execute();
+
+    if ($this->db->rowCount() > 0) {
+        $query = "UPDATE podcasts SET total_eps = total_eps + 1 WHERE podcast_id = :podcast_id";
+
+        $this->db->query($query);
+        $this->db->bind(":podcast_id", $podcast_id);
+        $this->db->execute();
+    }
   }
 
   public function deleteEpisode($episode_id) {
@@ -81,7 +89,7 @@ class Episode {
     $this->db->bind(":audio_url", $audio_url);
 
     $this->db->execute();
-    
+
   }
 
 }
