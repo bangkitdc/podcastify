@@ -3,19 +3,45 @@
 require_once BASE_URL . '/src/config/storage.php';
 
 function episodeList($episodes = null, $is_skeleton = false, $click_evt = "") {
+    require_once VIEWS_DIR . "/components/shares/tables/primary.php";
+    $dataHeader = ["Episode Title", "Description", "Duration", "Created At"];
+
+    echoTableHeader($dataHeader);
+
+    $index = 1;
+
     foreach ($episodes as $episode) {
-        $image_url = Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $episode->image_url);
-        echo
-        "
-            <div class=\"eps-row-content\" onclick=\"goToEpisodeDetail($episode->episode_id)\">
-                <img src=\"$image_url\" alt=\"episodeImage\" class=\"eps-img\">
-                <div class=\"eps-data\">
-                    <p class=\"eps-title\">$episode->title</p>
-                    <p class=\"eps-desc\">$episode->description</p>
-                </div>
-            </div>
-        ";
+        $datetime = new DateTime($episode->created_at);
+        $datetime->setTimezone(new DateTimeZone('Asia/Jakarta'));
+        $formatted_time = $datetime->format('Y-m-d H:i:s');
+
+        $dataContext = [
+        "number",
+        "thumbnail",
+        "eps_title",
+        "",
+        "eps_description",
+        "duration",
+        "created_at"
+        ];
+
+        $data = [
+        $index,
+        Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url),
+        $episode->title,
+        "",
+        $episode->description,
+        $episode->duration,
+        $formatted_time
+        ];
+
+        echoTableContent($dataContext, $data, "goToEpisodeDetail($episode->episode_id)");
+
+        $index++;
     }
+
+
+    echoClosingTag();
 }
 
 function echoEpsListJS(){
