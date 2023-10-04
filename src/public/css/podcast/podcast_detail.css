@@ -51,6 +51,10 @@
         background-color: var(--clr-background-highlight-one);
       }
 
+      &:active {
+        transform: scale(0.95);
+      }
+
       .eps-data {
         margin-left: 12px;
       }
