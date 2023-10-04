@@ -20,9 +20,11 @@ function episode_detail($episode = null)
         <p class=\"episode-detail-head-title\">$title</p>
         <p class=\"episode-detail-head-duration\">$duration minutes</p>
         <button class=\"episode-detail-head-button\">
-          <img src=\"/src/public/assets/icons/play_circle.png\">
+        <img src=\"" . ICONS_DIR . "/play.svg\" />
         </button>
-        <button type=\"button\" onclick=\"window.location.href = '/episode/$id?edit=true'\">Edit</button>
+        <button type=\"button\" onclick=\"showEditEpisode($id)\">
+        <img src=\"" . ICONS_DIR . "/edit.svg\" />
+        </button>
       </div>
 
       <div class=\"episode-detail-line\">
@@ -49,9 +51,11 @@ function episode_detail($episode = null)
         <p class=\"episode-detail-head-title\">$title</p>
         <p class=\"episode-detail-head-duration\">$duration minutes</p>
         <button class=\"episode-detail-head-button\">
-          <img src=\"/src/public/assets/icons/play_circle.png\">
+        <img src=\"" . ICONS_DIR . "/play.svg\" />
         </button>
-        <button type=\"button\" onclick=\"window.location.href = '/episode/$id/?edit=true'\">Edit</button>
+        <button type=\"button\" onclick=\"showEditEpisode($id)\">
+        <img src=\"" . ICONS_DIR . "/edit.svg\" />
+        </button>
       </div>
 
       <div class=\"episode-detail-line\">
@@ -70,6 +74,10 @@ function episode_detail($episode = null)
       </div>
     ";
   }
+
+  echo '
+        <script src="' . JS_DIR . 'episode/episode.js"></script>
+  ';
 };
 
 function formatDate($dateString)
@@ -79,7 +87,7 @@ function formatDate($dateString)
   $day = $dateTime->format('d');
   $month = $dateTime->format('F');
   $year = $dateTime->format('Y');
-  $dayName = $dateTime->format('l');  
+  $dayName = $dateTime->format('l');
 
-  return $dayName . ', ' . $day . ' '. $month . ' ' . $year;
+  return $dayName . ', ' . $day . ' ' . $month . ' ' . $year;
 }

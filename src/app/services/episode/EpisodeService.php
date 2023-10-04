@@ -39,8 +39,8 @@ class EpisodeService {
     return $episodes;
   }
 
-  public function getAllEpisodeCard() {
-    $episode_card_data = $this->episode_model->findAllEpisodeCard();
+  public function getAllEpisodeCard($page = 1, $limit = 10) {
+    $episode_card_data = $this->episode_model->findAllEpisodeCard($page, $limit);
 
     $episode_cards = array();
 

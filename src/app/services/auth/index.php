@@ -1,5 +1,6 @@
 <?php
 require_once MODELS_DIR . 'User.php';
+require_once SERVICES_DIR . 'user/index.php';
 
 class AuthService {
     public function login($username, $password) {
@@ -26,8 +27,12 @@ class AuthService {
             $role = "admin"; 
         }
 
+        // Update last login
+        $userService = new UserService();
+        $userService->updateLastLogin($user->user_id);
+
         $_SESSION['username'] = $username;
-        $_SESSION['userId'] = $user->user_id;
+        $_SESSION['user_id'] = $user->user_id;
         $_SESSION['role'] = $role;
 
         return "SUCCESS";

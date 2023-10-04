@@ -1,8 +1,8 @@
-EPISODE_BASE_URL = '/episode';
+EPISODE_BASE_URL = '/episode/';
 
-const createEpisdoe = (formData) => {
+const createEpisode = (formData) => {
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", EPISODE_BASE_URL + "/add", true);
+  xhr.open("POST", EPISODE_BASE_URL + "add", true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(formData);
 
@@ -11,7 +11,7 @@ const createEpisdoe = (formData) => {
 
 const updateEpisode = (json, episodeId) => {
   let xhr = new XMLHttpRequest();
-  console.log(EPISODE_BASE_URL + "/" + episodeId + "?edit=true");
+  console.log(EPISODE_BASE_URL + episodeId + "?edit=true");
   xhr.open("PATCH", EPISODE_BASE_URL + "/" + episodeId + "?edit=true", true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(json);
@@ -20,7 +20,7 @@ const updateEpisode = (json, episodeId) => {
 
 const deleteEpisode = (episodeId) => {
   let xhr = new XMLHttpRequest();
-  xhr.open("DELETE", EPISODE_BASE_URL + "/" + episodeId);
+  xhr.open("DELETE", EPISODE_BASE_URL + episodeId);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send();
   return xhr;
@@ -65,7 +65,7 @@ handleFormSubmit("add-episode-form", function() {
     document.getElementById("episode-description-input").value
   )
 
-  let xhr = createEpisdoe(formData);
+  let xhr = createEpisode(formData);
   console.log(xhr);
   xhr.onload = () => {
     console.log(xhr.responseText);

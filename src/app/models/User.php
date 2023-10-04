@@ -12,7 +12,7 @@ class User {
 
     public function findAll($page = 1, $limit = 10) 
     {
-        $query = "SELECT * FROM users WHERE  ORDER BY username LIMIT $limit OFFSET :offset";
+        $query = "SELECT * FROM users WHERE role_id = 2 ORDER BY user_id LIMIT $limit OFFSET :offset";
         $this->db->query($query);
 
         $offset = ($page - 1) * $limit;
@@ -106,9 +106,17 @@ class User {
         return $this->db->rowCount() > 0;
     }
 
-    public function update($email, $username, $hashedPassword, $firstName, $lastName, $status, $avatarURL, $roleId)
+    public function update($userId, $email, $username, $hashedPassword, $firstName, $lastName, $status, $avatarURL, $roleId)
     {
-        $query = "INSERT INTO users (email, username, password, first_name, last_name, status, avatar_url, role_id) VALUES (:email, :username, :password, :first_name, :last_name, :status, :avatar_url, :role_id)";
+        $query = "UPDATE users SET email = :email, 
+                                username = :username, 
+                                password = :password, 
+                                first_name = :first_name, 
+                                last_name = :last_name, 
+                                status = :status, 
+                                avatar_url = :avatar_url, 
+                                role_id = :role_id 
+                            WHERE user_id = :user_id";
 
         $this->db->query($query);
         $this->db->bind('email', $email);
@@ -119,33 +127,31 @@ class User {
         $this->db->bind('status', $status);
         $this->db->bind('avatar_url', $avatarURL);
         $this->db->bind('role_id', $roleId);
+        $this->db->bind('user_id', $userId); // Assuming you have a user_id to identify the user you want to update
 
         $this->db->execute();
     }
 
-    public function activateUser($userId)
+    public function updateLastLogin($userId)
     {
-        $query = "
-            UPDATE users 
-            SET status = 1
-            WHERE user_id = :user_id
-        ";
+        $query = "UPDATE users SET last_login = NOW() 
+                            WHERE user_id = :user_id";
 
         $this->db->query($query);
         $this->db->bind('user_id', $userId);
-
         $this->db->execute();
     }
 
-    public function deactivateUser($userId)
+    public function updateStatus($userId, $status)
     {
         $query = "
             UPDATE users 
-            SET status = 0
+            SET status = :status
             WHERE user_id = :user_id
         ";
 
         $this->db->query($query);
+        $this->db->bind('status', $status);
         $this->db->bind('user_id', $userId);
 
         $this->db->execute();
@@ -153,7 +159,7 @@ class User {
 
     public function getTotalRows()
     {
-        $query = "SELECT * FROM users";
+        $query = "SELECT * FROM users WHERE role_id = 2";
         $this->db->query($query);
         $this->db->fetch();
 

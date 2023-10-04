@@ -49,6 +49,10 @@ p {
 .episode-detail-head-button img{
   width: inherit;
   height: inherit;
+  background-color: transparent;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .episode-detail-line {

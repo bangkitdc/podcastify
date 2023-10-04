@@ -19,33 +19,42 @@ class EpisodeController extends BaseController
 
     switch ($_SERVER["REQUEST_METHOD"]) {
       case 'GET':
+        $data['episodes'] = [];
+        $data['episode'] = [''];
+
+        $total_episodes = $this->episode_service->getAllEpisode();
+
+        $data['episodes'] = $this->episode_service->getAllEpisodeCard(1,4);
+
+        $data['currentPage'] = 1;
+        $data['totalPages'] = count($total_episodes) / count($data['episodes']);
+
         if (isset($_GET['edit'])) { // go to edit page (?edit)
           $data['episode'] = $this->episode_service->getEpisodeById($id);
+          $this->view("pages/episode/edit_episode", $data);
+          break;
+        } 
+        
+        if (isset($_GET['page'])) {
+          $data['currentPage'] = $_GET['page'];
+          $episodes = $this->episode_service->getAllEpisodeCard($data['currentPage'], 4);
+          $data['episodes'] = $episodes;
 
-          $this->view('layouts/default', $data);
+          $this->view("pages/episode/index", $data);
           break;
         }
 
-        $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
+        // $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
 
-        $episodes = $this->episode_service->getAllEpisodeCard();
         if ($id != null && $id !== 'episode') {
-          $episode = $this->episode_service->getEpisodeDetail($id);
-          $data['episode'] = $episode;
+          $data['episode'] = $this->episode_service->getEpisodeDetail($id);
         }
-
-        $data['episodes'] = $episodes;
-
-        if ($isAjax) {
-          $this->view('pages/episode/detail_episode', $data);
-        } else {
-          $this->view("layouts/default", $data);
-        }
+        
+        $this->view("layouts/default", $data);
         break;
         
       case 'PATCH':
         $data = json_decode(file_get_contents('php://input'), true);
-        var_dump($data);
         $episode_id = $data['episode_id'];
         $title = $data['episode-title-input'];
         $description = $data['episode-description-input'];
@@ -57,6 +66,7 @@ class EpisodeController extends BaseController
         break;
       case 'DELETE':
         $this->episode_service->deleteEpisode($id);
+        break;
     }
   }
 

@@ -22,3 +22,13 @@ const setupModal = (modalId, cancelId, okayId = "") => {
     });
   }
 };
+
+const closeModal = (modalId) => {
+  var modal = document.getElementById(modalId);
+  modal.style.display = "none";
+}
+
+const openModal = (modalId) => {
+  var modal = document.getElementById(modalId);
+  modal.style.display = "block";
+}
