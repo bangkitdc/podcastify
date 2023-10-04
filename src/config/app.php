@@ -41,6 +41,7 @@ class App {
         if (!class_exists($controllerClassName)) {
             require_once BASE_DIR . 'ErrorController.php';
             $controllerClassName = 'ErrorController';
+            $this->controller = new $controllerClassName;
         }
 
         $this->controller = new $controllerClassName;

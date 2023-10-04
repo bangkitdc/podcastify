@@ -44,6 +44,7 @@
             paginationEpsNav($podcast, $total_pages);
 
         echo "</section>";
+        echoEpsListJS();
     ?>
   </div>
 </div>
