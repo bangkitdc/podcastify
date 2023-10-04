@@ -1,5 +1,5 @@
 <?php
-function episode_card($episode = null, $click_event = '')
+function episode_card($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
   $title = $episode ? $episode->title : '';
@@ -8,21 +8,24 @@ function episode_card($episode = null, $click_event = '')
   $card_type = $episode->image_url ? IMAGES_DIR . $episode->image_url : '';
 
   echo "
-    <div class=\"episode-card\" onclick=\"$click_event\">
-      <div class=\"episode-card-image\">
+    <div class=\"episode-card\" onclick=\"window.location.href='/episode/$id'\">
+    
     ";
   if ($card_type) {
-    echo "<img class=\"card-image\" src=\"$card_type\"/>";
+    echo "
+    <div class=\"episode-img-container\">
+    <img class=\"card-image\" src=\"$card_type\"/>
+    </div>";
   } else {
-    echo "<div class=\"no-card-image\"></div>";
+    echo "
+    <div class=\"episode-no-img-container\">
+    <div class=\"no-card-image\"></div>
+    </div>";
   }
   echo "
-      </div>
-      <div class=\"episode-card-description\">
         <p class=\"episode-card-title\">$title</p>
         <p class=\"episode-card-creator\">$creator</p>
         <p class=\"episode-card-duration\">{$duration} minutes</p>
-      </div>
     </div>
   ";
 }

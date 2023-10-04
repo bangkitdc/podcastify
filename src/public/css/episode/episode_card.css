@@ -1,38 +1,54 @@
 .episode-list-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  overflow: hidden;
 }
 
 .episode-card {
-  width: 120px;
-  height: 180px;
-  /* border: 2px solid red; */
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  background-color: var(--clr-background-card);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  height: fit-content;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.episode-card-image {
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.episode-card:hover {
+  background-color: var(--clr-background-highlight-two);
+}
+
+.episode-img-container, .episode-no-img-container {
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+}
+
+.episode-no-img-container{
+  background: linear-gradient(90deg, #282828 25%, #383838 50%, #282828 75%);
+  background-size: 100%;
+  animation: loading 1s infinite;
 }
 
 .card-image {
-  text-align: center;
-  max-width: inherit;
-  max-height: 120px;
-  border-radius: 10px;
+  width: 100%;
+  border-radius: 0.35rem;
+  box-shadow: var(--shadow-xl);
+  object-fit: cover;
+  object-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .no-card-image {
-  width: 120px;
-  height: 120px;
-  background-color: gray;
-  border-radius: 10px;
+  width: 100%;
+  border-radius: 0.35rem;
+  box-shadow: var(--shadow-xl);
 }
 
 .episode-card-description {
@@ -48,22 +64,29 @@
 }
 
 .episode-card-title {
-  font-size: 15px;
-  white-space: nowrap; 
-  overflow: hidden; 
+  font-size: 1rem;
+  line-height: 1.5rem;
+  overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .episode-card-creator {
-  font-size: 13px;
-  white-space: nowrap; 
-  overflow: hidden; 
+  font-size: 0.8rem;
+  opacity: 0.5;
+  line-height: 1.5rem;
+  font-weight: 500;
+  overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--clr-text-secondary);
+  white-space: nowrap;
 }
 
 .episode-card-duration {
-  font-size: 12px;
-  font-weight: lighter;
-  color: var(--clr-text-secondary);
+  font-size: 0.8rem;
+  opacity: 0.5;
+  line-height: 1.5rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
