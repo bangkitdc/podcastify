@@ -18,6 +18,15 @@ class PodcastService {
         return $podcasts;
     }
 
+    public function getAllCreatorName() {
+        $creator_names_data = $this->podcast_model->getAllCreatorName();
+        $creator_names = array();
+        foreach($creator_names_data as $creator_name) {
+            array_push($creator_names, $creator_name->creator_name);
+        }
+        return $creator_names;
+    }
+
     public function getPodcast($limit = 10, $page = 1) {
         return $this->podcast_model->getPodcast($limit, $page);
     }
