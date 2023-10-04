@@ -39,15 +39,10 @@ class LoginController extends BaseController {
                     $password = $_POST['password'];
 
                     $authService = new AuthService();
-                    $status = $authService->login($username, $password);
+                    $authService->login($username, $password);
 
-                    if ($status == "SUCCESS") {
-                        $response = array("success" => true, "redirect_url" => "/", "status_message" => "Login Successful.");
-                        http_response_code(ResponseHelper::HTTP_STATUS_OK);
-                    } else {
-                        $response = array("success" => false, "error_message" => "Login failed.");
-                        http_response_code(ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
-                    }
+                    $response = array("success" => true, "redirect_url" => "/", "status_message" => "Login Successful.");
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
                     // Set the Content-Type header to indicate JSON
                     header('Content-Type: application/json');
@@ -61,7 +56,7 @@ class LoginController extends BaseController {
             }
         } catch (Exception $e) {
             http_response_code($e->getCode());
-            $response = array("success" => false, "error_message" => "Login failed");
+            $response = array("success" => false, "error_message" => $e->getMessage());
             echo json_encode($response);
         }
     }
