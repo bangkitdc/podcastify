@@ -1,18 +1,19 @@
 .tables {
   border-collapse: collapse;
   margin: 0 auto;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   width: 100%;
 }
 
 .tables td,
 .tables th {
-  border: none;
   color: var(--clr-text-secondary);
   font-weight: 500;
   font-size: 14px;
   padding-left: 10px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .content-tables {
@@ -22,10 +23,6 @@
 .content-tables:hover {
   background-color: var(--clr-background-highlight-two);
   cursor: pointer;
-}
-
-.tables th, td {
-  text-align: left;
 }
 
 .tables th {
@@ -74,5 +71,5 @@
   color: var(--clr-text-secondary);
   font-weight: 500;
   font-size: 12px;
-  line-height: 10px;
+  line-height: 14px;
 }

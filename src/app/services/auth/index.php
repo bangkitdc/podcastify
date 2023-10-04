@@ -7,18 +7,17 @@ class AuthService {
         $user = new User();
 
         if (preg_match('/\s/', $username)) {
-            return "USERNAME CONTAINS WHITESPACE";
+            throw new Exception("Username contains whitespace", ResponseHelper::HTTP_STATUS_BAD_REQUEST);
         }
 
         $user = $user->findByUsername($username);
-    
-        /* if user doesn't exists */
-        if (!$user){
-            return "USER NOT FOUND";
+
+        if (!$this->checkPassword($password, $user->password) || !$user) {
+            throw new Exception("Invalid credentials", ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
         }
 
-        if (!$this->checkPassword($password, $user->password)) {
-            return "WRONG PASSWORD";
+        if ($user->status !== 1) {
+            throw new Exception("Your account has been suspended by Admin", ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
         }
 
         $role = "user";
@@ -35,14 +34,14 @@ class AuthService {
         $_SESSION['user_id'] = $user->user_id;
         $_SESSION['role'] = $role;
 
-        return "SUCCESS";
+        return;
     }
 
     public function logout() {
         session_unset();
         session_destroy();
 
-        return "SUCCESS";
+        return;
     }
 
     private function checkPassword($password, $hashedPassword) {

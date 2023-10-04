@@ -4,19 +4,23 @@
 <?php
 
 // $dataHeader = ["Username", "Email", "Last Login", "Status"];
+// sum(percentage) = 95
 
-function echoTableHeader($dataHeader = [])
+function echoTableHeader($dataHeader = [], $percentage = [35, 30, 15, 15])
 {
   echo '
     <table class="tables">
       <tr>
-        <th style="font-size:16px;">#</th>
+        <th style="font-size:16px;" width="5%">#</th>
   ';
-
+  
+  $index = 0;
   foreach ($dataHeader as $d) {
     echo '
-      <th>' . $d . '</th>
+      <th width="' . $percentage[$index] . '%">' . $d . '</th>
     ';
+
+    $index ++;
   }
 
   echo '

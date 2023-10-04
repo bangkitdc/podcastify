@@ -4,71 +4,26 @@
 </head>
 
 <div id="template">
-  <!-- <?php
-        $users = $data['users'];
-        $totalUsers = $data['totalUsers'];
-
-        $totalPages = ceil($totalUsers / 10);
-
-        foreach ($users as $user) {
-          echo '
-        <div>
-          ' . $user->user_id . '
-        </div>
-      ';
-        }
-        ?> -->
-
   <div class="title">
     <h2>Users List</h2>
     <p>Manage Podcastify Users</p>
   </div>
 
+  <div id="user-table">
+    <?php
+      require_once COMPONENTS_PRIVATES_DIR . 'user/tables.php';
+
+      $users = $data['users'];
+      $totalPages = $data['totalPages'];
+      $currentPage = $data['currentPage'];
+      renderUserTable($data['users'], $data['currentPage']);
+    ?>
+  </div>
+
   <?php
-  require_once VIEWS_DIR . "/components/shares/tables/primary.php";
-  require_once COMPONENTS_SHARES_DIR . 'utility/utility.php';
+    require_once COMPONENTS_SHARES_DIR . 'modals/updateModal.php';
 
-  $users = $data['users'];
-  $totalUsers = $data['totalUsers'];
-
-  $totalPages = ceil($totalUsers / 10);
-
-  $dataHeader = ["Username", "Email", "Last Login", "Status"];
-  echoTableHeader($dataHeader);
-
-  $index = 1;
-
-  foreach ($users as $user) {
-    $dataContext = [
-      "number",
-      "user_avatar",
-      "username",
-      "fulllname",
-      "email",
-      "last_login",
-      "status"
-    ];
-
-    $data = [
-      $index,
-      $user->avatar_url ? STORAGE::getFileUrl(STORAGE::USER_AVATAR_PATH, $user->avatar_url) : IMAGES_DIR . "avatar-template.png",
-      $user->username,
-      $user->first_name . " " . $user->last_name,
-      $user->email,
-      timeAgo($user->last_login), // utility function
-      $user->status == 1 ? "Active" : "Inactive"
-    ];
-
-    echoTableContent($dataContext, $data, "showModalEditStatusUser(" . $user->user_id . ", 'userModalUpdate')", "_user_" . $user->user_id);
-
-    $index++;
-  }
-
-  echoClosingTag();
-
-  require_once COMPONENTS_SHARES_DIR . 'modals/updateModal.php';
-
-  echoUpdateModalTop("userModalUpdate")
+    echoUpdateModalTop("userModalUpdate", "User status");
   ?>
 
   <form method="" class="modal-body" id="userModalUpdate-form">
@@ -90,7 +45,22 @@
     echoUpdateModalBottom($description);
   ?>
 
+  <div class="pagination-wrapper">
+    <?php
+    require_once VIEWS_DIR . "components/shares/paginations/primary.php";
+
+    $function = [
+      "loadUserList(true, false, false, false, $totalPages, $currentPage)",
+      "loadUserList(false, true, false, false, $totalPages, $currentPage)",
+      "loadUserList(false, false, true, false, $totalPages, $currentPage)",
+      "loadUserList(false, false, false, true, $totalPages, $currentPage)"
+    ];
+
+    echoPaginationNav("user", $currentPage, $totalPages, $function);
+    ?>
+  </div>
 </div>
 
-<script src="<?= JS_DIR ?>/components/modal.js"></script>
 <script src="<?= JS_DIR ?>/user/list.js"></script>
+<script src="<?= JS_DIR ?>/components/modal.js"></script>
+<script src="<?= JS_DIR ?>/user/pagination.js"></script>

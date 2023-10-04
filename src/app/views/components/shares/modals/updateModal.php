@@ -1,13 +1,15 @@
 <?php
 
-function echoUpdateModalTop($modalId)
+echo '<link rel="stylesheet" href="' . CSS_DIR . 'base_components/modal_update.css">';
+
+function echoUpdateModalTop($modalId, $modalTitle)
 {
   echo '
     <div class="modal" id="' . $modalId . '">
       <div class="modal-overlay" onclick="closeModal(\'' . $modalId . '\')"></div>
       <div class="modal-content">
         <div class="modal-title">
-          User details
+          ' . $modalTitle . '
           <div class="close-button-modal" onclick="closeModal(\'' . $modalId . '\')">
             <img src="' . ICONS_DIR . 'close.svg" alt="Close Button">
           </div>

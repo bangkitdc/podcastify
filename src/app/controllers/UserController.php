@@ -2,6 +2,7 @@
 
 require_once SERVICES_DIR . 'auth/index.php';
 require_once SERVICES_DIR . 'user/index.php';
+require_once COMPONENTS_PRIVATES_DIR . 'user/tables.php';
 
 class UserController extends BaseController {
     public function index()
@@ -40,9 +41,20 @@ class UserController extends BaseController {
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
                     $userService = new UserService();
-                    $page = 1;
-                    $data["users"] = $userService->getUsers($page, 10);
-                    $data["totalUsers"] = $userService->getTotalUsers();
+
+                    $data['currentPage'] = 1;
+                    $totalUsers= $userService->getTotalUsers();
+                    $data['totalPages'] = ceil($totalUsers / 10);
+                    $data["users"] = $userService->getUsers($data['currentPage'], 10);
+
+                    if (isset($_GET['page'])) {
+                        $data['currentPage'] = $_GET['page'];
+                        $data["users"] = $userService->getUsers($data['currentPage'], 10);
+
+                        return renderUserTable($data['users'], $data['currentPage']);
+                    }
+
+                    $data["users"] = $userService->getUsers($data['currentPage'], 10);
 
                     $this->view('layouts/default', $data);
                     break;
