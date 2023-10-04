@@ -45,8 +45,7 @@
   display: flex;
   width: fit-content;
   align-items: center;
-  background-color: red;
-  z-index: 2;
+  z-index: 4;
 
   &.open {
     .base-checkbox {
@@ -57,19 +56,25 @@
   .base-checkbox-blank-field {
     background-color: white;
     color: black;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
   }
 
   .base-checkbox {
     background-color: white;
     position: absolute;
-    z-index: 20000;
+    z-index: 100;
     display: none;
-    top: 70%;
+    margin-top: 3px;
+    top: 100%;
     padding: 8px 12px;
-
+    border-radius: 5px;
     .checkboxes-box {
       > label {
         color: black;
+        font-size: 1.2rem;
       }
     }
   }

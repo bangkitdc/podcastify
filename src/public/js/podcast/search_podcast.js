@@ -1,5 +1,27 @@
 let searchBar = document.getElementById("search-bar");
 
+let filterBtn = document.querySelector(".search-filter-btn");
+
+filterBtn.addEventListener("mousedown", () => {
+  let searchFunctionBox = document.querySelector(".search-function-box");
+
+  if (searchFunctionBox.style.maxWidth !== "0px") {
+    searchFunctionBox.style.maxWidth = "0px";
+    searchFunctionBox.style.overflow = "hidden";
+  } else {
+    searchFunctionBox.style.maxWidth = "100%";
+    searchFunctionBox.style.overflow = "visible";
+  }
+});
+
+searchBar.addEventListener("input", () => {
+  if (searchBar.value != "") {
+    document.querySelector(".clear-search-bar").style.display = "block";
+  } else {
+    document.querySelector(".clear-search-bar").style.display = "none";
+  }
+});
+
 const searchPodcast = (page = 1) => {
   const currentPageNumber = page;
   toggleVisibility(".podcast-box-area", "hidden");
@@ -45,14 +67,20 @@ const searchPodcast = (page = 1) => {
     toggleVisibility(".podcast-box-area", "visible");
     toggleVisibility(".podcast-nav-box", "visible");
     document.getElementById("podcast-container").outerHTML = xhr.responseText;
-    document.getElementById("pod-list-page-num").textContent =
-      currentPageNumber;
+    if (document.getElementById("pod-list-page-num"))
+      document.getElementById("pod-list-page-num").textContent =
+        currentPageNumber;
   };
 };
 
 // This is to catch keyboard event passed down from debounce
 const searchPodcastWrapper = (event) => {
   searchPodcast(1);
+};
+
+const clearSearchBar = () => {
+  searchBar.value = "";
+  document.querySelector(".clear-search-bar").style.display = "none";
 };
 
 if (document.getElementById("podcast-search-category-selection")) {
