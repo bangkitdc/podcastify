@@ -43,12 +43,15 @@ if (!$pathArray[0]) {
                     case 'add':
                         include VIEWS_DIR . "pages/episode/add_episode.php";
                         break;
-                    case 'edit':
-                        include VIEWS_DIR . "pages/episode/edit_episode.php";
                     default:
-                        include VIEWS_DIR . "pages/episode/detail_episode.php";
+                        if(isset($_GET['edit']) && $_GET['edit'] === 'true'){
+                            include VIEWS_DIR . "pages/episode/edit_episode.php";
+                        } else{
+                            include VIEWS_DIR . "pages/episode/detail_episode.php";
+                        }
                         break;
                 }
+                break;
             } else {
                 include VIEWS_DIR . "pages" . $path . "/index.php";
                 break;
