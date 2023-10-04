@@ -48,7 +48,7 @@ function baseCheckbox($options, $selected_values, $id = "", $label = "", $is_req
     '
         </div>
         <div class="base-checkbox-arrow-icon" id="base-checkbox-arrow-' . $id . '">
-            <img src="' . ICONS_DIR . 'down-arrow-black.svg" />
+            <img src="' . ICONS_DIR . 'down-arrow.svg" />
         </div>
     </div>
     ';
