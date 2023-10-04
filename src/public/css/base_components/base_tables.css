@@ -65,6 +65,9 @@
   font-weight: 500;
   font-size: 15px;
   line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .content-second {
@@ -72,4 +75,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -6,7 +6,7 @@
 // $dataHeader = ["Username", "Email", "Last Login", "Status"];
 // sum(percentage) = 95
 
-function echoTableHeader($dataHeader = [], $percentage = [35, 30, 15, 15])
+function echoTableHeader($dataHeader = [], $percentage = [])
 {
   echo '
     <table class="tables">

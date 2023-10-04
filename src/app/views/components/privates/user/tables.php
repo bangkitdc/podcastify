@@ -6,7 +6,7 @@ function renderUserTable($users, $currentPage)
   require_once COMPONENTS_SHARES_DIR . 'utility/utility.php';
 
   $dataHeader = ["Username", "Email", "Last Login", "Status"];
-  echoTableHeader($dataHeader);
+  echoTableHeader($dataHeader, [35, 30, 15, 15]);
 
   $index = 1 + (($currentPage - 1) * 10);
 

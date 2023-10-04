@@ -16,7 +16,7 @@ class AuthService {
             throw new Exception("Invalid credentials", ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
         }
 
-        if ($user->status !== 1) {
+        if ($user->status != 1) {
             throw new Exception("Your account has been suspended by Admin", ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
         }
 
