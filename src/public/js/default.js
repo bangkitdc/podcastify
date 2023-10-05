@@ -16,3 +16,6 @@ sliderEl.addEventListener("input", (event) => {
 
 // Initial update
 updateSliderBackground(sliderEl.value);
+audioPlayer.addEventListener("timeupdate", function () {
+  updateSliderBackground(progressSlider.value);
+})

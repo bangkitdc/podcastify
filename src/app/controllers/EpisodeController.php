@@ -23,115 +23,141 @@ class EpisodeController extends BaseController
 
   public function index($id = null)
   {
+    try {
+      switch ($_SERVER["REQUEST_METHOD"]) {
+        case 'GET':
+          $data['episodes'] = [];
+          $data['episode'] = [''];
 
-    switch ($_SERVER["REQUEST_METHOD"]) {
-      case 'GET':
-        $data['episodes'] = [];
-        $data['episode'] = [''];
+          $total_episodes = $this->episode_service->getAllEpisode();
 
-        $total_episodes = $this->episode_service->getAllEpisode();
+          $data['episodes'] = $this->episode_service->getAllEpisodeCard(1,2);
 
-        $data['episodes'] = $this->episode_service->getAllEpisodeCard(1,4);
+          $data['currentPage'] = 1;
+          $data['totalPages'] = count($total_episodes) / count($data['episodes']);
 
-        $data['currentPage'] = 1;
-        $data['totalPages'] = count($total_episodes) / count($data['episodes']);
+          if (isset($_GET['edit'])) { // go to edit page (?edit)
+            Middleware::checkIsAdmin();
+            $data['episode'] = $this->episode_service->getEpisodeById($id);
+            $this->view("pages/episode/edit_episode", $data);
+            break;
+          }
 
-        if (isset($_GET['edit'])) { // go to edit page (?edit)
-          $data['episode'] = $this->episode_service->getEpisodeById($id);
-          $this->view("pages/episode/edit_episode", $data);
+          if (isset($_GET['page'])) {
+            $data['currentPage'] = $_GET['page'];
+            $episodes = $this->episode_service->getAllEpisodeCard($data['currentPage'],2);
+            $data['episodes'] = $episodes;
+
+            $this->view("pages/episode/index", $data);
+            break;
+          }
+
+          // $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
+
+          if ($id != null && $id !== 'episode') {
+            $data['episode'] = $this->episode_service->getEpisodeDetail($id);
+          }
+
+          $this->view("layouts/default", $data);
           break;
-        }
 
-        if (isset($_GET['page'])) {
-          $data['currentPage'] = $_GET['page'];
-          $episodes = $this->episode_service->getAllEpisodeCard($data['currentPage'], 4);
-          $data['episodes'] = $episodes;
+        case 'PATCH':
+          Middleware::checkIsAdmin();
+          $data = json_decode(file_get_contents('php://input'), true);
+          $episode_id = $data['episode_id'];
+          $title = $data['episode-title-input'];
+          $description = $data['episode-description-input'];
+          $image_url = $data['edit-preview-poster-filename'];
+          $audio_url = $data['edit-audio-filename'];
 
-          $this->view("pages/episode/index", $data);
+          $this->episode_service->updateEpisode($episode_id, $title, $description, $image_url, $audio_url);
+
           break;
-        }
+        case 'DELETE':
+          Middleware::checkIsAdmin();
+          $this->episode_service->deleteEpisode($id);
+          break;
 
-        // $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
-
-        if ($id != null && $id !== 'episode') {
-          $data['episode'] = $this->episode_service->getEpisodeDetail($id);
-        }
-
-        $this->view("layouts/default", $data);
-        break;
-
-      case 'PATCH':
-        $data = json_decode(file_get_contents('php://input'), true);
-        $episode_id = $data['episode_id'];
-        $title = $data['episode-title-input'];
-        $description = $data['episode-description-input'];
-        $image_url = $data['edit-preview-poster-filename'];
-        $audio_url = $data['edit-audio-filename'];
-
-        $this->episode_service->updateEpisode($episode_id, $title, $description, $image_url, $audio_url);
-
-        break;
-      case 'DELETE':
-        $this->episode_service->deleteEpisode($id);
-        break;
+        default:
+          ResponseHelper::responseNotAllowedMethod();
+          return;
+      }
+    } catch (Exception $e) {
+      if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+        $this->view('layouts/error');
+      }
+      http_response_code($e->getCode());
+      exit;
     }
   }
 
   public function add()
   {
-    $podcast_data = $this->podcast_service->getAllPodcast();
+    try {
+      Middleware::checkIsAdmin();
+      $podcast_data = $this->podcast_service->getAllPodcast();
 
-    switch ($_SERVER['REQUEST_METHOD']) {
-      case 'POST':
-        $podcast_id = $_POST['podcast_id'];
-        var_dump($podcast_id);
-        $title = $_POST['episode-title-input'];
-        $description = $_POST['episode-description-input'];
-        $image_file = $_POST['preview-poster-filename'] ?? '';
-        $audio_file = $_POST['audio-filename'] ?? '';
+      switch ($_SERVER['REQUEST_METHOD']) {
+        case 'GET':
+          $podcastMapping = [];
 
-        $this->episode_service->addEpisode($podcast_id, 1, $title, $description, 60, $image_file, $audio_file);
-        break;
+          foreach ($podcast_data as $podcast) {
+            $podcastMapping[$podcast->title] = $podcast->podcast_id;
+          }
 
-      default:
-        break;
+          $data['podcasts'] = $podcastMapping;
+
+          $this->view('layouts/default', $data);
+          break;
+        case 'POST':
+          $podcast_id = $_POST['podcast_id'];
+          var_dump($podcast_id);
+          $title = $_POST['episode-title-input'];
+          $description = $_POST['episode-description-input'];
+          $image_file = $_POST['preview-poster-filename'] ?? '';
+          $audio_file = $_POST['audio-filename'] ?? '';
+
+          $this->episode_service->addEpisode($podcast_id, 1, $title, $description, 60, $image_file, $audio_file);
+          break;
+
+        default:
+          ResponseHelper::responseNotAllowedMethod();
+          return;
+      }
+    } catch (Exception $e) {
+      if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+        $this->view('layouts/error');
+      }
+      http_response_code($e->getCode());
+      exit;
     }
-
-    $podcastMapping = [];
-
-    foreach ($podcast_data as $podcast) {
-      $podcastMapping[$podcast->title] = $podcast->podcast_id;
-    }
-
-    $data['podcasts'] = $podcastMapping;
-
-    $this->view('layouts/default', $data);
   }
 
-  public function upload() {
+  public function upload()
+  {
     Middleware::checkIsAdmin();
 
     $type = Sanitizer::sanitizeStringParam("type");
     try {
-        switch ($_SERVER["REQUEST_METHOD"]) {
-            case "POST":
-                switch ($type) {
-                    case "image":
-                        $this->img_upload_service->upload($type);
-                        break;
-                    case "audio":
-                        $this->audio_upload_service->upload($type);
-                        break;
-                }
-                return;
+      switch ($_SERVER["REQUEST_METHOD"]) {
+        case "POST":
+          switch ($type) {
+            case "image":
+              $this->img_upload_service->upload($type);
+              break;
+            case "audio":
+              $this->audio_upload_service->upload($type);
+              break;
+          }
+          return;
 
-            default:
-                ResponseHelper::responseNotAllowedMethod();
-                break;
-        }
+        default:
+          ResponseHelper::responseNotAllowedMethod();
+          break;
+      }
     } catch (Exception $e) {
-        $this->view('layouts/error');
-        exit;
+      $this->view('layouts/error');
+      exit;
     }
   }
 };
