@@ -1,6 +1,6 @@
 <?php
 
-echo '<link rel="stylesheet" href="' . CSS_DIR . 'base_components/base_modal.css">';
+echo '<link rel="stylesheet" href="' . CSS_DIR . 'base_components/modal.css">';
 
 function infoModal($modal_id, $text, $ok_id, $modal_class = "") {
     echo
@@ -30,5 +30,5 @@ function actionModal($modal_id, $text, $okay_id, $cancel_id, $modal_class = "") 
 }
 
 function echoModalJS() {
-    echo '<script src="' . JS_DIR . 'modal.js"></script>';
+    echo '<script src="' . JS_DIR . 'components/modal.js"></script>';
 }

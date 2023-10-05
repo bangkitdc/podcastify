@@ -33,12 +33,14 @@
 
       <div class="edit-episode-file">
         <p>Change poster file : </p>
-        <?php baseFileUploader("image-file-upload", '', 'preview-image', false) ?>
+        <?php baseImageUploader("edit-poster-file-upload", '', 'edit-preview-poster', false) ?>
+        <input type="hidden" id="edit-preview-poster-filename" name="edit-preview-poster-filename">
       </div>
 
       <div class="edit-episode-file">
         <p>Change audio file : </p>
-        <?php baseFileUploader("audio-file-upload", '', 'preview-image', false) ?>
+        <?php baseAudioUploader("edit-audio-file-upload", '', false) ?>
+        <input type="hidden" id="edit-audio-filename" name="edit-audio-filename">
       </div>
 
 
@@ -66,7 +68,5 @@
       <button form="edit-episode-form" class="confirm-edit-episode-button">Edit Episode</button>
       <button form="delete-episode-form" class="delete-edit-episode-button">Delete Episode</button>
     </div>
-
   </div>
 </div>
-<script src="<?= JS_DIR ?>/episode/handle_upload.js"></script>

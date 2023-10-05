@@ -1,7 +1,4 @@
 <?php
-
-require_once BASE_URL . '/src/config/storage.php';
-
 function episode_card($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
@@ -12,7 +9,7 @@ function episode_card($episode = null)
 
   echo "
     <div class=\"episode-card\" onclick=\"window.location.href='/episode/$id'\">
-
+    
     ";
   if ($card_type) {
     echo "

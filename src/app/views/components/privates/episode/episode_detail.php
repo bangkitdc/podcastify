@@ -1,7 +1,4 @@
 <?php
-
-require_once BASE_URL . '/src/config/storage.php';
-
 function episode_detail($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
@@ -11,58 +8,42 @@ function episode_detail($episode = null)
   $upload_date = $episode ? formatDate($episode->created_at) : '';
   $description = $episode ? $episode->description : '';
 
-  $creator_img = $episode ? IMAGES_DIR . $episode->creator_img : '';
+  $creator_img = $episode ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->creator_img) : '';
   $creator_name = $episode ? $episode->creator_name : '';
+  $audio_file = $episode ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url) : '';
 
+  echo "
+      <div class=\"episode-detail-head\">
+    ";
   if ($poster) {
-    echo "
-      <div class=\"episode-detail-head\">
-        <div class=\"\">
-          <img class=\"episode-detail-head-image\" src=\"$poster\">
-        </div>
-        <p class=\"episode-detail-head-title\">$title</p>
-        <p class=\"episode-detail-head-duration\">$duration minutes</p>
-        <button class=\"episode-detail-head-button\">
-        <img src=\"" . ICONS_DIR . "/play.svg\" />
-        </button>
-        <button type=\"button\" onclick=\"showEditEpisode($id)\">
-        <img src=\"" . ICONS_DIR . "/edit.svg\" />
-        </button>
-      </div>
-
-      <div class=\"episode-detail-line\">
-
-      </div>
-
-      <div class=\"episode-detail-foot\">
-        <p class=\"episode-detail-foot-date\">$upload_date</p>
-        <p class=\"episode-detail-foot-description\">$description</p>
-
-        <div class=\"episode-detail-foot-creator\">
-          <img class=\"episode-detail-foot-creator-image\" src=\"$creator_img\">
-          <p class=\"episode-detail-foot-creator-name\">$creator_name</p>
-        </div>
-
-      </div>
-    ";
+    echo
+    "<div>
+      <img class=\"episode-detail-head-image\" src=\"$poster\">
+      </div>";
   } else {
-    echo "
-      <div class=\"episode-detail-head\">
-        <div class=\"episode-detail-head-image-empty\">
-
-        </div>
+    echo
+    "
+      <div class=\"episode-detail-head-image-empty\"></div>
+      ";
+  }
+  echo "
         <p class=\"episode-detail-head-title\">$title</p>
         <p class=\"episode-detail-head-duration\">$duration minutes</p>
-        <button class=\"episode-detail-head-button\">
-        <img src=\"" . ICONS_DIR . "/play.svg\" />
+        <button id=\"play-button\" class=\"episode-detail-head-play-button\"\" onclick=\"playAudio()\">
+        <img class=\"\" id=\"button-image\" src=\"" . ICONS_DIR . "play.svg\" />
         </button>
-        <button type=\"button\" onclick=\"showEditEpisode($id)\">
+      ";
+  if (Middleware::isAdmin()) {
+    echo "       
+        <button class=\"episode-detail-head-edit-button\" onclick=\"showEditEpisode($id)\">
         <img src=\"" . ICONS_DIR . "/edit.svg\" />
-        </button>
+        </button>";
+  }
+  echo "
       </div>
 
       <div class=\"episode-detail-line\">
-
+    
       </div>
 
       <div class=\"episode-detail-foot\">
@@ -70,13 +51,13 @@ function episode_detail($episode = null)
         <p class=\"episode-detail-foot-description\">$description</p>
 
         <div class=\"episode-detail-foot-creator\">
+        <input id=\"audio-file\" value=\"$audio_file\" hidden>
           <img class=\"episode-detail-foot-creator-image\" src=\"$creator_img\">
           <p class=\"episode-detail-foot-creator-name\">$creator_name</p>
         </div>
 
       </div>
     ";
-  }
 
   echo '
         <script src="' . JS_DIR . 'episode/episode.js"></script>

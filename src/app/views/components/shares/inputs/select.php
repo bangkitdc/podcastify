@@ -16,7 +16,7 @@ function baseSelect($options, $selected_value, $id = "", $is_required = true, $c
     '
         </select>
         <div class="base-select-arrow-icon" id="base-select-arrow-' . $id . '">
-            <img src="' . ICONS_DIR . 'down-arrow-black.svg" />
+            <img src="' . ICONS_DIR . 'down-arrow.svg" />
         </div>
     </div>
     ';

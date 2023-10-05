@@ -36,12 +36,14 @@
 
       <div class="add-episode-file">
         <p>Choose the poster file : </p>
-        <?php baseFileUploader("poster-file-upload", '', 'preview-image', false)?>
+        <?php baseImageUploader("poster-file-upload", '', 'preview-poster', false)?>
+        <input type="hidden" id="preview-poster-filename" name="preview-poster-filename">
       </div>
 
       <div class="add-episode-file">
         <p>Choose the audio file : </p>
-        <?php baseFileUploader("audio-file-upload", '', 'preview-image', false)?>
+        <?php baseAudioUploader("audio-file-upload", '', false)?>
+        <input type="hidden" id="audio-filename" name="audio-filename">
       </div>
 
       <div class="add-episode-buttons">

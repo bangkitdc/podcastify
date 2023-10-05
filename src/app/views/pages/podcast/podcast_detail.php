@@ -9,7 +9,7 @@
         require_once VIEWS_DIR . "components/privates/podcast/episodesList.php";
         require_once VIEWS_DIR . "components/privates/podcast/paginationNav.php";
 
-        $MAX_EPS_PER_PAGE = 2;
+        $MAX_EPS_PER_PAGE = 4;
 
         $podcast = $data['podcast'];
         $episodes = $data['episodes'];

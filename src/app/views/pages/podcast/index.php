@@ -8,12 +8,12 @@
         require_once VIEWS_DIR . "components/privates/podcast/paginationNav.php";
         require_once VIEWS_DIR . "/components/shares/inputs/select.php";
 
-        $MAX_PODCAST_PER_PAGE = 4;
+        $MAX_PODCAST_PER_PAGE = 8;
         $podcasts = $data['podcasts'];
         $total_pages = ceil($data['total_rows'] / $MAX_PODCAST_PER_PAGE);
 
         $is_ajax = isset($data["is_ajax"]) ? $data["is_ajax"] : false;
-        echo '<div>';
+
         if (!$is_ajax) {
             $category_opt = $data['categories'];
             $creator_opt = $data['creators'];
@@ -34,26 +34,26 @@
                     </button>
                 </div>
             ';
-                echo '<div class="search-function-box">';
-                    echo '<div>';
-                        baseCheckbox($category_opt, $podcast_category, 'podcast-search-category-selection', "Filter Category");
-                    echo '</div>';
-                    echo '<div>';
-                        baseCheckbox($creator_opt, $podcast_creator, 'podcast-search-creator-selection', "Filter Creator");
-                    echo '</div>';
-                    echo '<div><p>Sort By</p>';
-                        baseSelect($sort_opt, $sort_by, 'podcast-search-sort-selection');
-                    echo '</div>';
-                echo '</div>';
                 echo '
                     <div class="search-filter-btn">
                         <img src="'. ICONS_DIR . 'tune_white.svg" alt="filter_icon" />
                     </div>
                      ';
             echo '</div>';
+            echo '<div class="search-function-box">';
+                echo '<div>';
+                    baseCheckbox($category_opt, $podcast_category, 'podcast-search-category-selection', "Filter Category");
+                echo '</div>';
+                echo '<div>';
+                    baseCheckbox($creator_opt, $podcast_creator, 'podcast-search-creator-selection', "Filter Creator");
+                echo '</div>';
+                echo '<div><p>Sort By</p>';
+                    baseSelect($sort_opt, $sort_by, 'podcast-search-sort-selection');
+                echo '</div>';
+            echo '</div>';
             echoSelectJS();
         }
-        echo '</div>';
+
         // Podcasts container view
         echo "<div id=\"podcast-container\" class=\"podcast-container\">";
         if (count($podcasts) > 0) {
