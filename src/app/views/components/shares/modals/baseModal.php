@@ -1,6 +1,6 @@
 <?php
 
-echo '<link rel="stylesheet" href="' . CSS_DIR . 'base_components/base_modal.css">';
+echo '<link rel="stylesheet" href="' . CSS_DIR . 'base_components/modal.css">';
 
 function infoModal($modal_id, $text, $ok_id, $modal_class = "") {
     echo
