@@ -37,7 +37,7 @@ function echoTableHeader($dataHeader = [], $percentage = [])
 function echoTableContent($dataContext = [], $dataContent = [], $onClick = "", $id = "") {  
   echo '
     <tr class="content-tables" onclick="' . $onClick . '" id="' . $id . '">
-      <td style="padding-left:14px">' . $dataContent[0] . '</td>
+      <td style="padding-left:18px">' . $dataContent[0] . '</td>
       <td class="content-title">
         <img class="content-img" id="' . $dataContext[1] . $id . '" src="' . $dataContent[1] . '" alt="Image User ' . $id . '">
         <div class="content-text">

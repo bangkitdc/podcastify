@@ -22,7 +22,8 @@ body, html {
   overflow-y: auto;
   background-color: var(--clr-background-base-two);
   border-radius: var(--rounded-lg);
-  padding: 0rem 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .background-container {
@@ -31,11 +32,12 @@ body, html {
     #464949 0%, 
     var(--clr-background-base-two) 100%
   );
+
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: -1;
+  z-index: 0;
 }
 
 h1 {
@@ -50,4 +52,24 @@ h2 {
   font-weight: 700;
   letter-spacing: 0.01rem;
   margin: 0;
+}
+
+#template {
+  padding: 0rem 1.5rem;
+}
+
+#content-middle {
+  flex-grow: 1;
+  z-index: 1;
+}
+
+.content-footer {
+  padding: 2.5rem 1rem;
+  margin: 1.5rem 1.5rem 0;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--clr-background-highlight-three);
+  font-size: 14px;
+  z-index: 0;
 }

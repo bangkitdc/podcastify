@@ -17,10 +17,13 @@
     <div id="content" class="content">
       <div class="background-container"></div>
       <?php include_once COMPONENTS_SHARES_DIR . "/navbars/topbar.php" ?>
-      <div id="main-content" class="main-content">
+      <div id="content-middle">
         <?php
         $included = include VIEWS_DIR . "view_config.php";
         ?>
+      </div>
+      <div class="content-footer">
+        © 2023 Podcastify AB
       </div>
     </div>
 

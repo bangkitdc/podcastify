@@ -5,34 +5,122 @@ require_once SERVICES_DIR . 'user/index.php';
 require_once COMPONENTS_PRIVATES_DIR . 'user/tables.php';
 
 class UserController extends BaseController {
-    public function index()
+    public function index($id = null)
     {
         try {
+            Middleware::checkIsLoggedIn();
+            
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
+                    Middleware::checkIsAdmin();
+
+                    if ($id !== null) {
+                        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+                        $userService = new UserService();
+
+                        $data = $userService->getUser($id);
+
+                        http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                        header('Content-Type: application/json');
+                        echo json_encode($data);
+                        return;
+                    }
                     $this->list();
                     break;
-                case "POST":
-                    $this->logout();
+                case "PATCH":
+                    if ($id !== null) {
+                        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+                        $data = json_decode(file_get_contents('php://input'), true);
+
+                        $userId = $data['user_id'];
+                        $email = $data['email'];
+                        $username = $data['username'];
+                        $firstName = $data['first_name'];
+                        $lastName = $data['last_name'];
+
+                        $userService = new UserService();
+                        $userService->updatePersonalInfo($userId, $email, $username, $firstName, $lastName
+                        , NULL
+                        );
+
+                        $response = array("success" => true, "status_message" => "Update Profile Successful.");
+
+                        http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+                        // Set the Content-Type header to indicate JSON
+                        header('Content-Type: application/json');
+
+                        // Return the JSON response
+                        echo json_encode($response);
+                        return;
+                    }
+                    ResponseHelper::responseNotAllowedMethod();
                     break;
-                // case "PATCH":
-                //     $this->status();
-                //     break;
                 default:
-                    // response_not_allowed_method();
+                    ResponseHelper::responseNotAllowedMethod();
                     break;
             }
         } catch (Exception $e) {
             if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
                 $this->view('layouts/error');
             }
+
             http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
-
     }
 
-    public function list()
+    public function changePassword($id = null)
+    {
+        try {
+            Middleware::checkIsLoggedIn();
+
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case "PATCH":
+                    if ($id !== null) {
+                        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+                        $data = json_decode(file_get_contents('php://input'), true);
+
+                        $userId = $data['user_id'];
+                        $hashedPassword = $this->hashPassword($data['current_password']);
+                        $hashedNewPassword = $this->hashPassword($data['password']);
+
+                        $userService = new UserService();
+                        $userService->changePassword($userId, $hashedPassword, $hashedNewPassword);
+
+                        $response = array("success" => true, "status_message" => "Password Changed Successfully.");
+
+                        http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+                        // Set the Content-Type header to indicate JSON
+                        header('Content-Type: application/json');
+
+                        // Return the JSON response
+                        echo json_encode($response);
+                        return;
+                    }
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+            }
+        } catch (Exception $e) {
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
+            exit;
+        }
+    }
+
+    private function list()
     {
         try {
             Middleware::checkIsLoggedIn();
@@ -57,37 +145,6 @@ class UserController extends BaseController {
                     $data["users"] = $userService->getUsers($data['currentPage'], 10);
 
                     $this->view('layouts/default', $data);
-                    break;
-                default:
-                    ResponseHelper::responseNotAllowedMethod();
-                    break;
-            }
-        } catch (Exception $e) {
-            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
-                $this->view('layouts/error');
-            }
-            http_response_code($e->getCode());
-            exit;
-        }
-    }
-
-    public function edit($id)
-    {
-        try {
-            Middleware::checkIsLoggedIn();
-            Middleware::checkIsAdmin();
-
-            $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-
-            switch ($_SERVER['REQUEST_METHOD']) {
-                case "GET":
-                    $userService = new UserService();
-
-                    $data = $userService->getUser($id);
-
-                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
-                    header('Content-Type: application/json');
-                    echo json_encode($data);
                     break;
                 default:
                     ResponseHelper::responseNotAllowedMethod();
@@ -168,5 +225,11 @@ class UserController extends BaseController {
             http_response_code($e->getCode());
             exit;
         }
+    }
+
+    private function hashPassword($password)
+    {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        return $hashedPassword;
     }
 }

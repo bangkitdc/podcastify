@@ -3,14 +3,18 @@ require_once MODELS_DIR . 'User.php';
 require_once SERVICES_DIR . 'user/index.php';
 
 class AuthService {
-    public function login($username, $password) {
-        $user = new User();
+    private $user;
 
+    public function __construct()
+    {
+        $this->user = new User();
+    }
+    public function login($username, $password) {
         if (preg_match('/\s/', $username)) {
             throw new Exception("Username contains whitespace", ResponseHelper::HTTP_STATUS_BAD_REQUEST);
         }
 
-        $user = $user->findByUsername($username);
+        $user = $this->user->findByUsername($username);
 
         if (!$this->checkPassword($password, $user->password) || !$user) {
             throw new Exception("Invalid credentials", ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
@@ -21,7 +25,7 @@ class AuthService {
         }
 
         $role = "user";
-        /* if its admin */ 
+        /* if it's Admin */ 
         if($user->role_id == 1) {
             $role = "admin"; 
         }
@@ -35,6 +39,32 @@ class AuthService {
         $_SESSION['role'] = $role;
 
         return;
+    }
+
+    public function register($email, $username, $hashedPassword, $firstName, $lastName)
+    {
+        // Check if the email, username already exists
+        if ($this->user->emailExists($email) && $this->user->usernameExists($username)) {
+            throw new Exception('This email and username are already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+        }
+
+        // Check if the email already exists
+        if ($this->user->emailExists($email)) {
+            throw new Exception('This email is already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+        }
+
+        // Check if the username already exists
+        if ($this->user->usernameExists($username)) {
+            throw new Exception('This username is already connected to an account', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+        }
+
+        $this->user->create(
+            $email,
+            $username,
+            $hashedPassword,
+            $firstName,
+            $lastName
+        );
     }
 
     public function logout() {

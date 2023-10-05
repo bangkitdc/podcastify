@@ -17,7 +17,7 @@ function timeAgo($timestamp)
   foreach ($intervals as $seconds => $label) {
     $quotient = floor($difference / $seconds);
     if ($quotient >= 1) {
-      return $quotient == 1 ? $label . ' ago' : "$quotient $label" . ($label != 'just now' ? 's' : '') . ' ago';
+      return ($quotient == 1 ? 'a' : $quotient) . " $label" . ($quotient == 1 ? '' : 's') . ' ago';
     }
   }
 

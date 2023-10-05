@@ -8,17 +8,6 @@ class UserService {
     {
         $this->user = new User();
     }
-    // public function detail($userId) {
-    //     $user = new User();
-    //     $user = $user->findById($userId);
-    //     $resp = array();
-
-    //     if(isset($user)){
-    //         $resp['data'] = [];
-    //         $resp['status_message'] = "USER NOT FOUND";
-    //         return $resp;
-    //     }
-    // }
 
     public function getUser($userId)
     {
@@ -49,5 +38,41 @@ class UserService {
     public function updateStatus($userId, $status)
     {
         $this->user->updateStatus($userId, $status);
+    }
+
+    public function updatePersonalInfo($userId, $email, $username, $firstName, $lastName, $avatarURL)
+    {
+        // Check if the email, username already exists
+        if ($this->user->emailExistsForOthers($userId, $email) && $this->user->usernameExistsForOthers($userId, $username)) {
+            throw new Exception('This email and username are already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+        }
+
+        // Check if the email already exists
+        if ($this->user->emailExistsForOthers($userId, $username)) {
+            throw new Exception('This email is already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+        }
+
+        // Check if the username already exists
+        if ($this->user->usernameExistsForOthers($userId, $username)) {
+            throw new Exception('This username is already connected to an account', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+        }
+
+        $this->user->updateProfile(
+            $userId,
+            $email,
+            $username,
+            $firstName,
+            $lastName,
+            $avatarURL
+        );
+    }
+
+    public function changePassword($userId, $currentHashedPassword, $newHashedPassword)
+    {
+        if ($this->user->isCurrentPasswordWrong($userId, $currentHashedPassword)) {
+            throw new Exception('Current password is wrong.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+        }
+
+        $this->user->updatePassword($userId, $newHashedPassword);
     }
 }
