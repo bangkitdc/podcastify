@@ -33,9 +33,7 @@
 
   .podcast-detail-eps-container {
     background-color: var(--clr-background-base-one);
-    border-radius: 15px;
-    padding: 10px 20px;
-    width: 90%;
+    width: 100%;
     transition: all 0.5s ease;
 
     > h2 {
