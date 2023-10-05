@@ -8,7 +8,7 @@
         require_once VIEWS_DIR . "components/privates/podcast/paginationNav.php";
         require_once VIEWS_DIR . "/components/shares/inputs/select.php";
 
-        $MAX_PODCAST_PER_PAGE = 4;
+        $MAX_PODCAST_PER_PAGE = 8;
         $podcasts = $data['podcasts'];
         $total_pages = ceil($data['total_rows'] / $MAX_PODCAST_PER_PAGE);
 

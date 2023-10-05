@@ -1,7 +1,6 @@
 /* Podcast Detail */
 .podcast-detail-container {
   width: 100%;
-  padding: 10px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,7 +12,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--clr-text-secondary-darken);
     width: 100%;
 
     .podcast-detail-img {
@@ -33,6 +32,7 @@
 
   .podcast-detail-eps-container {
     background-color: var(--clr-background-base-one);
+    border-radius: 15px;
     width: 100%;
     transition: all 0.5s ease;
 

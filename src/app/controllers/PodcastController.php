@@ -13,6 +13,8 @@ class PodcastController extends BaseController
     private $podcast_service;
     private $upload_service;
     private $category_service;
+    private const MAX_PODCAST_PER_PAGE = 8;
+    private const MAX_EPS_PER_PODCAST_DETAIL = 4;
 
     public function __construct() {
         $this->podcast_service = new PodcastService();
@@ -26,7 +28,7 @@ class PodcastController extends BaseController
             case "GET":
                 $isAjax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && $_SERVER["HTTP_X_REQUESTED_WITH"] === "XMLHttpRequest";
 
-                $data["podcasts"] = $this->podcast_service->getPodcast(4, 1);
+                $data["podcasts"] = $this->podcast_service->getPodcast(PodcastController::MAX_PODCAST_PER_PAGE, 1);
                 $data["total_rows"] = $this->podcast_service->getTotalRows();
                 $data['categories'] = $this->category_service->getAllCategoryNames();
                 $data['creators'] = $this->podcast_service->getAllCreatorName();
@@ -53,7 +55,7 @@ class PodcastController extends BaseController
                     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
                     $data["podcast"] = $this->podcast_service->getPodcastById($id);
-                    $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, 1);
+                    $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, PodcastController::MAX_EPS_PER_PODCAST_DETAIL, 1);
                     $data["category"] = $this->category_service->getCategoryNameById($data["podcast"]->category_id);
 
                     $this->view("layouts/default", $data);
@@ -77,7 +79,7 @@ class PodcastController extends BaseController
                     $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
                     $page = Sanitizer::sanitizeIntParam("page");
 
-                    $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, 2, $page);
+                    $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, PodcastController::MAX_EPS_PER_PODCAST_DETAIL, $page);
 
                     return episodeList($data["episodes"]);
 
@@ -97,7 +99,7 @@ class PodcastController extends BaseController
                 case "GET":
                     $page = Sanitizer::sanitizeIntParam("page");
 
-                    $data["podcasts"] = $this->podcast_service->getPodcast(4, $page);
+                    $data["podcasts"] = $this->podcast_service->getPodcast(PodcastController::MAX_PODCAST_PER_PAGE, $page);
                     $data["total_rows"] = $this->podcast_service->getTotalRows();
                     $data["is_ajax"] = true;
 
@@ -139,7 +141,7 @@ class PodcastController extends BaseController
                         $filter_categories = [];
                     }
 
-                    list($data['total_rows'], $data['podcasts']) = $this->podcast_service->getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, 4);
+                    list($data['total_rows'], $data['podcasts']) = $this->podcast_service->getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, PodcastController::MAX_PODCAST_PER_PAGE);
 
                     $data['is_ajax'] = true;
 
