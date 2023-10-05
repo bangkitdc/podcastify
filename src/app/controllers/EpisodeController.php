@@ -94,6 +94,7 @@ class EpisodeController extends BaseController
   public function add()
   {
     try {
+      Middleware::checkIsAdmin();
       $podcast_data = $this->podcast_service->getAllPodcast();
 
       switch ($_SERVER['REQUEST_METHOD']) {
