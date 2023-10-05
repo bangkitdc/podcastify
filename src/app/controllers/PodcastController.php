@@ -6,6 +6,7 @@ require_once SERVICES_DIR . "/podcast/index.php";
 require_once SERVICES_DIR . "/upload/index.php";
 require_once SERVICES_DIR . "/category/index.php";
 require_once BASE_URL . "/src/app/views/components/privates/podcast/episodesList.php";
+require_once BASE_URL . '/src/config/storage.php';
 
 class PodcastController extends BaseController
 {
@@ -15,7 +16,7 @@ class PodcastController extends BaseController
 
     public function __construct() {
         $this->podcast_service = new PodcastService();
-        $this->upload_service = new UploadService();
+        $this->upload_service = new UploadService(Storage::PODCAST_IMAGE_PATH);
         $this->category_service = new CategoryService();
     }
 
@@ -246,7 +247,7 @@ class PodcastController extends BaseController
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "POST":
-                    $this->upload_service->upload();
+                    $this->upload_service->upload("image");
                     return;
 
                 default:

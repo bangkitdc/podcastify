@@ -23,7 +23,8 @@ function paginationEpsNav($podcast, $total_pages) {
     ";
 }
 
-function paginationPodcastNav($podcasts, $total_pages, $is_search) {
+function paginationPodcastNav($podcasts, $total_pages, $is_search = false) {
+    $is_search = $is_search ? 'true' : 'false';
     echo
     "
     <div class=\"pod-list-nav\">
