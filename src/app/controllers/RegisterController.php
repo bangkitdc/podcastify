@@ -19,15 +19,15 @@ class RegisterController extends BaseController {
         }
     }
 
-    public function register(){
+    private function register(){
         try {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "POST":                    
-                    $user = new User();
+                    $userService = new AuthService();
 
                     $hashedPassword = $this->hashPassword($_POST['password']);
 
-                    $user->create($_POST['email'], $_POST['username'], $hashedPassword, $_POST['first_name'], $_POST['last_name']);
+                    $userService->register($_POST['email'], $_POST['username'], $hashedPassword, $_POST['first_name'], $_POST['last_name']);
 
                     $response = array("success" => true, "redirect_url" => "/login", "status_message" => "Register Successful.");
 

@@ -19,16 +19,14 @@ echo '
         <img src="' . ICONS_DIR . 'down-arrow.svg" class="arrow-icon" />
       </button>
     </div>
-    <div id="dropdown" class="dropdown-container">
+    <div id="dropdown-topbar" class="dropdown-container">
       <ul class="dropdown-menu" aria-labelledby="dropdownDefaultButton">
 ';
 
 if (Middleware::isLoggedIn()) {
   echo '
         <li>
-          <form method="GET" action="/profile">
-            <button class="dropdown-link">Profile</button>
-          </form>
+          <button class="dropdown-link" onclick="window.location.href = \'/profile\'">Profile</button>
         </li>
         <li class="bottom-link">
           <form method="POST" action="/user/logout">

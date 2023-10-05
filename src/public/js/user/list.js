@@ -25,7 +25,7 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
 
           // TODO: notification
           if (response.success) {
-            closeModal(modalId);
+            closeModal(modalId, true);
             updateStatusUser(formData.get("user_id"), formData.get("status"));
           } else {
             console.error(response.error_message);
@@ -51,7 +51,7 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
 const showModalEditStatusUser = (userId, modalId) => {
   const xhr = new XMLHttpRequest();
 
-  xhr.open("GET", `/user/edit/${userId}`, true);
+  xhr.open("GET", `/user/${userId}`, true);
   xhr.setRequestHeader("Content-Type", "application/json");
 
   // Define the callback for when the request completes

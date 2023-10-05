@@ -14,7 +14,6 @@
       require_once COMPONENTS_PRIVATES_DIR . 'user/tables.php';
 
       $users = $data['users'];
-      $totalPages = $data['totalPages'];
       $currentPage = $data['currentPage'];
       renderUserTable($data['users'], $data['currentPage']);
     ?>
@@ -49,11 +48,12 @@
     <?php
     require_once VIEWS_DIR . "components/shares/paginations/primary.php";
 
+    $totalPages = $data['totalPages'];
     $function = [
-      "loadUserList(true, false, false, false, $totalPages, $currentPage)",
-      "loadUserList(false, true, false, false, $totalPages, $currentPage)",
-      "loadUserList(false, false, true, false, $totalPages, $currentPage)",
-      "loadUserList(false, false, false, true, $totalPages, $currentPage)"
+      "loadUserList(true, false, false, false, $totalPages)",
+      "loadUserList(false, true, false, false, $totalPages)",
+      "loadUserList(false, false, true, false, $totalPages)",
+      "loadUserList(false, false, false, true, $totalPages)"
     ];
 
     echoPaginationNav("user", $currentPage, $totalPages, $function);

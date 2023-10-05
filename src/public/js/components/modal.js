@@ -23,12 +23,20 @@ const setupModal = (modalId, cancelId, okayId = "") => {
   }
 };
 
-const closeModal = (modalId) => {
+const closeModal = (modalId, changeZ) => {
   var modal = document.getElementById(modalId);
+  if (changeZ) {
+    var topbar = document.querySelector(".topbar");
+    topbar.style.zIndex = 2;
+  }
+
   modal.style.display = "none";
 }
 
 const openModal = (modalId) => {
   var modal = document.getElementById(modalId);
+  var topbar = document.querySelector(".topbar");
+  topbar.style.zIndex = 1;
+  
   modal.style.display = "block";
 }

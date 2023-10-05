@@ -56,21 +56,6 @@ class User {
 
     public function create($email, $username, $hashedPassword, $firstName, $lastName)
     {
-        // Check if the email, username already exists
-        if ($this->emailExists($email) && $this->usernameExists($username)) {
-            throw new Exception('This email and username are already connected to an account.');
-        }
-
-        // Check if the email already exists
-        if ($this->emailExists($email)) {
-            throw new Exception('This email is already connected to an account.');
-        }
-
-        // Check if the username already exists
-        if ($this->usernameExists($username)) {
-            throw new Exception('This username is already connected to an account');
-        }
-        
         $query = "INSERT INTO users (email, username, password, first_name, last_name, role_id) VALUES (:email, :username, :password, :first_name, :last_name, :role_id)";
 
         $this->db->query($query);
@@ -85,9 +70,9 @@ class User {
     }
 
     // Check if the email already exists
-    private function emailExists($email)
+    public function emailExists($email)
     {
-        $query = "SELECT * FROM users WHERE email = :email";
+        $query = "SELECT COUNT(*) AS count FROM users WHERE email = :email";
         $this->db->query($query);
         $this->db->bind('email', $email);
         $this->db->fetch();
@@ -96,9 +81,9 @@ class User {
     }
 
     // Check if the username already exists
-    private function usernameExists($username)
+    public function usernameExists($username)
     {
-        $query = "SELECT * FROM users WHERE username = :username";
+        $query = "SELECT COUNT(*) AS count FROM users WHERE username = :username";
         $this->db->query($query);
         $this->db->bind('username', $username);
         $this->db->fetch();
@@ -106,28 +91,64 @@ class User {
         return $this->db->rowCount() > 0;
     }
 
-    public function update($userId, $email, $username, $hashedPassword, $firstName, $lastName, $status, $avatarURL, $roleId)
+    public function updateProfile($userId, $email, $username, $firstName, $lastName, $avatarURL)
     {
         $query = "UPDATE users SET email = :email, 
                                 username = :username, 
-                                password = :password, 
                                 first_name = :first_name, 
                                 last_name = :last_name, 
-                                status = :status, 
-                                avatar_url = :avatar_url, 
-                                role_id = :role_id 
+                                avatar_url = :avatar_url
                             WHERE user_id = :user_id";
 
         $this->db->query($query);
         $this->db->bind('email', $email);
         $this->db->bind('username', $username);
-        $this->db->bind('password', $hashedPassword);
         $this->db->bind('first_name', $firstName);
         $this->db->bind('last_name', $lastName);
-        $this->db->bind('status', $status);
         $this->db->bind('avatar_url', $avatarURL);
-        $this->db->bind('role_id', $roleId);
-        $this->db->bind('user_id', $userId); // Assuming you have a user_id to identify the user you want to update
+        $this->db->bind('user_id', $userId);
+
+        $this->db->execute();
+    }
+
+    public function emailExistsForOthers($userId, $email)
+    {
+        $query = "SELECT COUNT(*) AS count FROM users WHERE email = :email AND user_id != :user_id";
+        $this->db->query($query);
+        $this->db->bind('email', $email);
+        $this->db->bind('user_id', $userId);
+
+        return $this->db->fetch()->count > 0;
+    }
+
+    public function usernameExistsForOthers($userId, $username)
+    {
+        $query = "SELECT COUNT(*) AS count FROM users WHERE username = :username AND user_id != :user_id";
+        $this->db->query($query);
+        $this->db->bind('username', $username);
+        $this->db->bind('user_id', $userId);
+
+        return $this->db->fetch()->count > 0;
+    }
+
+    public function isCurrentPasswordWrong($userId, $hashedPassword)
+    {
+        $query = "SELECT COUNT(*) AS count FROM users WHERE user_id = :user_id AND password = :password";
+        $this->db->query($query);
+        $this->db->bind('user_id', $userId);
+        $this->db->bind('password', $hashedPassword);
+
+        return $this->db->fetch()->count > 0;
+    }
+
+    public function updatePassword($userId, $hashedPassword)
+    {
+        $query = "UPDATE users SET password = :password
+                            WHERE user_id = :user_id";
+
+        $this->db->query($query);
+        $this->db->bind('password', $hashedPassword);
+        $this->db->bind('user_id', $userId);
 
         $this->db->execute();
     }
@@ -159,10 +180,9 @@ class User {
 
     public function getTotalRows()
     {
-        $query = "SELECT * FROM users WHERE role_id = 2";
+        $query = "SELECT COUNT(*) AS count FROM users WHERE role_id = 2";
         $this->db->query($query);
-        $this->db->fetch();
 
-        return $this->db->rowCount();
+        return $this->db->fetch()->count;
     }
 }

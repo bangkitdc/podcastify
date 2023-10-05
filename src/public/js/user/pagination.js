@@ -1,28 +1,33 @@
-let currPageNum = 1;
-
 const loadUserList = (
   start = false,
   prev = false,
   next = false,
   end = false,
   totalPages,
-  currentPage = 1
 ) => {
+  let currentPage = document.getElementById('user-list-page-num').innerText;
+
   let pageNumber = currentPage;
-  if (next && currentPage < totalPages) {
+  if (next) {
+    if (pageNumber >= totalPages) return;
     pageNumber++;
-  } else if (prev && currentPage > 1) {
-    pageNumber--;
-  } else if (start) {
-    pageNumber = 1;
   } else if (end) {
+    if (pageNumber >= totalPages) return;
     pageNumber = totalPages;
+  } else if (start) {
+    if (pageNumber <= 1) return;
+    pageNumber = 1;
+  } else if (prev) {
+    if (pageNumber <= 1) return;
+    pageNumber--;
+  } else {
+    return;
   }
 
   document.getElementById("user-list-page-num").textContent = pageNumber;
 
   let xhr = new XMLHttpRequest();
-  const url = "user/list?page=" + pageNumber;
+  const url = "user?page=" + pageNumber;
   xhr.open("GET", url, true);
 
   xhr.onload = () => {

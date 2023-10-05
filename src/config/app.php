@@ -59,7 +59,7 @@ class App {
         }
 
         // echo '<pre>';
-        // print_r($this->params);
+        // print_r($this->controller);
         // echo '</pre>';
 
         call_user_func_array([$this->controller, $this->method], $this->params);

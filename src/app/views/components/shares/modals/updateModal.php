@@ -6,11 +6,11 @@ function echoUpdateModalTop($modalId, $modalTitle)
 {
   echo '
     <div class="modal" id="' . $modalId . '">
-      <div class="modal-overlay" onclick="closeModal(\'' . $modalId . '\')"></div>
+      <div class="modal-overlay" onclick="closeModal(\'' . $modalId . '\', true)"></div>
       <div class="modal-content">
         <div class="modal-title">
           ' . $modalTitle . '
-          <div class="close-button-modal" onclick="closeModal(\'' . $modalId . '\')">
+          <div class="close-button-modal" onclick="closeModal(\'' . $modalId . '\', true)">
             <img src="' . ICONS_DIR . 'close.svg" alt="Close Button">
           </div>
         </div>

@@ -18,13 +18,13 @@ function baseInputText($placeholder, $value, $id = "", $is_required = true, $cla
 /**
  * $name will become id and this will be used in js file
  */
-function echoInputText($name, $tabIndex, $isPassword = false, $eyeIcon = false)
+function echoInputText($name, $tabIndex, $isPassword = false, $eyeIcon = false, $custom = false)
 {
-    $capitalizedName = ucwords(str_replace('-', ' ', $name));
+    $capitalizedName = ucwords(str_replace('_', ' ', $name));
 
     if ($isPassword) {
         echo '
-            <div class="form-group">
+            <div class="form-group ' . ($custom ? 'custom' : '') . '">
                 <label for="' . $name . '">' . $capitalizedName . '</label>
             ';
 
@@ -52,7 +52,7 @@ function echoInputText($name, $tabIndex, $isPassword = false, $eyeIcon = false)
         ';
     } else {
         echo '
-            <div class="form-group">
+            <div class="form-group ' . ($custom ? 'custom' : '') . '">
                 <label for="' . $name . '">' . $capitalizedName . '</label>
                 <input type="text" name="' . $name . '" placeholder="' . $capitalizedName . '" id="' . $name . '" tabindex="' . $tabIndex . '">
                 <div id="' . $name . '-alert" class="alert-hide">

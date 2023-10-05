@@ -12,6 +12,6 @@ document.addEventListener("mouseup", function (e) {
 });
 
 document.getElementById("dropdown-btn").addEventListener("click", function () {
-  document.querySelector(".dropdown-container").classList.toggle("active");
+  document.querySelector("#dropdown-topbar").classList.toggle("active");
   document.querySelector(".arrow-icon").classList.toggle("up");
 });

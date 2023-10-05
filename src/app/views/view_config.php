@@ -22,7 +22,10 @@ if (!$pathArray[0]) {
             include VIEWS_DIR . "pages/home/index.php";
             break;
         case 'user':
-            include VIEWS_DIR . "pages/user/list.php";
+            include VIEWS_DIR . "pages/user/index.php";
+            break;
+        case 'profile':
+            include VIEWS_DIR . "pages/profile/index.php";
             break;
         case 'podcast':
             // Reconstruct the path from the array
