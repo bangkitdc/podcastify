@@ -1,4 +1,4 @@
-EPISODE_BASE_URL = '/episode'
+const EPISODE_BASE_URL = '/episode'
 
 function loadEpisodeList(start = false, prev = false, next = false, end = false, totalPages, currentPage = 1) {
   let pageNumber = currentPage;
