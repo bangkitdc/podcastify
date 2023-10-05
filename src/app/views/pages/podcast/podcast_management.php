@@ -56,9 +56,9 @@
         ";
 
         if ($type == "edit") {
-            baseFileUploader("file-upload", "", "preview-image", false);
+            baseImageUploader("file-upload", "", "preview-image", false);
         } else {
-            baseFileUploader("file-upload", "", "preview-image", false);
+            baseImageUploader("file-upload", "", "preview-image", false);
         }
         echo "<input type=\"hidden\" id=\"preview-image-filename\" name=\"preview-image-filename\">";
         if ($podcast != null) {
@@ -79,4 +79,4 @@
     ?>
   </div>
 </div>
-<script src="<?= JS_DIR ?>/podcast/handle_upload.js"></script>
+<script src="<?= JS_DIR ?>podcast/handle_upload.js"></script>

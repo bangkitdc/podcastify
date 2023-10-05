@@ -30,5 +30,5 @@ function actionModal($modal_id, $text, $okay_id, $cancel_id, $modal_class = "") 
 }
 
 function echoModalJS() {
-    echo '<script src="' . JS_DIR . 'modal.js"></script>';
+    echo '<script src="' . JS_DIR . 'components/modal.js"></script>';
 }
