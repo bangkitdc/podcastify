@@ -5,11 +5,11 @@ let filterBtn = document.querySelector(".search-filter-btn");
 filterBtn.addEventListener("mousedown", () => {
   let searchFunctionBox = document.querySelector(".search-function-box");
 
-  if (searchFunctionBox.style.maxWidth !== "0px") {
-    searchFunctionBox.style.maxWidth = "0px";
+  if (searchFunctionBox.style.maxHeight !== "0px") {
+    searchFunctionBox.style.maxHeight = "0px";
     searchFunctionBox.style.overflow = "hidden";
   } else {
-    searchFunctionBox.style.maxWidth = "100%";
+    searchFunctionBox.style.maxHeight = "100px";
     searchFunctionBox.style.overflow = "visible";
   }
 });
