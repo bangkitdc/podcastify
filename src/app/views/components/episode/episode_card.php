@@ -1,15 +1,18 @@
 <?php
+
+require_once BASE_URL . '/src/config/storage.php';
+
 function episode_card($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
   $title = $episode ? $episode->title : '';
   $creator = $episode ? $episode->creator_name : '';
   $duration = $episode ? $episode->duration / 60 : '';
-  $card_type = $episode->image_url ? IMAGES_DIR . $episode->image_url : '';
+  $card_type = $episode->image_url ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : '';
 
   echo "
     <div class=\"episode-card\" onclick=\"window.location.href='/episode/$id'\">
-    
+
     ";
   if ($card_type) {
     echo "

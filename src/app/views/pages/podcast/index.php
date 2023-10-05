@@ -8,12 +8,12 @@
         require_once VIEWS_DIR . "components/privates/podcast/paginationNav.php";
         require_once VIEWS_DIR . "/components/shares/inputs/select.php";
 
-        $MAX_PODCAST_PER_PAGE = 4;
+        $MAX_PODCAST_PER_PAGE = 8;
         $podcasts = $data['podcasts'];
         $total_pages = ceil($data['total_rows'] / $MAX_PODCAST_PER_PAGE);
 
         $is_ajax = isset($data["is_ajax"]) ? $data["is_ajax"] : false;
-        echo '<div>';
+
         if (!$is_ajax) {
             $category_opt = $data['categories'];
             $creator_opt = $data['creators'];
@@ -53,7 +53,7 @@
             echo '</div>';
             echoSelectJS();
         }
-        echo '</div>';
+
         // Podcasts container view
         echo "<div id=\"podcast-container\" class=\"podcast-container\">";
         if (count($podcasts) > 0) {

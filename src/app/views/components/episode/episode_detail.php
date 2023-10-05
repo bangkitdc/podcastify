@@ -1,8 +1,11 @@
 <?php
+
+require_once BASE_URL . '/src/config/storage.php';
+
 function episode_detail($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
-  $poster = $episode ? IMAGES_DIR . $episode->image_url : '';
+  $poster = $episode ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : '';
   $title = $episode ? $episode->title : '';
   $duration = $episode ? $episode->duration / 60 : '';
   $upload_date = $episode ? formatDate($episode->created_at) : '';
@@ -28,7 +31,7 @@ function episode_detail($episode = null)
       </div>
 
       <div class=\"episode-detail-line\">
-    
+
       </div>
 
       <div class=\"episode-detail-foot\">
@@ -59,7 +62,7 @@ function episode_detail($episode = null)
       </div>
 
       <div class=\"episode-detail-line\">
-    
+
       </div>
 
       <div class=\"episode-detail-foot\">
