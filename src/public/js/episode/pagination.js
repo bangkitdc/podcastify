@@ -20,6 +20,6 @@ function loadEpisodeList(start = false, prev = false, next = false, end = false,
 
   xhr.onload = () => {
     console.log(xhr.responseText);
-    document.getElementById("main-content").innerHTML = xhr.responseText;
+    document.getElementById("content-middle").innerHTML = xhr.responseText;
   }
 }

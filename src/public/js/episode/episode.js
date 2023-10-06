@@ -36,7 +36,7 @@ const showEditEpisode = (episodeId) => {
   let xhr = getEpisode(url);
 
   xhr.onload = () => {
-    document.getElementById("main-content").innerHTML = xhr.responseText;
+    document.getElementById("content-middle").innerHTML = xhr.responseText;
     addScript("/src/public/js/episode/handle_upload_edit.js");
   };
 };
