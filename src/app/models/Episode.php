@@ -78,18 +78,33 @@ class Episode {
   }
 
   public function updateEpisode($episode_id, $title, $description, $image_url, $audio_url) {
-    $query = "UPDATE episodes SET title = :title, description = :description, image_url = :image_url, audio_url = :audio_url, updated_at = NOW() WHERE episode_id = :episode_id";
+    $query = "UPDATE episodes SET title = :title, description = :description, updated_at = NOW()";
+
+    if (!empty($image_url)) {
+        $query .= ", image_url = :image_url";
+    }
+
+    if (!empty($audio_url)) {
+        $query .= ", audio_url = :audio_url";
+    }
+
+    $query .= " WHERE episode_id = :episode_id";
 
     $this->db->query($query);
 
     $this->db->bind(":episode_id", $episode_id);
     $this->db->bind(":title", $title);
     $this->db->bind(":description", $description);
-    $this->db->bind(":image_url", $image_url);
-    $this->db->bind(":audio_url", $audio_url);
+
+    if (!empty($image_url)) {
+        $this->db->bind(":image_url", $image_url);
+    }
+
+    if (!empty($audio_url)) {
+        $this->db->bind(":audio_url", $audio_url);
+    }
 
     $this->db->execute();
-
   }
 
 }
