@@ -85,9 +85,9 @@
 
 #userModalEdit .modal-form {
   grid-column: span 4 / span 7;
-  gap: 0.5rem;
-  display: grid;
-  grid-template-rows: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Modals Change Password */

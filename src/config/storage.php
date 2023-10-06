@@ -88,4 +88,24 @@ class Storage
             error_log('Internal Server Error');
         }
     }
+
+    public function getUniqueRandomName() 
+    {
+        $valid = false;
+        while (!$valid) {
+            // Set unique random name
+            $fileName = md5(uniqid(mt_rand(), true));
+            $valid = !$this->doesFileExist($fileName);
+        }
+
+        return $fileName;
+    }
+
+    public function saveAvatarImage($fileName, $file)
+    {
+        $success = move_uploaded_file($file, $this->storageDir . $fileName);
+        if (!$success) {
+            throw new Exception('Internal Server Error', ResponseHelper::HTTP_STATUS_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -3,14 +3,15 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
 
   try {
     const xhr = new XMLHttpRequest();
-    xhr.open("PATCH", "/user/status", true);
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
+  
     const formData = new FormData(document.querySelector(elementForm));
     const formDataObject = {};
     formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
+
+    xhr.open("PATCH", `/user/status/${formData.get("user_id")}`, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
     // Convert JavaScript object to JSON string
     const jsonData = JSON.stringify(formDataObject);
@@ -61,8 +62,7 @@ const showModalEditStatusUser = (userId, modalId) => {
         const user = JSON.parse(xhr.responseText);
 
         // Update modal with user data
-        document.querySelector(`#${modalId} .modal-image`).src =
-          user.avatar_url || "/src/public/assets/images/avatar-template.png";
+        document.querySelector(`#${modalId} .modal-image`).src = user.avatar_url ? `src/storage/user/${user.avatar_url}` : "/src/public/assets/images/avatar-template.png";
         document.querySelector(`#${modalId} [name='user_id']`).value =
           user.user_id;
         document.querySelector(`#${modalId} [name='status']`).value = parseInt(user.status);

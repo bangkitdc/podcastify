@@ -257,4 +257,5 @@ a {
 .alert-show p{
   padding-top: 0.15rem;
   color: var(--clr-text-danger);
+  font-size: 12px;
 }

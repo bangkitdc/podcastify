@@ -1,6 +1,5 @@
 <?php
 
-require_once MODELS_DIR . 'User.php';
 require_once SERVICES_DIR . 'auth/index.php';
 
 class RegisterController extends BaseController {

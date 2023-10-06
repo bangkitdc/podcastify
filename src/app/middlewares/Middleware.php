@@ -1,6 +1,9 @@
 <?php
 
 require_once BASE_URL . "/src/app/helpers/RedirectHelper.php";
+require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
+require_once BASE_URL . "/src/app/helpers/SanitizeHelper.php";
+
 
 class Middleware {
     public static function checkReferer() 

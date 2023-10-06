@@ -5,7 +5,7 @@ require_once SERVICES_DIR . 'user/index.php';
 require_once COMPONENTS_PRIVATES_DIR . 'user/tables.php';
 
 class UserController extends BaseController {
-    public function index($id = null)
+    public function index($userId = null)
     {
         try {
             Middleware::checkIsLoggedIn();
@@ -14,12 +14,12 @@ class UserController extends BaseController {
                 case "GET":
                     Middleware::checkIsAdmin();
 
-                    if ($id !== null) {
-                        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+                    if ($userId !== null) {
+                        $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
 
                         $userService = new UserService();
 
-                        $data = $userService->getUser($id);
+                        $data = $userService->getUser($userId);
 
                         http_response_code(ResponseHelper::HTTP_STATUS_OK);
                         header('Content-Type: application/json');
@@ -28,28 +28,42 @@ class UserController extends BaseController {
                     }
                     $this->list();
                     break;
-                case "PATCH":
-                    if ($id !== null) {
-                        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-                        $data = json_decode(file_get_contents('php://input'), true);
+                case "POST":
+                    if ($userId !== null) {
+                        $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
 
-                        $userId = $data['user_id'];
-                        $email = $data['email'];
-                        $username = $data['username'];
-                        $firstName = $data['first_name'];
-                        $lastName = $data['last_name'];
+                        $userId = $_POST['user_id'];
+                        $email = $_POST['email'];
+                        $username = $_POST['username'];
+                        $firstName = $_POST['first_name'];
+                        $lastName = $_POST['last_name'];
+
+                        // Handle file upload
+                        $imageUploadService = new UploadService(STORAGE::USER_AVATAR_PATH);
+
+                        $imageUrl = null;
+                        if (isset($_FILES['data'])) {
+                            $imageUrl = $imageUploadService->getUniqueFilename();
+                        }
 
                         $userService = new UserService();
-                        $userService->updatePersonalInfo($userId, $email, $username, $firstName, $lastName
-                        , NULL
+                        $userService->updatePersonalInfo(
+                            $userId, 
+                            $email, 
+                            $username, 
+                            $firstName, 
+                            $lastName,
+                            $imageUrl
                         );
+
+                        // $imageUrl unique
+                        if ($imageUrl) {
+                            $imageUploadService->uploadAvatarImage($imageUrl);
+                        }
 
                         $response = array("success" => true, "status_message" => "Update Profile Successful.");
 
                         http_response_code(ResponseHelper::HTTP_STATUS_OK);
-
-                        // Set the Content-Type header to indicate JSON
-                        header('Content-Type: application/json');
 
                         // Return the JSON response
                         echo json_encode($response);
@@ -73,36 +87,31 @@ class UserController extends BaseController {
         }
     }
 
-    public function changePassword($id = null)
+    public function changePassword($userId)
     {
         try {
             Middleware::checkIsLoggedIn();
 
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "PATCH":
-                    if ($id !== null) {
-                        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-                        $data = json_decode(file_get_contents('php://input'), true);
+                    $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
+                    $data = json_decode(file_get_contents('php://input'), true);
 
-                        $userId = $data['user_id'];
-                        $hashedPassword = $this->hashPassword($data['current_password']);
-                        $hashedNewPassword = $this->hashPassword($data['password']);
+                    $hashedPassword = $this->hashPassword($data['current_password']);
+                    $hashedNewPassword = $this->hashPassword($data['password']);
 
-                        $userService = new UserService();
-                        $userService->changePassword($userId, $hashedPassword, $hashedNewPassword);
+                    $userService = new UserService();
+                    $userService->changePassword($userId, $hashedPassword, $hashedNewPassword);
 
-                        $response = array("success" => true, "status_message" => "Password Changed Successfully.");
+                    $response = array("success" => true, "status_message" => "Password Changed Successfully.");
 
-                        http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
-                        // Set the Content-Type header to indicate JSON
-                        header('Content-Type: application/json');
+                    // Set the Content-Type header to indicate JSON
+                    header('Content-Type: application/json');
 
-                        // Return the JSON response
-                        echo json_encode($response);
-                        return;
-                    }
-                    ResponseHelper::responseNotAllowedMethod();
+                    // Return the JSON response
+                    echo json_encode($response);
                     break;
                 default:
                     ResponseHelper::responseNotAllowedMethod();
@@ -159,7 +168,7 @@ class UserController extends BaseController {
         }
     }
 
-    public function status()
+    public function status($userId)
     {
         try {
             Middleware::checkIsLoggedIn();
@@ -167,9 +176,8 @@ class UserController extends BaseController {
 
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "PATCH":
+                    $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
                     $data = json_decode(file_get_contents('php://input'), true);
-
-                    $userId = filter_var($data['user_id'], FILTER_VALIDATE_INT);
 
                     $allowedStatus = [0, 1];
                     if (!in_array($data['status'], $allowedStatus)) {

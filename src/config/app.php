@@ -18,8 +18,6 @@ class App {
         // [0] : controller
         // [1] : method/ params
         // Example : podcast/1, podcast/add
-
-        // Middleware::checkReferer();
         
         $url = $this->parseURL();
         if (isset($url[0])) {

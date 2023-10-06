@@ -5,28 +5,42 @@ const debounceInputValidation = (
   validationState
 ) => {
   const inputElement = document.querySelector(`#${inputIdentifier}`);
+
+  inputElement.addEventListener(
+    "keyup",
+    debounce(
+      () =>
+        validateInput(inputIdentifier, regex, errorMessage, validationState),
+      500
+    )
+  );
+};
+
+const validateInput = (
+  inputIdentifier,
+  regex,
+  errorMessage,
+  validationState
+) => {
+  const inputElement = document.querySelector(`#${inputIdentifier}`);
   const alertElement = document.querySelector(`#${inputIdentifier}-alert`);
 
-  const validateInput = () => {
-    const inputValue = inputElement.value;
-    const paragraphElement = alertElement.querySelector("p");
+  const inputValue = inputElement.value;
+  const paragraphElement = alertElement.querySelector("p");
 
-    if (!regex.test(inputValue)) {
-      paragraphElement.innerText = errorMessage;
+  if (!regex.test(inputValue)) {
+    paragraphElement.innerText = errorMessage;
 
-      alertElement.className = "alert-show";
-      inputElement.className = "alert-show";
-      validationState.value = false;
-    } else {
-      paragraphElement.innerText = "";
+    alertElement.className = "alert-show";
+    inputElement.className = "alert-show";
+    validationState.value = false;
+  } else {
+    paragraphElement.innerText = "";
 
-      alertElement.className = "alert-hide";
-      inputElement.classList.remove("alert-show");
-      validationState.value = true;
-    }
-  };
-
-  inputElement.addEventListener("keyup", debounce(validateInput, 500));
+    alertElement.className = "alert-hide";
+    inputElement.classList.remove("alert-show");
+    validationState.value = true;
+  }
 };
 
 const debounceInputValidationExact = (
