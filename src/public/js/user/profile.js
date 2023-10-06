@@ -144,7 +144,7 @@ const showModalEditUser = (userId, modalId) => {
         const user = JSON.parse(xhr.responseText);
 
         // Update modal with user data
-        document.querySelector(`#${modalId} .avatar`).src = user.avatar_url ? `src/storage/user/${user.avatar_url}` : "/src/public/assets/images/avatar-template.png";
+        document.querySelector(`#${modalId} .avatar`).src = user.avatar_url ? `src/storage/user/${user.avatar_url}` : "/src/public/assets/images/avatar-template.png";        
         document.querySelector(`#${modalId} [name='user_id']`).value =
           user.user_id;
         document.querySelector(`#${modalId} [name='email']`).value = user.email;
@@ -214,6 +214,7 @@ const updateProfileUser = (formData) => {
   const firstName = formData.get("first_name");
   const lastName = formData.get("last_name");
   const email = formData.get("email");
+  const fileInput = formData.get("edit-avatar-file-upload");
 
   // Update HTML elements with the retrieved values
   document.querySelector("#profile-username").innerHTML = username;
@@ -221,6 +222,14 @@ const updateProfileUser = (formData) => {
     "#profile-fullname"
   ).innerHTML = `${firstName} ${lastName}`;
   document.querySelector("#profile-email").innerHTML = email;
+  
+  // Check if a file is selected
+  if (fileInput instanceof File) {
+    // Create a URL for the file
+    const fileURL = URL.createObjectURL(fileInput);
+    // Set the src attribute of the image element
+    document.querySelector("#profile-image").src = fileURL;
+  }
 };
 
 

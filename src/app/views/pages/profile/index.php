@@ -7,7 +7,7 @@
 
   echo '
       <div class="profile-body">
-        <img class="profile-image" src="' . $avatarURL . '" alt="Profile Image">
+        <img id="profile-image" class="profile-image" src="' . $avatarURL . '" alt="Profile Image">
         <div class="profile-info">
           <p>Profile</p>
           <h1 id="profile-username">' . $user->username . '</h1>
