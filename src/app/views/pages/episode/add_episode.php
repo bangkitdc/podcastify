@@ -8,6 +8,10 @@
     require_once VIEWS_DIR . "/components/shares/inputs/text.php";
     require_once VIEWS_DIR . "/components/shares/upload/baseFileUploader.php";
     require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
+    require_once VIEWS_DIR . "/components/shares/modals/baseModal.php";
+
+    actionModal("add-episode-confirm-modal", "Are you sure to create this episode ?", "add-episode-modal-ok", "add-episode-modal-cancel");
+    infoModal("add-episode-audio-modal", "Please Upload Your Audio File!", "add-episode-audio-modal-ok")
     ?>
     <p class="add-episode-container-title">Add Episode</p>
 
@@ -54,5 +58,5 @@
     </form>
   </div>
 </div>
-<script src="<?= JS_DIR ?>/components/inputText.js"></script>
+<?php echoJsFile(); echoModalJS()?>
 <script src="<?= JS_DIR ?>/episode/handle_upload.js"></script>
