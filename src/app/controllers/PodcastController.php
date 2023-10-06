@@ -64,7 +64,9 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
     }
@@ -86,7 +88,9 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
     }
@@ -109,7 +113,9 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
     }
@@ -151,7 +157,9 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
     }
@@ -176,7 +184,7 @@ class PodcastController extends BaseController
                 case "PATCH":
                     $data = json_decode(file_get_contents('php://input'), true);
 
-                    $title = filter_var($data['podcast-name-input'], FILTER_SANITIZE_STRING);
+                    $title = strtoupper(filter_var($data['podcast-name-input'], FILTER_SANITIZE_STRING));
                     $creator_name = filter_var($data['podcast-creator-input'], FILTER_SANITIZE_STRING);
                     $description = filter_var($data['podcast-desc-input'], FILTER_SANITIZE_STRING);
                     $category_name = filter_var($data['podcast-category-selection'], FILTER_SANITIZE_STRING);
@@ -201,9 +209,14 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            http_response_code(ResponseHelper::HTTP_STATUS_BAD_REQUEST);
-            echo $e->getMessage();
-            return;
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
+            exit;
         }
     }
 
@@ -236,17 +249,29 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            http_response_code(ResponseHelper::HTTP_STATUS_BAD_REQUEST);
-            echo $e->getMessage();
-            return;
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
+            exit;
         }
     }
 
     // /random
     public function random($limit) {
-        $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+        try {
+            $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
 
-        return $this->podcast_service->getRandomPodcasts($limit);
+            return $this->podcast_service->getRandomPodcasts($limit);
+        } catch (Exception $e) {
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
+            exit;
+        }
     }
 
     // /upload
@@ -264,8 +289,14 @@ class PodcastController extends BaseController
                     break;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
-            exit;
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+
+            http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
+            return;
         }
     }
 }
