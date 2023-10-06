@@ -134,12 +134,23 @@ handleFormSubmit("create-podcast", function () {
 
     let xhrImg = uploadPodcastImage(uploadUrl, true, imgFormData);
     xhrImg.onload = () => {
-      formData.append("preview-image-filename", xhrImg.responseText);
+      if (xhrImg.status >= 200 && xhrImg.status < 300) {
+        formData.append("preview-image-filename", xhrImg.responseText);
 
-      let xhr = createPodcast(formData);
-      xhr.onload = () => {
-        window.location.href = "/podcast";
-      };
+        let xhr = createPodcast(formData);
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            window.location.href = "/podcast";
+          } else {
+            const response = JSON.parse(xhr.responseText);
+            console.error(response.error_message);
+          }
+        };
+      } else {
+        const response = JSON.parse(xhr.responseText);
+        console.error(response.error_message);
+      }
     };
   });
 });
@@ -161,8 +172,14 @@ handleFormSubmit("update-form", function () {
       }
       let json = JSON.stringify(data);
       let xhr = updatePodcast(json, podcastId);
+
       xhr.onload = () => {
-        window.location.href = "/podcast";
+        if (xhr.status >= 200 && xhr.status < 300) {
+          window.location.href = "/podcast";
+        } else {
+          const response = JSON.parse(xhr.responseText);
+          console.error(response.error_message);
+        }
       };
     };
 
@@ -195,10 +212,16 @@ handleFormSubmit("update-form", function () {
       imgFormData.append("data", fileField.files[0]);
 
       let xhrImg = uploadPodcastImage(uploadUrl, true, imgFormData);
-      xhrImg.onload = () => {
-        formData.append("preview-image-filename", xhrImg.responseText);
 
-        sendPodcastEditPayload(formData);
+      xhrImg.onload = () => {
+        if (xhrImg.status >= 200 && xhrImg.status < 300) {
+          formData.append("preview-image-filename", xhrImg.responseText);
+
+          sendPodcastEditPayload(formData);
+        } else {
+          const response = JSON.parse(xhr.responseText);
+          console.error(response.error_message);
+        }
       };
     } else {
       sendPodcastEditPayload(formData);
@@ -213,8 +236,14 @@ if (document.getElementById("delete-podcast")) {
     deleteModal.addEventListener("okayClicked", () => {
       let podcastId = document.getElementById("podcast-id").value;
       let xhr = deletePodcast(podcastId);
+
       xhr.onload = () => {
-        window.location.href = "/podcast";
+        if (xhr.status >= 200 && xhr.status < 300) {
+          window.location.href = "/podcast";
+        } else {
+          const response = JSON.parse(xhr.responseText);
+          console.error(response.error_message);
+        }
       };
     });
   });
