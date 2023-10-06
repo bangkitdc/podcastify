@@ -95,7 +95,15 @@ const loadPodcastList = (
       toggleVisibility(".podcast-box-skeleton", "hidden");
       toggleVisibility(".podcast-box-area", "visible");
       toggleVisibility(".podcast-nav-box", "visible");
-      document.getElementById("podcast-container").outerHTML = xhr.responseText;
+      var parser = new DOMParser();
+      var xhrDOM = parser.parseFromString(xhr.responseText, "text/html");
+      var newPodcastContainer = xhrDOM.getElementById("podcast-container");
+
+      var currPodcastContainer = document.getElementById("podcast-container");
+      currPodcastContainer.parentNode.replaceChild(
+        newPodcastContainer,
+        currPodcastContainer
+      );
       document.getElementById("pod-list-page-num").textContent = currPageNum;
     };
   }
