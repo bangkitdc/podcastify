@@ -56,6 +56,10 @@ class Podcast {
 
         $result = $this->db->fetchAll();
 
+        if (empty($result)) {
+            throw new Exception("No podcasts found for the given page.");
+        }
+
         return $result;
     }
 
@@ -64,7 +68,13 @@ class Podcast {
 
         $this->db->query($query);
 
-        return $this->db->fetchAll();
+        $result = $this->db->fetchAll();
+
+        if (empty($result)) {
+            throw new Exception("No creator found.");
+        }
+
+        return $result;
     }
 
     public function createPodcast($title, $description, $creator_name, $image_url, $category_id) {
@@ -204,8 +214,12 @@ class Podcast {
 
         $this->db->query($query);
         $this->db->bind(":limit", $limit);
-        
+
         $result = $this->db->fetchAll();
+
+        if (empty($result)) {
+            throw new Exception("No podcast in database.");
+        }
 
         return $result;
     }
