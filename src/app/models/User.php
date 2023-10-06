@@ -96,17 +96,25 @@ class User {
         $query = "UPDATE users SET email = :email, 
                                 username = :username, 
                                 first_name = :first_name, 
-                                last_name = :last_name, 
-                                avatar_url = :avatar_url
-                            WHERE user_id = :user_id";
+                                last_name = :last_name";
+
+        if (!empty($avatarURL)) {
+            $query .= ", avatar_url = :avatar_url";
+        }
+
+        $query .= " WHERE user_id = :user_id";
 
         $this->db->query($query);
         $this->db->bind('email', $email);
         $this->db->bind('username', $username);
         $this->db->bind('first_name', $firstName);
         $this->db->bind('last_name', $lastName);
-        $this->db->bind('avatar_url', $avatarURL);
+        
         $this->db->bind('user_id', $userId);
+
+        if (!empty($avatarURL)) {
+            $this->db->bind('avatar_url', $avatarURL);
+        }
 
         $this->db->execute();
     }
@@ -184,5 +192,16 @@ class User {
         $this->db->query($query);
 
         return $this->db->fetch()->count;
+    }
+
+    public function getAvatar($userId)
+    {
+        $query = "SELECT avatar_url as avatar FROM users 
+            WHERE user_id = :user_id";
+        $this->db->query($query);
+        $this->db->bind('user_id', $userId);
+        $result = $this->db->fetch()->avatar;
+
+        return $result;
     }
 }

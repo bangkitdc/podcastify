@@ -50,7 +50,9 @@ class UploadService {
         return $this->storage->getUniqueRandomName() . ALLOWED_IMAGES[$mimetype];
     }
 
-    public function uploadAvatarImage($fileName) {
+    public function replaceAvatarImage($oldfileName, $fileName) {
+        $this->storage->deleteFile($oldfileName);
+
         $file = $_FILES['data']['tmp_name'];
         $this->storage->saveAvatarImage($fileName, $file);
     }

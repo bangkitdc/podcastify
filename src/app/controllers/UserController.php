@@ -41,12 +41,14 @@ class UserController extends BaseController {
                         // Handle file upload
                         $imageUploadService = new UploadService(STORAGE::USER_AVATAR_PATH);
 
-                        $imageUrl = null;
+                        $imageUrl = "";
                         if (isset($_FILES['data'])) {
                             $imageUrl = $imageUploadService->getUniqueFilename();
                         }
 
                         $userService = new UserService();
+                        $currentAvatarURL = $userService->getUserAvatar($userId);
+
                         $userService->updatePersonalInfo(
                             $userId, 
                             $email, 
@@ -58,7 +60,7 @@ class UserController extends BaseController {
 
                         // $imageUrl unique
                         if ($imageUrl) {
-                            $imageUploadService->uploadAvatarImage($imageUrl);
+                            $imageUploadService->replaceAvatarImage($currentAvatarURL, $imageUrl);
                         }
 
                         $response = array("success" => true, "status_message" => "Update Profile Successful.");

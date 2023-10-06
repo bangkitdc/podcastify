@@ -75,4 +75,9 @@ class UserService {
 
         $this->user->updatePassword($userId, $newHashedPassword);
     }
+
+    public function getUserAvatar($userId)
+    {
+        return $this->user->getAvatar($userId);
+    }
 }
