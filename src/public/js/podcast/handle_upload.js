@@ -134,9 +134,6 @@ handleFormSubmit("create-podcast", function () {
 
     let xhrImg = uploadPodcastImage(uploadUrl, true, imgFormData);
     xhrImg.onload = () => {
-      document.getElementById("preview-image-filename").value =
-        xhrImg.responseText;
-
       formData.append("preview-image-filename", xhrImg.responseText);
 
       let xhr = createPodcast(formData);
@@ -153,7 +150,7 @@ handleFormSubmit("update-form", function () {
 
   // Send form when okay button is clicked
   saveChangesModal.addEventListener("okayClicked", () => {
-    const sendPayload = (payloadForm) => {
+    const sendPodcastEditPayload = (payloadForm) => {
       let data = {};
       let podcastId = 0;
       for (let [key, value] of payloadForm.entries()) {
@@ -201,10 +198,10 @@ handleFormSubmit("update-form", function () {
       xhrImg.onload = () => {
         formData.append("preview-image-filename", xhrImg.responseText);
 
-        sendPayload(formData);
+        sendPodcastEditPayload(formData);
       };
     } else {
-      sendPayload(formData);
+      sendPodcastEditPayload(formData);
     }
   });
 });
