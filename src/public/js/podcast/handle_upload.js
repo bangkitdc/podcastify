@@ -40,18 +40,6 @@ document.getElementById("file-upload").addEventListener("change", function () {
       document.getElementById("preview-image").style.display = "block";
       document.getElementById("filename-file-upload").innerText =
         document.getElementById("file-upload").files[0].name;
-
-      let url = "/upload";
-      let fileField = document.getElementById("file-upload");
-      let formData = new FormData();
-      formData.append("filename", fileField.files[0].name);
-      formData.append("data", fileField.files[0]);
-
-      let xhr = uploadPodcastImage(url, true, formData);
-      xhr.onload = () => {
-        document.getElementById("preview-image-filename").value =
-          xhr.responseText;
-      };
     };
     reader.readAsDataURL(this.files[0]);
   }
@@ -137,9 +125,24 @@ handleFormSubmit("create-podcast", function () {
       document.getElementById("podcast-category-selection").value
     );
 
-    let xhr = createPodcast(formData);
-    xhr.onload = () => {
-      window.location.href = "/podcast";
+    // upload image to server
+    let uploadUrl = "/upload";
+    let fileField = document.getElementById("file-upload");
+    let imgFormData = new FormData();
+    imgFormData.append("filename", fileField.files[0].name);
+    imgFormData.append("data", fileField.files[0]);
+
+    let xhrImg = uploadPodcastImage(uploadUrl, true, imgFormData);
+    xhrImg.onload = () => {
+      document.getElementById("preview-image-filename").value =
+        xhrImg.responseText;
+
+      formData.append("preview-image-filename", xhrImg.responseText);
+
+      let xhr = createPodcast(formData);
+      xhr.onload = () => {
+        window.location.href = "/podcast";
+      };
     };
   });
 });
@@ -150,6 +153,22 @@ handleFormSubmit("update-form", function () {
 
   // Send form when okay button is clicked
   saveChangesModal.addEventListener("okayClicked", () => {
+    const sendPayload = (payloadForm) => {
+      let data = {};
+      let podcastId = 0;
+      for (let [key, value] of payloadForm.entries()) {
+        data[key] = value;
+        if (key == "podcast-id") {
+          podcastId = value;
+        }
+      }
+      let json = JSON.stringify(data);
+      let xhr = updatePodcast(json, podcastId);
+      xhr.onload = () => {
+        window.location.href = "/podcast";
+      };
+    };
+
     let form = document.getElementById("update-form");
     let formData = new FormData(form);
     // reappend values
@@ -170,20 +189,23 @@ handleFormSubmit("update-form", function () {
       document.getElementById("podcast-category-selection").value
     );
 
-    let data = {};
-    let podcastId = 0;
-    for (let [key, value] of formData.entries()) {
-      data[key] = value;
-      if (key == "podcast-id") {
-        podcastId = value;
-      }
-    }
-    let json = JSON.stringify(data);
+    // upload image to server
+    let uploadUrl = "/upload";
+    let fileField = document.getElementById("file-upload");
+    let imgFormData = new FormData();
+    if (fileField.files[0]) {
+      imgFormData.append("filename", fileField.files[0].name);
+      imgFormData.append("data", fileField.files[0]);
 
-    let xhr = updatePodcast(json, podcastId);
-    xhr.onload = () => {
-      window.location.href = "/podcast";
-    };
+      let xhrImg = uploadPodcastImage(uploadUrl, true, imgFormData);
+      xhrImg.onload = () => {
+        formData.append("preview-image-filename", xhrImg.responseText);
+
+        sendPayload(formData);
+      };
+    } else {
+      sendPayload(formData);
+    }
   });
 });
 
