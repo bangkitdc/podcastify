@@ -54,18 +54,6 @@ document
         document.getElementById("preview-poster").style.display = "block";
         document.getElementById("filename-poster-file-upload").innerText =
           document.getElementById("poster-file-upload").files[0].name;
-
-        let url = "/upload?type=image";
-        let fileField = document.getElementById("poster-file-upload");
-        let formData = new FormData();
-        formData.append("filename", fileField.files[0].name);
-        formData.append("data", fileField.files[0]);
-
-        let xhr = uploadEpsFile(url, true, formData);
-        xhr.onload = () => {
-          document.getElementById("preview-poster-filename").value =
-            xhr.responseText;
-        };
       };
       reader.readAsDataURL(this.files[0]);
     }
@@ -79,17 +67,6 @@ document
       reader.onload = (e) => {
         document.getElementById("filename-audio-file-upload").innerText =
           document.getElementById("audio-file-upload").files[0].name;
-
-        let url = "/upload?type=audio";
-        let fileField = document.getElementById("audio-file-upload");
-        let formData = new FormData();
-        formData.append("filename", fileField.files[0].name);
-        formData.append("data", fileField.files[0]);
-
-        let xhr = uploadEpsFile(url, true, formData);
-        xhr.onload = () => {
-          document.getElementById("audio-filename").value = xhr.responseText;
-        };
       };
       reader.readAsDataURL(this.files[0]);
     }
@@ -137,11 +114,35 @@ handleFormSubmit("add-episode-form", function () {
     );
   })
 
-  let xhr = createEpisode(formData);
+  // upload image to server
+  let imgUrl = "/upload?type=image";
+  let fileField = document.getElementById("poster-file-upload");
+  let imgFormData = new FormData();
+  imgFormData.append("filename", fileField.files[0].name);
+  imgFormData.append("data", fileField.files[0]);
 
-  xhr.onload = () => {
-    console.log(xhr.responseText);
-    window.location.href = "/episode";
+  let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
+  xhrImg.onload = () => {
+    formData.append("preview-poster-filename", xhrImg.responseText);
+
+    // upload audio to server
+    let audioUrl = "/upload?type=audio";
+    let audioFileField = document.getElementById("audio-file-upload");
+    let audioFormData = new FormData();
+    audioFormData.append("filename", audioFileField.files[0].name);
+    audioFormData.append("data", audioFileField.files[0]);
+
+    let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
+    xhrAudio.onload = () => {
+      formData.append("audio-filename", xhrAudio.responseText);
+      console.log(xhrAudio.responseText);
+
+      let xhr = createEpisode(formData);
+
+      xhr.onload = () => {
+        window.location.href = "/episode";
+      };
+    };
   };
 });
 

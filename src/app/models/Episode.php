@@ -1,11 +1,17 @@
 <?php
 
+require_once BASE_URL . '/src/config/storage.php';
+
 class Episode {
   private $db;
+  private $episode_img_storage;
+  private $episode_audio_storage;
 
   public function __construct()
   {
     $this->db = new Database();
+    $this->episode_img_storage = new Storage(Storage::EPISODE_IMAGE_PATH);
+    $this->episode_audio_storage = new Storage(Storage::EPISODE_AUDIO_PATH);
   }
 
   public function findAll($page = 1, $limit = 10) {
@@ -44,6 +50,21 @@ class Episode {
   }
 
   public function createEpisode($podcast_id, $category_id, $title, $description, $duration, $image_url, $audio_url) {
+    try {
+        $id = $this->getEpisodeIdByTitle($title);
+        if ($id != "") {
+            throw new Exception("Episode already exists with the same title!");
+        }
+    } catch (Exception $e) {
+        if ($image_url != "") {
+            $this->episode_img_storage->deleteFile($image_url);
+        }
+        if ($audio_url != "") {
+            $this->episode_audio_storage->deleteFile($audio_url);
+        }
+        throw new Exception($e->getMessage());
+    }
+
     $query = "INSERT INTO `episodes` (`podcast_id`, `category_id`,`title`,`description`, `duration`,`image_url`, `audio_url`) VALUES (:podcast_id, :category_id, :title, :description, :duration, :image_url, :audio_url)";
 
     $this->db->query(($query));
@@ -64,10 +85,25 @@ class Episode {
         $this->db->query($query);
         $this->db->bind(":podcast_id", $podcast_id);
         $this->db->execute();
+    } else {
+        if ($image_url != "") {
+            $this->episode_img_storage->deleteFile($image_url);
+        }
+        if ($audio_url != "") {
+            $this->episode_audio_storage->deleteFile($audio_url);
+        }
+
+        throw new Exception("Episode with $title already exists!");
     }
   }
 
   public function deleteEpisode($episode_id) {
+    $result = $this->findById($episode_id)[0];
+    $audio_url = $result->audio_url;
+    $image_url = $result->image_url;
+    $this->episode_img_storage->deleteFile($image_url);
+    $this->episode_audio_storage->deleteFile($audio_url);
+
     $query = "DELETE FROM episodes WHERE episodes.episode_id = :episode_id";
 
     $this->db->query($query);
@@ -78,6 +114,21 @@ class Episode {
   }
 
   public function updateEpisode($episode_id, $title, $description, $image_url, $audio_url) {
+    try {
+        $id = $this->getEpisodeIdByTitle($title);
+        if ($id != $episode_id && $id != "") {
+            throw new Exception("Episode already exists with the same title!");
+        }
+    } catch (Exception $e) {
+        if ($image_url != "") {
+            $this->episode_img_storage->deleteFile($image_url);
+        }
+        if ($audio_url != "") {
+            $this->episode_audio_storage->deleteFile($audio_url);
+        }
+        throw new Exception($e->getMessage());
+    }
+
     $query = "UPDATE episodes SET title = :title, description = :description, updated_at = NOW()";
 
     if (!empty($image_url)) {
@@ -105,6 +156,20 @@ class Episode {
     }
 
     $this->db->execute();
+  }
+
+  public function getEpisodeIdByTitle($title) {
+    $query = "SELECT episode_id FROM episodes WHERE title = :title";
+
+    $this->db->query($query);
+
+    $this->db->bind(":title", $title);
+    $result = $this->db->fetch();
+
+    if ($this->db->rowCount() == 0) {
+        return "";
+    }
+    return $result->episode_id;
   }
 
 }
