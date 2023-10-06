@@ -32,7 +32,12 @@ const loadEpsList = (
   xhr.open("GET", "/podcast" + URL);
   xhr.send();
   xhr.onload = () => {
-    document.getElementById("podcast-eps-list-container").innerHTML =
-      xhr.responseText;
+    if (xhr.status >= 200 && xhr.status < 300) {
+      document.getElementById("podcast-eps-list-container").innerHTML =
+        xhr.responseText;
+    } else {
+      const response = JSON.parse(xhr.responseText);
+      console.error(response.error_message);
+    }
   };
 };

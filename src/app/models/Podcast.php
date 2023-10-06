@@ -21,7 +21,7 @@ class Podcast {
 
         $result = $this->db->fetchAll();
         if (!$result) {
-            throw new Exception("No podcast in database.");
+            throw new Exception("No podcast in database.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
         return $result;
     }
@@ -34,7 +34,7 @@ class Podcast {
 
         $result = $this->db->fetch();
         if (!$result) {
-            throw new Exception("Podcast with ID $podcast_id not found.");
+            throw new Exception("Podcast with ID $podcast_id not found.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
         return $result;
     }
@@ -57,7 +57,7 @@ class Podcast {
         $result = $this->db->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("No podcasts found for the given page.");
+            throw new Exception("No podcasts found for the given page.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
 
         return $result;
@@ -71,7 +71,7 @@ class Podcast {
         $result = $this->db->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("No creator found.");
+            throw new Exception("No creator found.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
 
         return $result;
@@ -87,7 +87,7 @@ class Podcast {
             if ($image_url != "") {
                 $this->podcast_storage->deleteFile($image_url);
             }
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), ResponseHelper::HTTP_STATUS_BAD_REQUEST);
         }
 
         $query = "INSERT INTO podcasts (title, description, creator_name, image_url, category_id, created_at, updated_at) VALUES (:title, :description, :creator_name, :image_url, :category_id, NOW(), NOW())";
@@ -102,7 +102,7 @@ class Podcast {
         $this->db->execute();
 
         if ($this->db->rowCount() == 0) {
-            throw new Exception("Failed to create podcast.");
+            throw new Exception("Failed to create podcast.", 500);
         }
     }
 
@@ -119,7 +119,7 @@ class Podcast {
         $this->db->execute();
 
         if ($this->db->rowCount() == 0) {
-            throw new Exception("Podcast with ID $podcast_id not found.");
+            throw new Exception("Podcast with ID $podcast_id not found.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
     }
 
@@ -133,7 +133,7 @@ class Podcast {
             if ($image_url != "") {
                 $this->podcast_storage->deleteFile($image_url);
             }
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), ResponseHelper::HTTP_STATUS_BAD_REQUEST);
         }
 
         if ($image_url != "") {
@@ -252,7 +252,7 @@ class Podcast {
         $result = $this->db->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("No podcast in database.");
+            throw new Exception("No podcast in database.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
 
         return $result;
