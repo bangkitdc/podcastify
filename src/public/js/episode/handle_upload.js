@@ -74,7 +74,11 @@ document
 
 let addEpisodeModal = document.getElementById("add-episode-confirm-modal");
 let addEpisodeAudioModal = document.getElementById("add-episode-audio-modal");
-setupModal("add-episode-confirm-modal", "add-episode-modal-cancel", "add-episode-modal-ok")
+setupModal(
+  "add-episode-confirm-modal",
+  "add-episode-modal-cancel",
+  "add-episode-modal-ok"
+);
 setupModal("add-episode-audio-modal", "add-episode-audio-modal-ok");
 
 handleFormSubmit("add-episode-form", function () {
@@ -94,7 +98,7 @@ handleFormSubmit("add-episode-form", function () {
   if (!titleValidation || !descriptionValidation) return;
 
   let audioFile = document.getElementById("audio-file-upload");
-  if(!audioFile.files.length) {
+  if (!audioFile.files.length) {
     addEpisodeAudioModal.style.display = "flex";
     return;
   }
@@ -120,30 +124,48 @@ handleFormSubmit("add-episode-form", function () {
     imgFormData.append("filename", fileField.files[0].name);
     imgFormData.append("data", fileField.files[0]);
 
-    let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
-    xhrImg.onload = () => {
-      formData.append("preview-poster-filename", xhrImg.responseText);
+    try {
+      let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
+      xhrImg.onload = () => {
+        formData.append("preview-poster-filename", xhrImg.responseText);
 
-      // upload audio to server
-      let audioUrl = "/upload?type=audio";
-      let audioFileField = document.getElementById("audio-file-upload");
-      let audioFormData = new FormData();
-      audioFormData.append("filename", audioFileField.files[0].name);
-      audioFormData.append("data", audioFileField.files[0]);
+        try {
+          // upload audio to server
+          let audioUrl = "/upload?type=audio";
+          let audioFileField = document.getElementById("audio-file-upload");
+          let audioFormData = new FormData();
+          audioFormData.append("filename", audioFileField.files[0].name);
+          audioFormData.append("data", audioFileField.files[0]);
 
-      let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
-      xhrAudio.onload = () => {
-        formData.append("audio-filename", xhrAudio.responseText);
-        console.log(xhrAudio.responseText);
+          let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
+          xhrAudio.onload = () => {
+            formData.append("audio-filename", xhrAudio.responseText);
 
-        let xhr = createEpisode(formData);
+            try {
+              let xhr = createEpisode(formData);
+              xhr.onload = () => {
+                if (xhr.status === 200) {
+                  window.location.href = "/episode";
+                } else {
+                  console.error("Request failed with status:", xhr.status);
+                }
+              };
 
-        xhr.onload = () => {
-          window.location.href = "/episode";
-        };
+              xhr.onerror = function () {
+                console.error("Error during XMLHttpRequest");
+              };
+            } catch (error) {
+              console.error("Error creating episode:", error);
+            }
+          };
+        } catch (error) {
+          console.error("Error uploading audio:", error);
+        }
       };
-    };
-  })
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  });
 });
 
 handleFormSubmit("delete-episode-form", function () {
@@ -156,11 +178,21 @@ handleFormSubmit("delete-episode-form", function () {
       episodeId = value;
     }
   }
+  try {
+    let xhr = deleteEpisode(episodeId);
 
-  let xhr = deleteEpisode(episodeId);
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        window.location.href = "/episode";
+      } else {
+        console.error("Request failed with status:", xhr.status);
+      }
+    };
 
-  xhr.onload = () => {
-    console.log(xhr.responseText);
-    window.location.href = "/episode";
-  };
+    xhr.onerror = function () {
+      console.error("Error during XMLHttpRequest");
+    };
+  } catch (error) {
+    console.error("Error during XMLHttpRequest:", error);
+  }
 });

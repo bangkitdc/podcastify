@@ -26,8 +26,8 @@ const deleteEpisode = (episodeId) => {
   xhr.open("DELETE", EPISODE_EDIT_BASE_URL + episodeId);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send();
-  return xhr
-}
+  return xhr;
+};
 
 const handleFormSubmit = (formId, callback) => {
   let formElement = document.getElementById(formId);
@@ -74,9 +74,19 @@ document.getElementById("edit-audio-file-upload") &&
     });
 
 let editEpisodeModal = document.getElementById("edit-episode-confirm-modal");
-let deleteEpisodeModal = document.getElementById("delete-episode-confirm-modal");
-setupModal("edit-episode-confirm-modal", "edit-episode-modal-cancel", "edit-episode-modal-ok");
-setupModal("delete-episode-confirm-modal", "delete-episode-modal-cancel", "delete-episode-modal-ok");
+let deleteEpisodeModal = document.getElementById(
+  "delete-episode-confirm-modal"
+);
+setupModal(
+  "edit-episode-confirm-modal",
+  "edit-episode-modal-cancel",
+  "edit-episode-modal-ok"
+);
+setupModal(
+  "delete-episode-confirm-modal",
+  "delete-episode-modal-cancel",
+  "delete-episode-modal-ok"
+);
 
 handleFormSubmit("edit-episode-form", function () {
   editEpisodeModal.style.display = "flex";
@@ -90,26 +100,38 @@ handleFormSubmit("edit-episode-form", function () {
       }
     }
     let json = JSON.stringify(data);
-    let xhr = updateEpisode(json, episodeId);
+    try {
+      let xhr = updateEpisode(json, episodeId);
 
-    xhr.onload = () => {
-      window.location.href = "/episode";
-    };
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          window.location.href = "/episode";
+        } else {
+          console.error("Request failed with status:", xhr.status);
+        }
+      };
+
+      xhr.onerror = function () {
+        console.error("Error during XMLHttpRequest");
+      };
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   editEpisodeModal.addEventListener("okayClicked", function () {
     let form = document.getElementById("edit-episode-form");
     let formData = new FormData(form);
 
-      formData.append(
-        "episode-title-input",
-        document.getElementById("episode-title-input").value
-      );
+    formData.append(
+      "episode-title-input",
+      document.getElementById("episode-title-input").value
+    );
 
-      formData.append(
-        "episode-description-input",
-        document.getElementById("episode-description-input").value
-      );
+    formData.append(
+      "episode-description-input",
+      document.getElementById("episode-description-input").value
+    );
 
     let imgUrl = "/upload?type=image";
     let fileField = document.getElementById("edit-poster-file-upload");
@@ -122,12 +144,19 @@ handleFormSubmit("edit-episode-form", function () {
       imgFormData.append("data", fileField.files[0]);
 
       imgUploadPromise = new Promise((resolve, reject) => {
-        let xhrImg = uploadEditedEpsFile(imgUrl, true, imgFormData);
-        xhrImg.onload = () => {
-          formData.append("edit-preview-poster-filename", xhrImg.responseText);
-          resolve();
-        };
-        xhrImg.onerror = reject;
+        try {
+          let xhrImg = uploadEditedEpsFile(imgUrl, true, imgFormData);
+          xhrImg.onload = () => {
+            formData.append(
+              "edit-preview-poster-filename",
+              xhrImg.responseText
+            );
+            resolve();
+          };
+          xhrImg.onerror = reject;
+        } catch (error) {
+          console.error("An error occurred:", error);
+        }
       });
     }
 
@@ -142,12 +171,16 @@ handleFormSubmit("edit-episode-form", function () {
       audioFormData.append("data", audioFileField.files[0]);
 
       audioUploadPromise = new Promise((resolve, reject) => {
-        let xhrAudio = uploadEditedEpsFile(audioUrl, true, audioFormData);
-        xhrAudio.onload = () => {
-          formData.append("edit-audio-filename", xhrAudio.responseText);
-          resolve();
-        };
-        xhrAudio.onerror = reject;
+        try {
+          let xhrAudio = uploadEditedEpsFile(audioUrl, true, audioFormData);
+          xhrAudio.onload = () => {
+            formData.append("edit-audio-filename", xhrAudio.responseText);
+            resolve();
+          };
+          xhrAudio.onerror = reject;
+        } catch (error) {
+          console.error("An error occurred:", error);
+        }
       });
     }
 
@@ -156,19 +189,31 @@ handleFormSubmit("edit-episode-form", function () {
       .catch((error) =>
         console.error("An error occurred while uploading files:", error)
       );
-  })
+  });
 });
 
-if(document.getElementById("delete-episode")){
+if (document.getElementById("delete-episode")) {
   document.getElementById("delete-episode").addEventListener("click", () => {
     deleteEpisodeModal.style.display = "flex";
 
     deleteEpisodeModal.addEventListener("okayClicked", () => {
       let id = document.getElementById("episode_id").value;
-      let xhr = deleteEpisode(id);
-      xhr.onload = () => {
-        window.location.href = "/episode";
-      };
+      try {
+        let xhr = deleteEpisode(id);
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            window.location.href = "/episode";
+          } else {
+            console.error("Request failed with status:", xhr.status);
+          }
+        };
+
+        xhr.onerror = function () {
+          console.error("Error during XMLHttpRequest");
+        };
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
     });
   });
 }
