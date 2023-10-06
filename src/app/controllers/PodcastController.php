@@ -242,6 +242,13 @@ class PodcastController extends BaseController
         }
     }
 
+    // /random
+    public function random($limit) {
+        $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+
+        return $this->podcast_service->getRandomPodcasts($limit);
+    }
+
     // /upload
     public function upload() {
         Middleware::checkIsAdmin();
