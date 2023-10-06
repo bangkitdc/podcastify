@@ -78,6 +78,18 @@ class Podcast {
     }
 
     public function createPodcast($title, $description, $creator_name, $image_url, $category_id) {
+        try {
+            $id = $this->getPodcastIdByTitle($title);
+            if ($id != "") {
+                throw new Exception("Podcast already exists with the same title!");
+            }
+        } catch (Exception $e) {
+            if ($image_url != "") {
+                $this->podcast_storage->deleteFile($image_url);
+            }
+            throw new Exception($e->getMessage());
+        }
+
         $query = "INSERT INTO podcasts (title, description, creator_name, image_url, category_id, created_at, updated_at) VALUES (:title, :description, :creator_name, :image_url, :category_id, NOW(), NOW())";
         $this->db->query($query);
 
@@ -112,6 +124,18 @@ class Podcast {
     }
 
     public function updatePodcast($podcast_id, $title, $description, $creator_name, $image_url, $category_id) {
+        try {
+            $id = $this->getPodcastIdByTitle($title);
+            if ($id != $podcast_id && $id != "") {
+                throw new Exception("Podcast already exists with the same title!");
+            }
+        } catch (Exception $e) {
+            if ($image_url != "") {
+                $this->podcast_storage->deleteFile($image_url);
+            }
+            throw new Exception($e->getMessage());
+        }
+
         if ($image_url != "") {
             $query = "UPDATE podcasts SET title = :title, description = :description, creator_name = :creator_name, image_url = :image_url, category_id = :category_id, updated_at = NOW() WHERE podcast_id = :podcast_id";
             $this->db->query($query);
@@ -128,10 +152,6 @@ class Podcast {
         $this->db->bind(":podcast_id", $podcast_id);
 
         $this->db->execute();
-
-        if ($this->db->rowCount() == 0) {
-            throw new Exception("Podcast with ID $podcast_id not found.");
-        }
     }
 
     public function getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, $limit) {
@@ -196,7 +216,7 @@ class Podcast {
     }
 
     public function getEpisodesByPodcastId($podcast_id, $limit, $page) {
-        $query = "SELECT * FROM episodes where podcast_id = :podcast_id LIMIT :limit OFFSET :offset";
+        $query = "SELECT * FROM episodes WHERE podcast_id = :podcast_id LIMIT :limit OFFSET :offset";
         $this->db->query($query);
 
         $offset = ($page - 1) * $limit;
@@ -207,6 +227,20 @@ class Podcast {
         $result = $this->db->fetchAll();
 
         return $result;
+    }
+
+    public function getPodcastIdByTitle($title) {
+        $query = "SELECT podcast_id FROM podcasts WHERE title = :title";
+
+        $this->db->query($query);
+
+        $this->db->bind(":title", $title);
+        $result = $this->db->fetch();
+
+        if ($this->db->rowCount() == 0) {
+            return "";
+        }
+        return $result->podcast_id;
     }
 
     public function getRandomPodcasts($limit) {
