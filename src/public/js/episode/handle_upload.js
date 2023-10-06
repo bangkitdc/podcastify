@@ -112,38 +112,38 @@ handleFormSubmit("add-episode-form", function () {
       "episode-description-input",
       document.getElementById("episode-description-input").value
     );
-  })
 
-  // upload image to server
-  let imgUrl = "/upload?type=image";
-  let fileField = document.getElementById("poster-file-upload");
-  let imgFormData = new FormData();
-  imgFormData.append("filename", fileField.files[0].name);
-  imgFormData.append("data", fileField.files[0]);
+    // upload image to server
+    let imgUrl = "/upload?type=image";
+    let fileField = document.getElementById("poster-file-upload");
+    let imgFormData = new FormData();
+    imgFormData.append("filename", fileField.files[0].name);
+    imgFormData.append("data", fileField.files[0]);
 
-  let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
-  xhrImg.onload = () => {
-    formData.append("preview-poster-filename", xhrImg.responseText);
+    let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
+    xhrImg.onload = () => {
+      formData.append("preview-poster-filename", xhrImg.responseText);
 
-    // upload audio to server
-    let audioUrl = "/upload?type=audio";
-    let audioFileField = document.getElementById("audio-file-upload");
-    let audioFormData = new FormData();
-    audioFormData.append("filename", audioFileField.files[0].name);
-    audioFormData.append("data", audioFileField.files[0]);
+      // upload audio to server
+      let audioUrl = "/upload?type=audio";
+      let audioFileField = document.getElementById("audio-file-upload");
+      let audioFormData = new FormData();
+      audioFormData.append("filename", audioFileField.files[0].name);
+      audioFormData.append("data", audioFileField.files[0]);
 
-    let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
-    xhrAudio.onload = () => {
-      formData.append("audio-filename", xhrAudio.responseText);
-      console.log(xhrAudio.responseText);
+      let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
+      xhrAudio.onload = () => {
+        formData.append("audio-filename", xhrAudio.responseText);
+        console.log(xhrAudio.responseText);
 
-      let xhr = createEpisode(formData);
+        let xhr = createEpisode(formData);
 
-      xhr.onload = () => {
-        window.location.href = "/episode";
+        xhr.onload = () => {
+          window.location.href = "/episode";
+        };
       };
     };
-  };
+  })
 });
 
 handleFormSubmit("delete-episode-form", function () {
