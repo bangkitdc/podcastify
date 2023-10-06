@@ -37,6 +37,8 @@ const showEditEpisode = (episodeId) => {
 
   xhr.onload = () => {
     document.getElementById("content-middle").innerHTML = xhr.responseText;
+    addScript("/src/public/js/components/inputText.js");
+    addScript("/src/public/js/components/modal.js");
     addScript("/src/public/js/episode/handle_upload_edit.js");
   };
 };

@@ -10,12 +10,19 @@ const uploadEditedEpsFile = (url, async = true, data = null) => {
 
 const updateEpisode = (json, episodeId) => {
   let xhr = new XMLHttpRequest();
-  console.log(EPISODE_EDIT_BASE_URL + episodeId + "?edit=true");
-  xhr.open("PATCH", EPISODE_EDIT_BASE_URL + "/" + episodeId + "?edit=true", true);
+  xhr.open("PATCH", EPISODE_EDIT_BASE_URL + episodeId + "?edit=true", true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(json);
   return xhr;
 };
+
+const deleteEpisode = (episodeId) => {
+  let xhr = new XMLHttpRequest();
+  xhr.open("DELETE", EPISODE_EDIT_BASE_URL + episodeId);
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.send();
+  return xhr
+}
 
 const handleFormSubmit = (formId, callback) => {
   let formElement = document.getElementById(formId);
@@ -88,35 +95,64 @@ document.getElementById("edit-audio-file-upload") &&
       }
     });
 
+let editEpisodeModal = document.getElementById("edit-episode-confirm-modal");
+let deleteEpisodeModal = document.getElementById("delete-episode-confirm-modal");
+setupModal("edit-episode-confirm-modal", "edit-episode-modal-cancel", "edit-episode-modal-ok");
+setupModal("delete-episode-confirm-modal", "delete-episode-modal-cancel", "delete-episode-modal-ok");
+
 handleFormSubmit("edit-episode-form", function () {
-  let form = document.getElementById("edit-episode-form");
-  let formData = new FormData(form);
+  editEpisodeModal.style.display = "flex";
 
-  formData.append(
-    "episode-title-input",
-    document.getElementById("episode-title-input").value
-  );
+  editEpisodeModal.addEventListener("okayClicked", function () {
+    let form = document.getElementById("edit-episode-form");
+    let formData = new FormData(form);
 
-  formData.append(
-    "episode-description-input",
-    document.getElementById("episode-description-input").value
-  );
+    formData.append(
+      "episode-title-input",
+      document.getElementById("episode-title-input").value
+    );
 
-  let data = {};
-  let episodeId = 0;
-  for (let [key, value] of formData.entries()) {
-    data[key] = value;
-    if (key == "episode_id") {
-      episodeId = value;
+    formData.append(
+      "episode-description-input",
+      document.getElementById("episode-description-input").value
+    );
+
+    let data = {};
+    let episodeId = 0;
+    for (let [key, value] of formData.entries()) {
+      data[key] = value;
+      if (key == "episode_id") {
+        episodeId = value;
+      }
     }
-  }
 
-  let json = JSON.stringify(data);
+    let json = JSON.stringify(data);
 
-  let xhr = updateEpisode(json, episodeId);
+    let xhr = updateEpisode(json, episodeId);
 
-  xhr.onload = () => {
-    console.log(xhr.responseText);
-    window.location.href = "/episode";
-  };
+    xhr.onload = () => {
+      console.log(xhr.responseText);
+      // window.location.href = "/episode";
+    };
+  });
 });
+
+if(document.getElementById("delete-episode")){
+  document.getElementById("delete-episode").addEventListener("click", () => {
+    deleteEpisodeModal.style.display = "flex";
+
+    deleteEpisodeModal.addEventListener("okayClicked", () => {
+      let id = document.getElementById("episode_id").value;
+      let xhr = deleteEpisode(id);
+      xhr.onload = () => {
+        // window.location.href = "/episode";
+      };
+    });
+  });
+}
+
+if (document.getElementById("cancel-change")) {
+  document.getElementById("cancel-change").addEventListener("click", () => {
+    window.location.href = "/episode";
+  });
+}
