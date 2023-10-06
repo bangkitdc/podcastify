@@ -66,7 +66,15 @@ const searchPodcast = (page = 1) => {
     toggleVisibility(".podcast-box-skeleton", "hidden");
     toggleVisibility(".podcast-box-area", "visible");
     toggleVisibility(".podcast-nav-box", "visible");
-    document.getElementById("podcast-container").outerHTML = xhr.responseText;
+    var parser = new DOMParser();
+    var xhrDOM = parser.parseFromString(xhr.responseText, "text/html");
+    var newPodcastContainer = xhrDOM.getElementById("podcast-container");
+
+    var currPodcastContainer = document.getElementById("podcast-container");
+    currPodcastContainer.parentNode.replaceChild(
+      newPodcastContainer,
+      currPodcastContainer
+    );
     if (document.getElementById("pod-list-page-num"))
       document.getElementById("pod-list-page-num").textContent =
         currentPageNumber;
@@ -90,3 +98,12 @@ if (document.getElementById("podcast-search-category-selection")) {
 }
 
 searchBar.addEventListener("keyup", debounce(searchPodcastWrapper, 500));
+document
+  .querySelectorAll('.base-checkbox input[type="checkbox"]')
+  .forEach(function (checkbox) {
+    checkbox.addEventListener("change", debounce(searchPodcastWrapper, 500));
+  });
+
+document
+  .getElementById("podcast-search-sort-selection")
+  .addEventListener("change", debounce(searchPodcastWrapper, 500));
