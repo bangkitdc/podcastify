@@ -15,6 +15,10 @@ class UploadService {
             case "image":
                 if (isset($_FILES['data'])) {
                     $tempName = $_FILES['data']['tmp_name'];
+                    $filesize = filesize($tempName);
+                    if ($filesize > MAX_SIZE) {
+                        throw new Exception('Request Entity Too Large', ResponseHelper::HTTP_STATUS_PAYLOAD_TOO_LARGE);
+                    }
                     $fileName = $this->storage->saveImage($tempName);
                     echo $fileName;
                     return;
@@ -23,14 +27,17 @@ class UploadService {
             case "audio":
                 if (isset($_FILES['data'])) {
                     $tempName = $_FILES['data']['tmp_name'];
+                    $filesize = filesize($tempName);
+                    if ($filesize > MAX_SIZE) {
+                        throw new Exception('Request Entity Too Large', ResponseHelper::HTTP_STATUS_PAYLOAD_TOO_LARGE);
+                    }
                     $fileName = $this->storage->saveAudio($tempName);
                     echo $fileName;
                     return;
                 }
                 break;
             default:
-                echo "Unsupported File Type!";
-                break;
+                throw new Exception('Unsupported File Type!', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
         }
     }
 

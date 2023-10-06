@@ -63,21 +63,26 @@ const searchPodcast = (page = 1) => {
   xhr.open("GET", url);
   xhr.send();
   xhr.onload = () => {
-    toggleVisibility(".podcast-box-skeleton", "hidden");
-    toggleVisibility(".podcast-box-area", "visible");
-    toggleVisibility(".podcast-nav-box", "visible");
-    var parser = new DOMParser();
-    var xhrDOM = parser.parseFromString(xhr.responseText, "text/html");
-    var newPodcastContainer = xhrDOM.getElementById("podcast-container");
+    if (xhr.status >= 200 && xhr.status < 300) {
+      toggleVisibility(".podcast-box-skeleton", "hidden");
+      toggleVisibility(".podcast-box-area", "visible");
+      toggleVisibility(".podcast-nav-box", "visible");
+      var parser = new DOMParser();
+      var xhrDOM = parser.parseFromString(xhr.responseText, "text/html");
+      var newPodcastContainer = xhrDOM.getElementById("podcast-container");
 
-    var currPodcastContainer = document.getElementById("podcast-container");
-    currPodcastContainer.parentNode.replaceChild(
-      newPodcastContainer,
-      currPodcastContainer
-    );
-    if (document.getElementById("pod-list-page-num"))
-      document.getElementById("pod-list-page-num").textContent =
-        currentPageNumber;
+      var currPodcastContainer = document.getElementById("podcast-container");
+      currPodcastContainer.parentNode.replaceChild(
+        newPodcastContainer,
+        currPodcastContainer
+      );
+      if (document.getElementById("pod-list-page-num"))
+        document.getElementById("pod-list-page-num").textContent =
+          currentPageNumber;
+    } else {
+      const response = JSON.parse(xhr.responseText);
+      console.error(response.error_message);
+    }
   };
 };
 
