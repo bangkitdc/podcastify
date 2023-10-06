@@ -117,17 +117,23 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
 };
 
 document
+  .getElementById("edit-preview-avatar")
+  .addEventListener("click", function () {
+    // Trigger the click event on the file input
+    document.getElementById("edit-avatar-file-upload").click();
+  });
+
+document
   .getElementById("edit-avatar-file-upload")
   .addEventListener("change", function () {
     if (this.files && this.files[0]) {
       var reader = new FileReader();
       reader.onload = (e) => {
         document.getElementById("edit-preview-avatar").src = e.target.result;
-        document.getElementById("edit-preview-avatar").style.display = "block";
-        document.getElementById("filename-edit-avatar-file-upload").innerText =
-          document.getElementById("edit-avatar-file-upload").files[0].name;
       };
       reader.readAsDataURL(this.files[0]);
+
+      this.value = "";
     }
   });
 

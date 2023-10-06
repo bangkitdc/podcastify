@@ -21,9 +21,14 @@ class UserController extends BaseController {
 
                         $data = $userService->getUser($userId);
 
+                        $response = array("success" => true, "status_message" => "Fetched successfully", "data" => $data);
                         http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+                        // Set the Content-Type header to indicate JSON
                         header('Content-Type: application/json');
-                        echo json_encode($data);
+
+                        // Return the JSON response
+                        echo json_encode($response);
                         return;
                     }
                     $this->list();

@@ -10,13 +10,9 @@ class AuthService {
         $this->user = new User();
     }
     public function login($username, $password) {
-        if (preg_match('/\s/', $username)) {
-            throw new Exception("Username contains whitespace", ResponseHelper::HTTP_STATUS_BAD_REQUEST);
-        }
-
         $user = $this->user->findByUsername($username);
 
-        if (!$this->checkPassword($password, $user->password) || !$user) {
+        if (!$user || !$this->checkPassword($password, $user->password)) {
             throw new Exception("Invalid credentials", ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
         }
 
@@ -45,12 +41,12 @@ class AuthService {
     {
         // Check if the email, username already exists
         if ($this->user->emailExists($email) && $this->user->usernameExists($username)) {
-            throw new Exception('This email and username are already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+            throw new Exception('This email and username are already connected to an account', ResponseHelper::HTTP_STATUS_FORBIDDEN);
         }
 
         // Check if the email already exists
         if ($this->user->emailExists($email)) {
-            throw new Exception('This email is already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+            throw new Exception('This email is already connected to an account', ResponseHelper::HTTP_STATUS_FORBIDDEN);
         }
 
         // Check if the username already exists

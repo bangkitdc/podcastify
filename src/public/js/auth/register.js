@@ -57,7 +57,7 @@ inputPassword &&
         paragraphPassword.innerText = "Password must consist of a minimum of 8 characters, at least one letter, one number, and one special character.";
 
         alertPassword.className = "alert-show";
-        inputPassword.className = "alert-show";
+        inputPassword.classList.add("alert-show");
         passwordValidation.value = false;
       } else {
         paragraphPassword.innerText = "";
@@ -72,7 +72,7 @@ inputPassword &&
           paragraphConfirmPassword.innerText = "Your passwords doesn't match.";
 
           alertConfirmPassword.className = "alert-show";
-          inputConfirmPassword.className = "alert-show";
+          inputConfirmPassword.classList.add("alert-show");
           confirmPasswordValidation.value = false;
         } else {
           paragraphConfirmPassword.innerText = "";
@@ -166,31 +166,24 @@ const submitRegisterForm = async (e) => {
     formData.delete("confirm_password");
 
     xhr.onload = function () {
-      if (xhr.status === 201) {
-        try {
-          const response = JSON.parse(xhr.responseText);
+      const response = JSON.parse(xhr.responseText);
 
-          // TODO: notification
-          if (response.success) {
+      if (xhr.status === 200) {
+        if (response.success) {
+          showNotificationSuccess(response.status_message);
+
+          setTimeout(() => {
             location.replace(response.redirect_url);
-          } else {
-            console.error(response.error_message);
-          }
-        } catch (error) {
-          console.error("Error parsing JSON response:", error);
+          }, 3000);
         }
       } else {
-        console.error("Request failed with status:", xhr.status);
+        showNotificationDanger(response.error_message);
       }
-    };
-
-    xhr.onerror = function () {
-      console.error("Error during XMLHttpRequest");
     };
 
     xhr.send(formData);
   } catch (error) {
-    console.error("Error during XMLHttpRequest:", error);
+    showNotificationDanger("Error during XMLHttpRequest: " + error);
   }
 };
 

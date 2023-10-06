@@ -31,6 +31,13 @@
   </div>
 </body>
 
+<?php
+require_once COMPONENTS_SHARES_DIR . 'notifications/primary.php';
+
+echoNotification();
+?>
+
+<script src="<?= JS_DIR ?>components/notification.js"></script>
 <script src="<?= JS_DIR ?>default.js"></script>
 <script src="<?= JS_DIR ?>topbar.js"></script>
 

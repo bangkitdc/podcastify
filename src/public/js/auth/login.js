@@ -23,31 +23,24 @@ const submitLoginForm = async (e) => {
     const formData = new FormData(document.querySelector(".login-form"));
 
     xhr.onload = function () {
-      if (xhr.status === 200) {
-        try {
-          const data = JSON.parse(xhr.responseText);
+      const response = JSON.parse(xhr.responseText);
 
-          // TODO: notifications
-          if (data.success) {
-            location.replace(data.redirect_url);
-          } else {
-            console.error(data.error_message);
-          }
-        } catch (parseError) {
-          console.error("Error parsing JSON response:", parseError);
+      if (xhr.status === 200) {
+        if (response.success) {
+          showNotificationSuccess(response.status_message);
+
+          setTimeout(() => {
+            location.replace(response.redirect_url);
+          }, 3000);
         }
       } else {
-        console.error("Request failed with status:", xhr.status);
+        showNotificationDanger(response.error_message);
       }
-    };
-
-    xhr.onerror = function () {
-      console.error("Error during XMLHttpRequest");
     };
 
     xhr.send(formData);
   } catch (error) {
-    console.error("Error during XMLHttpRequest:", error);
+    showNotificationDanger("Error during XMLHttpRequest: " + error);
   }
 
 };

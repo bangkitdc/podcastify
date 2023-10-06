@@ -37,6 +37,6 @@ class ResponseHelper
 
     public static function responseNotAllowedMethod()
     {
-        self::response(["status_message" => "METHOD NOT ALLOWED"], self::HTTP_STATUS_METHOD_NOT_ALLOWED);
+        self::response(["success" => false, "error_message" => "Not allowed"], self::HTTP_STATUS_METHOD_NOT_ALLOWED);
     }
 }

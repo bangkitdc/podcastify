@@ -50,45 +50,46 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
 };
 
 const showModalEditStatusUser = (userId, modalId) => {
-  const xhr = new XMLHttpRequest();
+  try {
+    const xhr = new XMLHttpRequest();
 
-  xhr.open("GET", `/user/${userId}`, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.open("GET", `/user/${userId}`, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
 
-  // Define the callback for when the request completes
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      try {
-        const user = JSON.parse(xhr.responseText);
+    // Define the callback for when the request completes
+    xhr.onload = function () {
+      const response = JSON.parse(xhr.responseText);
+      if (xhr.status === 200) {
+        if (response.success) {
+          const user = response.data;
 
-        // Update modal with user data
-        document.querySelector(`#${modalId} .modal-image`).src = user.avatar_url ? `src/storage/user/${user.avatar_url}` : "/src/public/assets/images/avatar-template.png";
-        document.querySelector(`#${modalId} [name='user_id']`).value =
-          user.user_id;
-        document.querySelector(`#${modalId} [name='status']`).value = parseInt(user.status);
+          // Update modal with user data
+          document.querySelector(`#${modalId} .modal-image`).src =
+            user.avatar_url
+              ? `src/storage/user/${user.avatar_url}`
+              : "/src/public/assets/images/avatar-template.png";
+          document.querySelector(`#${modalId} [name='user_id']`).value =
+            user.user_id;
+          document.querySelector(`#${modalId} [name='status']`).value =
+            parseInt(user.status);
 
-        // Open the modal
-        openModal(modalId);
+          // Open the modal
+          openModal(modalId);
 
-        // Set up form submission
-        const elementForm = `#${modalId}-form`;
-        document.querySelector(elementForm).onsubmit = (e) =>
-          submitUpdateForm(e, elementForm, modalId);
-      } catch (error) {
-        console.error("Error parsing JSON response:", error);
+          // Set up form submission
+          const elementForm = `#${modalId}-form`;
+          document.querySelector(elementForm).onsubmit = (e) =>
+            submitUpdateForm(e, elementForm, modalId);
+        }
+      } else {
+        showNotificationDanger(response.error_message);
       }
-    } else {
-      console.error("Request failed with status:", xhr.status);
-    }
-  };
+    };
 
-  // Define the callback for network errors
-  xhr.onerror = function () {
-    console.error("Error during XMLHttpRequest");
-  };
-
-  // Send the request
-  xhr.send();
+    xhr.send();
+  } catch (error) {
+    showNotificationDanger("Error during XMLHttpRequest: " + error);
+  }
 }
 
 const updateStatusUser = (userId, val) => {

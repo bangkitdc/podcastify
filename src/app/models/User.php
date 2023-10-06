@@ -75,9 +75,8 @@ class User {
         $query = "SELECT COUNT(*) AS count FROM users WHERE email = :email";
         $this->db->query($query);
         $this->db->bind('email', $email);
-        $this->db->fetch();
 
-        return $this->db->rowCount() > 0;
+        return $this->db->fetch()->count > 0;
     }
 
     // Check if the username already exists
@@ -86,9 +85,8 @@ class User {
         $query = "SELECT COUNT(*) AS count FROM users WHERE username = :username";
         $this->db->query($query);
         $this->db->bind('username', $username);
-        $this->db->fetch();
-        
-        return $this->db->rowCount() > 0;
+
+        return $this->db->fetch()->count > 0;
     }
 
     public function updateProfile($userId, $email, $username, $firstName, $lastName, $avatarURL)

@@ -1,21 +1,13 @@
 <head>
-  <link rel="stylesheet" href="<?= CSS_DIR ?>base_components/base_file_uploader.css">
+  <link rel="stylesheet" href="<?= CSS_DIR ?>base_components/no_button_file_uploader.css">
 </head>
 <?php
 
-function baseImageUploader($input_id = "", $input_class = "", $img_id = "", $is_required = true, $img_class = "")
+function customImageUploader($input_id = "")
 {
-  $required_status = $is_required ? 'required' : '';
   $allowed_img = implode(',', array_keys(ALLOWED_IMAGES));
   echo
   "
-    <div class=\"file-uploader-container\">
-        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status name=\"$input_id\" accept=\"$allowed_img\" />
-        <label for=\"$input_id\" class=\"file-uploader-label\">
-            Choose File
-        </label>
-        <span id=\"filename-$input_id\"></span>
-        <img id=\"$img_id\" src=\"#\" alt=\"User img\" class=\"image-preview $img_class\" />
-    </div>
+    <input type=\"file\" id=\"$input_id\" class='file-uploader' name=\"$input_id\" accept=\"$allowed_img\" />
     ";
 }
