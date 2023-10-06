@@ -33,12 +33,21 @@ const addScript = (src) => {
 
 const showEditEpisode = (episodeId) => {
   const url = episodeId + "?edit=true";
-  let xhr = getEpisode(url);
-
-  xhr.onload = () => {
-    document.getElementById("content-middle").innerHTML = xhr.responseText;
-    addScript("/src/public/js/components/inputText.js");
-    addScript("/src/public/js/components/modal.js");
-    addScript("/src/public/js/episode/handle_upload_edit.js");
-  };
+  try {
+    let xhr = getEpisode(url);
+  
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        document.getElementById("content-middle").innerHTML = xhr.responseText;
+        addScript("/src/public/js/components/inputText.js");
+        addScript("/src/public/js/components/modal.js");
+        addScript("/src/public/js/episode/handle_upload_edit.js");
+      } else {
+        console.error("Request failed with status:", xhr.status);
+      }
+    };
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  
 };
