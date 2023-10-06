@@ -57,7 +57,7 @@ class PodcastController extends BaseController
                     $data["category"] = $this->category_service->getCategoryNameById($data["podcast"]->category_id);
 
                     $this->view("layouts/default", $data);
-                    return ResponseHelper::HTTP_STATUS_OK;
+                    return;
 
                 default:
                     ResponseHelper::responseNotAllowedMethod();
