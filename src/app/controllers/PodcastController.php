@@ -201,8 +201,9 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
-            exit;
+            http_response_code(ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+            echo $e->getMessage();
+            return;
         }
     }
 
@@ -235,8 +236,9 @@ class PodcastController extends BaseController
                     return;
             }
         } catch (Exception $e) {
-            $this->view('layouts/error');
-            exit;
+            http_response_code(ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+            echo $e->getMessage();
+            return;
         }
     }
 
