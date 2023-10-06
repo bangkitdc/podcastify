@@ -26,7 +26,15 @@
         ?>
       </div>
     </div>
+
+    <?php
+    require_once COMPONENTS_SHARES_DIR . 'notifications/primary.php';
+
+    echoNotification();
+    ?>
   </div>
 </body>
+
+<script src="<?= JS_DIR ?>components/notification.js"></script>
 
 </html>

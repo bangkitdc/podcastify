@@ -37,10 +37,10 @@
 
   <form method="" class="modal-body" id="userModalEdit-form">
     <div class="modal-image">
-      <img class="avatar" src="" alt="Profile Image">
+      <img id="edit-preview-avatar" class="avatar" src="" alt="Profile Image">
+      <span class="sub-text">Update your avatar by clicking the image</span>
       <div class="edit-episode-file">
-        <?php baseImageUploader("edit-avatar-file-upload", '', 'edit-preview-avatar', false) ?>
-        <input type="hidden" id="edit-preview-avatar-filename" name="edit-preview-avatar-filename">
+        <?php customImageUploader("edit-avatar-file-upload") ?>
       </div>
     </div>
     <input type="hidden" name="user_id" id="userModalEdit-user_id" value="">

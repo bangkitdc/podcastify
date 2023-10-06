@@ -41,7 +41,7 @@ class LoginController extends BaseController {
                     $authService = new AuthService();
                     $authService->login($username, $password);
 
-                    $response = array("success" => true, "redirect_url" => "/", "status_message" => "Login Successful.");
+                    $response = array("success" => true, "redirect_url" => "/", "status_message" => "Login Successful");
                     http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
                     // Set the Content-Type header to indicate JSON
@@ -55,10 +55,6 @@ class LoginController extends BaseController {
                     break;
             }
         } catch (Exception $e) {
-            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
-                $this->view('layouts/error');
-            }
-
             http_response_code($e->getCode());
             $response = array("success" => false, "error_message" => $e->getMessage());
             echo json_encode($response);

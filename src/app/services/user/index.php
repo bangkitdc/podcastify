@@ -44,12 +44,12 @@ class UserService {
     {
         // Check if the email, username already exists
         if ($this->user->emailExistsForOthers($userId, $email) && $this->user->usernameExistsForOthers($userId, $username)) {
-            throw new Exception('This email and username are already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+            throw new Exception('This email and username are already connected to an account', ResponseHelper::HTTP_STATUS_FORBIDDEN);
         }
 
         // Check if the email already exists
         if ($this->user->emailExistsForOthers($userId, $username)) {
-            throw new Exception('This email is already connected to an account.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+            throw new Exception('This email is already connected to an account', ResponseHelper::HTTP_STATUS_FORBIDDEN);
         }
 
         // Check if the username already exists
@@ -70,7 +70,7 @@ class UserService {
     public function changePassword($userId, $currentHashedPassword, $newHashedPassword)
     {
         if ($this->user->isCurrentPasswordWrong($userId, $currentHashedPassword)) {
-            throw new Exception('Current password is wrong.', ResponseHelper::HTTP_STATUS_FORBIDDEN);
+            throw new Exception('Current password is wrong', ResponseHelper::HTTP_STATUS_FORBIDDEN);
         }
 
         $this->user->updatePassword($userId, $newHashedPassword);

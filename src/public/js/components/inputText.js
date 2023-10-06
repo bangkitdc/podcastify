@@ -32,7 +32,7 @@ const validateInput = (
     paragraphElement.innerText = errorMessage;
 
     alertElement.className = "alert-show";
-    inputElement.className = "alert-show";
+    inputElement.classList.add("alert-show");
     validationState.value = false;
   } else {
     paragraphElement.innerText = "";
@@ -64,7 +64,7 @@ const debounceInputValidationExact = (
       paragraphElement.innerText = errorMessage;
 
       alertElement.className = "alert-show";
-      inputElement.className = "alert-show";
+      inputElement.classList.add("alert-show");
       validationState.value = false;
     } else {
       paragraphElement.innerText = "";
@@ -110,8 +110,7 @@ document.querySelectorAll(".btn-eye").forEach(function (button) {
     const eyeIcon = button.querySelector(".eye-icon");
 
     // Toggle visibility
-    passwordInput.type =
-      passwordInput.type === "password" ? "text" : "password";
+    passwordInput.type = passwordInput.type == "password" ? "text" : "password";
 
     // Toggle 'visible' class on eyeIcon
     eyeIcon.classList.toggle("visible");
