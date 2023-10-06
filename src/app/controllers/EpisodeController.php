@@ -30,10 +30,10 @@ class EpisodeController extends BaseController
 
           $total_episodes = $this->episode_service->getAllEpisode();
 
-          $data['episodes'] = $this->episode_service->getAllEpisodeCard(1,2);
+          $data['episodes'] = $this->episode_service->getAllEpisodeCard(1, 2);
 
           $data['currentPage'] = 1;
-          $data['totalPages'] = count($total_episodes) / count($data['episodes']);
+          $data['totalPages'] = ceil(count($total_episodes) / 2);
 
           if (isset($_GET['edit'])) { // go to edit page (?edit)
             Middleware::checkIsAdmin();
@@ -44,7 +44,7 @@ class EpisodeController extends BaseController
 
           if (isset($_GET['page'])) {
             $data['currentPage'] = $_GET['page'];
-            $episodes = $this->episode_service->getAllEpisodeCard($data['currentPage'],2);
+            $episodes = $this->episode_service->getAllEpisodeCard($data['currentPage'], 2);
             $data['episodes'] = $episodes;
 
             $this->view("pages/episode/index", $data);
@@ -86,6 +86,8 @@ class EpisodeController extends BaseController
         $this->view('layouts/error');
       }
       http_response_code($e->getCode());
+      $response = array("success" => false, "error_message" => $e->getMessage());
+      echo json_encode($response);
       exit;
     }
   }
@@ -128,6 +130,8 @@ class EpisodeController extends BaseController
         $this->view('layouts/error');
       }
       http_response_code($e->getCode());
+      $response = array("success" => false, "error_message" => $e->getMessage());
+      echo json_encode($response);
       exit;
     }
   }
@@ -155,8 +159,14 @@ class EpisodeController extends BaseController
           break;
       }
     } catch (Exception $e) {
-      $this->view('layouts/error');
-      exit;
+      if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+        $this->view('layouts/error');
+    }
+
+    http_response_code($e->getCode());
+    $response = array("success" => false, "error_message" => $e->getMessage());
+    echo json_encode($response);
+    return;
     }
   }
 };
