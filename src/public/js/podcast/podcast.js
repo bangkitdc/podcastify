@@ -92,19 +92,24 @@ const loadPodcastList = (
     xhr.open("GET", "/podcast" + URL);
     xhr.send();
     xhr.onload = () => {
-      toggleVisibility(".podcast-box-skeleton", "hidden");
-      toggleVisibility(".podcast-box-area", "visible");
-      toggleVisibility(".podcast-nav-box", "visible");
-      var parser = new DOMParser();
-      var xhrDOM = parser.parseFromString(xhr.responseText, "text/html");
-      var newPodcastContainer = xhrDOM.getElementById("podcast-container");
+      if (xhr.status >= 200 && xhr.status < 300) {
+        toggleVisibility(".podcast-box-skeleton", "hidden");
+        toggleVisibility(".podcast-box-area", "visible");
+        toggleVisibility(".podcast-nav-box", "visible");
+        var parser = new DOMParser();
+        var xhrDOM = parser.parseFromString(xhr.responseText, "text/html");
+        var newPodcastContainer = xhrDOM.getElementById("podcast-container");
 
-      var currPodcastContainer = document.getElementById("podcast-container");
-      currPodcastContainer.parentNode.replaceChild(
-        newPodcastContainer,
-        currPodcastContainer
-      );
-      document.getElementById("pod-list-page-num").textContent = currPageNum;
+        var currPodcastContainer = document.getElementById("podcast-container");
+        currPodcastContainer.parentNode.replaceChild(
+          newPodcastContainer,
+          currPodcastContainer
+        );
+        document.getElementById("pod-list-page-num").textContent = currPageNum;
+      } else {
+        const response = JSON.parse(xhr.responseText);
+        console.error(response.error_message);
+      }
     };
   }
 };
