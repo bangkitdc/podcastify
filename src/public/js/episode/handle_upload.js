@@ -111,7 +111,6 @@ handleFormSubmit("add-episode-form", function () {
   let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
   xhrImg.onload = () => {
     formData.append("preview-poster-filename", xhrImg.responseText);
-    console.log(xhrImg.responseText);
 
     // upload audio to server
     let audioUrl = "/upload?type=audio";
@@ -128,8 +127,7 @@ handleFormSubmit("add-episode-form", function () {
       let xhr = createEpisode(formData);
 
       xhr.onload = () => {
-        console.log(xhr.responseText);
-        // window.location.href = "/episode";
+        window.location.href = "/episode";
       };
     };
   };
