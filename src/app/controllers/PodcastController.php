@@ -1,7 +1,5 @@
 <?php
 
-require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
-require_once BASE_URL . "/src/app/helpers/SanitizeHelper.php";
 require_once SERVICES_DIR . "/podcast/index.php";
 require_once SERVICES_DIR . "/upload/index.php";
 require_once SERVICES_DIR . "/category/index.php";

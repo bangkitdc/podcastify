@@ -1,7 +1,7 @@
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const usernameRegex = /^\w+$/;
+const usernameRegex = /^\w{5,}$/;
 const nameRegex = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
-const passwordRegex = /^[a-zA-Z0-9]+$/;
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 const emailValidation = { value: true }; // Initial state
 debounceInputValidation(
@@ -15,7 +15,7 @@ const usernameValidation = { value: true }; // Initial state
 debounceInputValidation(
   "username",
   usernameRegex,
-  "Username must consist of letters, numbers, or underscores only.",
+  "Username must consist of a minimum of 5 characters, can be letters, numbers, or underscores.",
   usernameValidation
 );
 
@@ -54,7 +54,7 @@ inputPassword &&
       const paragraphConfirmPassword = alertConfirmPassword.querySelector("p");
 
       if (!passwordRegex.test(password)) {
-        paragraphPassword.innerText = "Password must consist of letters and numbers."
+        paragraphPassword.innerText = "Password must consist of a minimum of 8 characters, at least one letter, one number, and one special character.";
 
         alertPassword.className = "alert-show";
         inputPassword.className = "alert-show";
@@ -142,9 +142,9 @@ const submitRegisterForm = async (e) => {
 
   if (emailValidation.value) {
     emailValid = handleInputValidation(
-    "email",
-    "Please enter your email."
-  );
+      "email",
+      "Please enter your email."
+    );
   }
 
   if (

@@ -3,9 +3,11 @@
 
   $user = $data['user'];
 
+  $avatarURL = $user->avatar_url ? Storage::getFileUrl(Storage::USER_AVATAR_PATH, $user->avatar_url) : IMAGES_DIR . 'avatar-template.png';
+
   echo '
       <div class="profile-body">
-        <img class="profile-image" src="' . ($user->avatar_url ?? (IMAGES_DIR . 'avatar-template.png')) . '" alt="Profile Image">
+        <img class="profile-image" src="' . $avatarURL . '" alt="Profile Image">
         <div class="profile-info">
           <p>Profile</p>
           <h1 id="profile-username">' . $user->username . '</h1>
@@ -29,11 +31,17 @@
   require_once COMPONENTS_SHARES_DIR . 'modals/updateModal.php';
 
   echoUpdateModalTop("userModalEdit", "Profile details");
+
+  require_once VIEWS_DIR . "/components/shares/upload/customFileUploader.php";
   ?>
 
   <form method="" class="modal-body" id="userModalEdit-form">
     <div class="modal-image">
       <img class="avatar" src="" alt="Profile Image">
+      <div class="edit-episode-file">
+        <?php baseImageUploader("edit-avatar-file-upload", '', 'edit-preview-avatar', false) ?>
+        <input type="hidden" id="edit-preview-avatar-filename" name="edit-preview-avatar-filename">
+      </div>
     </div>
     <input type="hidden" name="user_id" id="userModalEdit-user_id" value="">
     <div class="modal-form">
@@ -92,7 +100,7 @@
   </form>
 
   <?php
-  $description = "By proceeding, you agree to change Podcastify users's status. Please make sure you have the rights.";
+  $description = "By proceeding, you agree to change your Podcastify account password. Please make sure you have the rights.";
   echoUpdateModalBottom($description);
 
   ?>

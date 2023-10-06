@@ -10,8 +10,8 @@ const uploadEditedEpsFile = (url, async = true, data = null) => {
 
 const updateEpisode = (json, episodeId) => {
   let xhr = new XMLHttpRequest();
-  console.log(EPISODE_BASE_URL + episodeId + "?edit=true");
-  xhr.open("PATCH", EPISODE_BASE_URL + "/" + episodeId + "?edit=true", true);
+  console.log(EPISODE_EDIT_BASE_URL + episodeId + "?edit=true");
+  xhr.open("PATCH", EPISODE_EDIT_BASE_URL + "/" + episodeId + "?edit=true", true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(json);
   return xhr;

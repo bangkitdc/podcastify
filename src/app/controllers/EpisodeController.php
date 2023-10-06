@@ -1,9 +1,8 @@
 <?php
-require_once BASE_URL . "/src/app/helpers/ResponseHelper.php";
-require_once BASE_URL . "/src/app/helpers/SanitizeHelper.php";
-require_once BASE_URL . '/src/app/services/episode/EpisodeService.php';
-require_once BASE_URL . '/src/app/services/podcast/index.php';
-require_once SERVICES_DIR . "/upload/index.php";
+
+require_once SERVICES_DIR . 'episode/EpisodeService.php';
+require_once SERVICES_DIR . 'podcast/index.php';
+require_once SERVICES_DIR . "upload/index.php";
 require_once BASE_URL . '/src/config/storage.php';
 
 class EpisodeController extends BaseController
@@ -111,7 +110,7 @@ class EpisodeController extends BaseController
           break;
         case 'POST':
           $podcast_id = $_POST['podcast_id'];
-          var_dump($podcast_id);
+          // var_dump($podcast_id);
           $title = $_POST['episode-title-input'];
           $description = $_POST['episode-description-input'];
           $image_file = $_POST['preview-poster-filename'] ?? '';

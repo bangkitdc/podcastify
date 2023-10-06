@@ -55,9 +55,14 @@ class LoginController extends BaseController {
                     break;
             }
         } catch (Exception $e) {
+            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
+                $this->view('layouts/error');
+            }
+
             http_response_code($e->getCode());
             $response = array("success" => false, "error_message" => $e->getMessage());
             echo json_encode($response);
+            exit;
         }
     }
 }

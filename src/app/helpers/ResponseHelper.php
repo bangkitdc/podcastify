@@ -13,6 +13,9 @@ class ResponseHelper
     public const HTTP_STATUS_NOT_FOUND = 404;
     public const HTTP_STATUS_METHOD_NOT_ALLOWED = 405;
     public const HTTP_STATUS_NOT_ACCEPTABLE = 406;
+    public const HTTP_STATUS_PAYLOAD_TOO_LARGE = 413;
+    public const HTTP_STATUS_UNSUPPORTED_MEDIA_TYPE = 415;
+    public const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
     /**
      * JSON response
      */
