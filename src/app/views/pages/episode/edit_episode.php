@@ -8,6 +8,10 @@
     require_once VIEWS_DIR . "/components/shares/inputs/text.php";
     require_once VIEWS_DIR . "/components/shares/upload/baseFileUploader.php";
     require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
+    require_once VIEWS_DIR . "/components/shares/modals/baseModal.php";
+
+    actionModal("edit-episode-confirm-modal", "Save changes for this episode ?", "edit-episode-modal-ok", "edit-episode-modal-cancel");
+    actionModal("delete-episode-confirm-modal", "Are you sure to DELETE this episode ?", "delete-episode-modal-ok", "delete-episode-modal-cancel");
 
     $episode_data = $data['episode'] ? $data['episode'][0] : null;
 
@@ -50,23 +54,15 @@
       }
       ?>
 
-    </form>
+      <div class="edit-episode-buttons">
+        <?php baseButton('Cancel', 'cancel-change') ?>
+        <?php baseButton("Save Changes", "save-change-epispde", "submit"); ?>
+        <?php baseButton("Delete Podcast", "delete-episode", "negative"); ?>
+      </div>
 
-    <form id="delete-episode-form" class="edit-episode-buttons">
-      <?php
-      if ($episode_data != null) {
-        echo "<input type=\"hidden\" id=\"episode_id\" name=\"episode_id\" value=\"$id\" />";
-      }
-      ?>
     </form>
-
-    <div class="edit-episode-buttons">
-      <!-- <?php baseButton('Cancel', 'cancel-change') ?>
-      <?php baseButton("Save Changes", "save-change", "submit"); ?>
-      <?php baseButton("Delete Podcast", "delete-podcast", "negative"); ?> -->
-      <button type="button" onclick="window.location.href = '/episode'" class="cancel-edit-episode-button">Cancel</button>
-      <button form="edit-episode-form" class="confirm-edit-episode-button">Edit Episode</button>
-      <button form="delete-episode-form" class="delete-edit-episode-button">Delete Episode</button>
-    </div>
   </div>
 </div>
+<?php echoJsFile();
+echoModalJS(); ?>
+<!-- <script src="<?= JS_DIR ?>episode/handle_upload_edit.js"></script> -->

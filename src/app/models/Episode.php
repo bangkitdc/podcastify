@@ -108,7 +108,7 @@ class Episode {
 
     $this->db->query($query);
 
-    $this->db->bind(":episode _id", $episode_id);
+    $this->db->bind(":episode_id", $episode_id);
 
     $this->db->execute();
   }

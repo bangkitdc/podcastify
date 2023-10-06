@@ -72,6 +72,11 @@ document
     }
   });
 
+let addEpisodeModal = document.getElementById("add-episode-confirm-modal");
+let addEpisodeAudioModal = document.getElementById("add-episode-audio-modal");
+setupModal("add-episode-confirm-modal", "add-episode-modal-cancel", "add-episode-modal-ok")
+setupModal("add-episode-audio-modal", "add-episode-audio-modal-ok");
+
 handleFormSubmit("add-episode-form", function () {
   let titleValidation = false;
   let descriptionValidation = false;
@@ -88,18 +93,26 @@ handleFormSubmit("add-episode-form", function () {
 
   if (!titleValidation || !descriptionValidation) return;
 
-  let form = document.getElementById("add-episode-form");
-  let formData = new FormData(form);
+  let audioFile = document.getElementById("audio-file-upload");
+  if(!audioFile.files.length) {
+    addEpisodeAudioModal.style.display = "flex";
+    return;
+  }
+  addEpisodeModal.style.display = flex;
+  addEpisodeModal.addEventListener("okayClicked", () => {
+    let form = document.getElementById("add-episode-form");
+    let formData = new FormData(form);
 
-  formData.append(
-    "episode-title-input",
-    document.getElementById("episode-title-input").value
-  );
+    formData.append(
+      "episode-title-input",
+      document.getElementById("episode-title-input").value
+    );
 
-  formData.append(
-    "episode-description-input",
-    document.getElementById("episode-description-input").value
-  );
+    formData.append(
+      "episode-description-input",
+      document.getElementById("episode-description-input").value
+    );
+  })
 
   // upload image to server
   let imgUrl = "/upload?type=image";
