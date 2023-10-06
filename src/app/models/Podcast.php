@@ -198,4 +198,15 @@ class Podcast {
 
         return $result;
     }
+
+    public function getRandomPodcasts($limit) {
+        $query = "SELECT * FROM podcasts ORDER BY RAND() LIMIT :limit";
+
+        $this->db->query($query);
+        $this->db->bind(":limit", $limit);
+        
+        $result = $this->db->fetchAll();
+
+        return $result;
+    }
 }

@@ -66,4 +66,8 @@ class PodcastService {
     public function deletePodcast($podcast_id) {
         $this->podcast_model->deletePodcast($podcast_id);
     }
+
+    public function getRandomPodcasts($limit) {
+        return $this->podcast_model->getRandomPodcasts($limit);
+    }
 }
