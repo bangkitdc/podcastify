@@ -2,14 +2,13 @@
   <link rel="stylesheet" href="<?= CSS_DIR ?>episode/episode_card.css">
 </head>
 <div id="template">
-  <div class="episode-container">
-    <div id="episode-list-container" class="episode-list-container">
-      <h1>Episodes</h1>
-      <?php
-      // require_once VIEWS_DIR . "components/privates/episode/episode_card.php";
-      require_once VIEWS_DIR . "components/shares/paginations/primary.php";
-      require_once VIEWS_DIR . "components/shares/tables/primary.php";
-
+  <div id="episode-list-container" class="episode-list-container">
+    <h1>Episodes</h1>
+    <?php
+    // require_once VIEWS_DIR . "components/privates/episode/episode_card.php";
+    require_once VIEWS_DIR . "components/shares/paginations/primary.php";
+    require_once VIEWS_DIR . "components/shares/tables/primary.php";
+    if (count($data['episodes'])) {
       echoTableHeader(["Title", "Duration", "Upload Date"], [60, 20, 15]);
       $ctr = 1;
       foreach ($data['episodes'] as $episode) {
@@ -39,18 +38,23 @@
         "loadEpisodeList(false, false, true, false, $total_pages, $current_page)",
         "loadEpisodeList(false, false, false, true, $total_pages, $current_page)"
       ]);
+    } else {
+      echo "
+      <div class=\"no-episode-container\">
+        <h1>No Episodes Available</h1>
+      </div>";
+    }
 
-      function formatDate($dateString)
-      {
-        $dateTime = new DateTime($dateString);
+    function formatDate($dateString)
+    {
+      $dateTime = new DateTime($dateString);
 
-        $day = $dateTime->format('d');
-        $month = $dateTime->format('F');
-        $year = $dateTime->format('Y');
+      $day = $dateTime->format('d');
+      $month = $dateTime->format('F');
+      $year = $dateTime->format('Y');
 
-        return $month . ' ' . $day . ', ' . $year;
-      }
-      ?>
-    </div>
+      return $month . ' ' . $day . ', ' . $year;
+    }
+    ?>
   </div>
   <script src="<?= JS_DIR ?>/episode/pagination.js"></script>
