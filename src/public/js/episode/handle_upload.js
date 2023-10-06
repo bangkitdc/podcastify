@@ -98,7 +98,7 @@ handleFormSubmit("add-episode-form", function () {
     addEpisodeAudioModal.style.display = "flex";
     return;
   }
-  addEpisodeModal.style.display = flex;
+  addEpisodeModal.style.display = "flex";
   addEpisodeModal.addEventListener("okayClicked", () => {
     let form = document.getElementById("add-episode-form");
     let formData = new FormData(form);

@@ -93,7 +93,7 @@ handleFormSubmit("edit-episode-form", function () {
     let xhr = updateEpisode(json, episodeId);
 
     xhr.onload = () => {
-      // window.location.href = "/episode";
+      window.location.href = "/episode";
     };
   };
 
@@ -167,7 +167,7 @@ if(document.getElementById("delete-episode")){
       let id = document.getElementById("episode_id").value;
       let xhr = deleteEpisode(id);
       xhr.onload = () => {
-        // window.location.href = "/episode";
+        window.location.href = "/episode";
       };
     });
   });
