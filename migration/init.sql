@@ -36,7 +36,7 @@ CREATE TABLE categories (
 
 CREATE TABLE podcasts (
     podcast_id          INT             AUTO_INCREMENT      PRIMARY KEY,
-    title               VARCHAR(255)    NOT NULL,
+    title               VARCHAR(255)    UNIQUE NOT NULL,
     description         VARCHAR(255)    NOT NULL,
     creator_name        VARCHAR(255)    NOT NULL,
     total_eps           INT             NOT NULL DEFAULT 0,

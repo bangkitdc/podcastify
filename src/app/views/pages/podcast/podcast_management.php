@@ -55,11 +55,8 @@
             <p>Upload New Poster</p>
         ";
 
-        if ($type == "edit") {
-            baseImageUploader("file-upload", "", "preview-image", false);
-        } else {
-            baseImageUploader("file-upload", "", "preview-image", false);
-        }
+        baseImageUploader("file-upload", "", "preview-image", false);
+        
         echo "<input type=\"hidden\" id=\"preview-image-filename\" name=\"preview-image-filename\">";
         if ($podcast != null) {
             echo "<input type=\"hidden\" id=\"podcast-id\" name=\"podcast-id\" value=\"$podcast->podcast_id\" />";
