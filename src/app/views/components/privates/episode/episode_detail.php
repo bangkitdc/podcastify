@@ -2,6 +2,7 @@
 function episode_detail($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
+  $creator_id = $episode ? $episode->podcast_id : '';
   $poster = $episode ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : '';
   $title = $episode ? $episode->title : '';
   $duration = $episode ? $episode->duration / 60 : '';
@@ -18,7 +19,7 @@ function episode_detail($episode = null)
   if ($poster) {
     echo
     "<div>
-      <img class=\"episode-detail-head-image\" src=\"$poster\">
+      <img id=\"episode-detail-head-image\" class=\"episode-detail-head-image\" src=\"$poster\">
       </div>";
   } else {
     echo
@@ -27,7 +28,7 @@ function episode_detail($episode = null)
       ";
   }
   echo "
-        <p class=\"episode-detail-head-title\">$title</p>
+        <p id=\"episode-detail-head-title\" class=\"episode-detail-head-title\">$title</p>
         <p class=\"episode-detail-head-duration\">$duration minutes</p>
         <button id=\"play-button\" class=\"episode-detail-head-play-button\"\" onclick=\"playAudio()\">
         <img class=\"\" id=\"button-image\" src=\"" . ICONS_DIR . "play.svg\" />
@@ -52,8 +53,9 @@ function episode_detail($episode = null)
 
         <div class=\"episode-detail-foot-creator\">
         <input id=\"audio-file\" value=\"$audio_file\" hidden>
+        <input id=\"creator_id\" value=\"$creator_id\" hidden>
           <img class=\"episode-detail-foot-creator-image\" src=\"$creator_img\">
-          <p class=\"episode-detail-foot-creator-name\">$creator_name</p>
+          <p id=\"episode-detail-foot-creator-name\" class=\"episode-detail-foot-creator-name\" onclick=\"window.location.href='/podcast/show/$creator_id'\">$creator_name</p>
         </div>
 
       </div>

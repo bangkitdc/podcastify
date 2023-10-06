@@ -99,3 +99,9 @@ p {
   flex: 1;
   font-size: 15px;
 }
+
+.episode-detail-foot-creator-name:hover {
+  cursor: pointer;
+  color: var(--clr-text-primary);
+  text-decoration: underline;
+}
