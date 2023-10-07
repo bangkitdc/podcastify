@@ -15,7 +15,7 @@
         $category_opt = $data['categories'];
         $podcast_category = isset($data['podcast_category']) ? $data['podcast_category'] : $category_opt[0];
 
-        $podcast_name = $type == 'edit' ? $podcast->title : '';
+        $podcast_name = $type == 'edit' ? ucwords($podcast->title) : '';
         $podcast_creator = $type == 'edit' ? $podcast->creator_name : '';
         $podcast_desc = $type == 'edit' ? $podcast->description : '';
 
@@ -56,7 +56,7 @@
         ";
 
         baseImageUploader("file-upload", "", "preview-image", false);
-        
+
         echo "<input type=\"hidden\" id=\"preview-image-filename\" name=\"preview-image-filename\">";
         if ($podcast != null) {
             echo "<input type=\"hidden\" id=\"podcast-id\" name=\"podcast-id\" value=\"$podcast->podcast_id\" />";
