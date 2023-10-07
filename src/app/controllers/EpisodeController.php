@@ -118,7 +118,7 @@ class EpisodeController extends BaseController
           $podcastMapping = [];
 
           foreach ($podcast_data as $podcast) {
-            $podcastMapping[$podcast->title] = $podcast->podcast_id;
+            $podcastMapping[$podcast->podcast_id] = $podcast->title;
           }
 
           $data['podcasts'] = $podcastMapping;
@@ -126,14 +126,14 @@ class EpisodeController extends BaseController
           $this->view('layouts/default', $data);
           break;
         case 'POST':
-          $podcast_id = $_POST['podcast_id'];
+          $podcast_title = $_POST['podcast_title'];
           // var_dump($podcast_id);
           $title = $_POST['episode-title-input'];
           $description = $_POST['episode-description-input'];
           $image_file = $_POST['preview-poster-filename'] ? $_POST['preview-poster-filename'] : null;
           $audio_file = $_POST['audio-filename'] ?? '';
 
-          $this->episode_service->addEpisode($podcast_id, 1, $title, $description, 60, $image_file, $audio_file);
+          $this->episode_service->addEpisode($podcast_title, 1, $title, $description, 60, $image_file, $audio_file);
 
           $response = array("success" => true, "redirect_url" => "/episode", "status_message" => "Episode Successfully Added.");
           http_response_code(ResponseHelper::HTTP_STATUS_OK);
