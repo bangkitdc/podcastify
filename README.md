@@ -17,17 +17,22 @@ Podcastify is built using the following technologies:
 
 ## How to Get Started
 1. Clone this repository
-2. On the root of this project, run the following commands:
+2. Copy the `.env.example` file and rename it to `.env`:
+```bash
+    cp .env.example .env
+```
+3. Open the `.env` file and replace the placeholder values with your actual data.
+4. On the root of this project, run the following commands:
 ```bash
     docker build -t tubes-1:latest .
-    
+
     docker-compose up -d --build
 ```
-3. To shut down the app, run
+5. To shut down the app, run
 ```bash
     docker-compose down
 ```
-4. Ensure that the Docker Daemon is running
+6. Ensure that the Docker Daemon is running
 
 ## Tasking
 
