@@ -39,7 +39,14 @@ window.onload = () => {
             card.appendChild(imgPlaceholder);
 
             let name = document.createElement("p");
-            name.textContent = podcast.title;
+            let podcastTitle = podcast.title
+              .toLowerCase()
+              .split(" ")
+              .map((word) => {
+                return word.charAt(0).toUpperCase() + word.slice(1);
+              })
+              .join(" ");
+            name.textContent = podcastTitle;
             name.className = "card-name";
             card.appendChild(name);
 
