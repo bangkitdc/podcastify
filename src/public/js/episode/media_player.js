@@ -60,7 +60,6 @@ const playAudio = () => {
   }
 
   var totalPlayed = parseInt(localStorage.getItem("totalPlayed"));
-  console.log(totalPlayed);
 
   if (totalPlayed >= 3) {
     showNotificationDanger("Please login to listen more");

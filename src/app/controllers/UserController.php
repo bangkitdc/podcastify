@@ -235,6 +235,7 @@ class UserController extends BaseController {
 
                     $authService = new AuthService();
                     $authService->logout();
+                    
                     RedirectHelper::redirectHome();
                     break;
                 default:
