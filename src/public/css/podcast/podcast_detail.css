@@ -15,6 +15,20 @@
     border-bottom: 2px solid var(--clr-text-secondary-darken);
     width: 100%;
 
+    @media (max-width: 640px) {
+      > h1 {
+        font-size: 24px;
+      }
+
+      > h2 {
+        font-size: 20px;
+      }
+
+      > h3 {
+        font-size: 16px;
+      }
+    }
+
     .podcast-detail-img {
       width: 200px;
       height: 200px;
