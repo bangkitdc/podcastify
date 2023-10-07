@@ -5,7 +5,12 @@ require_once BASE_URL . '/src/config/storage.php';
 function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") {
     $title = !$is_skeleton ? ucwords($podcast->title) : '';
     $creator_name = !$is_skeleton ? $podcast->creator_name : '';
-    $img_url = !$is_skeleton ?  Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url) : '';
+    if (!$is_skeleton && $podcast->image_url) {
+        $img_url = Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url);
+    } else {
+        $img_url = IMAGES_DIR . "podcast-template.png";
+    }
+
     echo
     "
         <div class=\"podcast-content-container\" onclick=\"$click_evt\">

@@ -15,7 +15,8 @@
         $episodes = $data['episodes'];
         $category = $data['category'];
         $total_pages = $podcast->total_eps == 0 ? 1 : ceil($podcast->total_eps / $MAX_EPS_PER_PAGE);
-        $image_url = Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url);
+        $image_url = $podcast->image_url ? Storage::getFileUrl(Storage::PODCAST_IMAGE_PATH, $podcast->image_url) : IMAGES_DIR . "podcast-template.png";
+
         // Podcasts view
         echo "<section class=\"podcast-detail-container\">";
             echo

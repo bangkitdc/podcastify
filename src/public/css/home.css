@@ -25,6 +25,26 @@
   box-shadow: var(--shadow);
   cursor: pointer;
   transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+
+  .card-img-placeholder {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.35rem;
+    box-shadow: var(--shadow-xl);
+    object-fit: cover;
+    object-position: center center;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 .card:hover {
