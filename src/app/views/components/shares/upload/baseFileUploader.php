@@ -9,7 +9,7 @@ function baseImageUploader($input_id = "", $input_class = "", $img_id = "", $is_
     echo
     "
     <div class=\"file-uploader-container\">
-        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status name=\"$input_id\" accept=\"$allowed_img\" />
+        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status name=\"$input_id\" accept=\"$allowed_img\" aria-label=\"image-upload\" />
         <label for=\"$input_id\" class=\"file-uploader-label\">
             Choose File
         </label>
@@ -25,7 +25,7 @@ function baseAudioUploader($input_id = "", $input_class = "", $is_required = tru
     echo
     "
     <div class=\"file-uploader-container\">
-        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status name=\"$input_id\" accept=\"$allowed_audio\" />
+        <input type=\"file\" id=\"$input_id\" class=\"file-uploader $input_class\" $required_status name=\"$input_id\" accept=\"$allowed_audio\" aria-label=\"audio-upload\" />
         <label for=\"$input_id\" class=\"file-uploader-label\">
             Choose File
         </label>

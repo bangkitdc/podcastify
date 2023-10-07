@@ -1,4 +1,6 @@
 <head>
+  <title>Podcastify | Details</title>
+  <meta name="description" content="Your podcast details.">
   <link rel="stylesheet" href="<?= CSS_DIR ?>podcast/podcast_detail.css">
 </head>
 <div id="template">

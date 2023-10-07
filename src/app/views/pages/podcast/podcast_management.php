@@ -1,4 +1,6 @@
 <head>
+    <title>Podcastify | Manage</title>
+    <meta name="description" content="Manage your podcast.">
     <link rel="stylesheet" href="<?= CSS_DIR ?>podcast/podcast_management.css">
 </head>
 <div id="template">

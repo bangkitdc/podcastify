@@ -13,7 +13,7 @@ echo '
           </div>
         </div>
       </a>
-      <a href="/search">
+      <a href="/podcast">
         <div id="search-nav" class="link-flex">
           <img src="' . ICONS_DIR . 'search-inactive.svg" alt="Search" />
           <div class="icon-text">
