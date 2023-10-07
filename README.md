@@ -36,11 +36,33 @@ Podcastify is built using the following technologies:
 
 ## Tasking
 
-|              Name              |   NIM    | Client Side | Server Side |
-| :----------------------------: | :------: | :---------: | :---------: |
-| Muhammad Bangkit Dwi Cahyono   | 13521055 |             |             |
-| Irsyad Nurwidianto Basuki      | 13521072 |             |             |
-| Jimly Firdaus                  | 13521102 |             |             |
+### Server side
+
+| 13521055                            | 13521072               | 13521102                   |
+| ----------------------------------- | :--------------------: | -------------------------- |
+| Setup Docker, DB, and Structure     |                        |                            |
+| Migration                           |                        |                            |
+| Login, Register, Logout             |                        |                            |
+| CRUD User                           |                        |                            |
+| Profile                             |                        |                            |
+| Change Password                     |                        |                            |
+| Home, Routing, Error Handling       |                        |                            |
+| Middleware and Helpers              |                        |                            |
+| Storage                             |                        |                            |
+
+### Client Side
+
+| 13521055                            | 13521072               | 13521102                   |
+| ----------------------------------- | :--------------------: | -------------------------- |
+| Layouts                             |                        |                            |
+| Components                          |                        |                            |
+| Input Validation                    |                        |                            |
+| Login and Register Page             |                        |                            |
+| User List Page                      |                        |                            |
+| Profile Page                        |                        |                            |
+| Error Page                          |                        |                            |
+| Navbars and Home Page               |                        |                            |
+| Responsiveness                      |                        |                            |
 
 ## Responsive Layouts & Lighthouse
 <div align="center">
