@@ -30,11 +30,13 @@
 .notification.success {
   opacity: 1;
   background-color: var(--clr-text-announcement);
+  z-index: 100;
 }
 
 .notification.danger {
   opacity: 1;
   background-color: var(--clr-text-danger);
+  z-index: 100;
 }
 
 /* Media Queries */

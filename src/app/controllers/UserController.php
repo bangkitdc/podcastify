@@ -12,8 +12,6 @@ class UserController extends BaseController {
             
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
-                    Middleware::checkIsAdmin();
-
                     if ($userId !== null) {
                         $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
 
@@ -64,7 +62,7 @@ class UserController extends BaseController {
                         );
 
                         // $imageUrl unique
-                        if ($imageUrl) {
+                        if (!empty($imageUrl)) {
                             $imageUploadService->replaceAvatarImage($currentAvatarURL, $imageUrl);
                         }
 
@@ -85,6 +83,7 @@ class UserController extends BaseController {
         } catch (Exception $e) {
             if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
                 $this->view('layouts/error');
+                return;
             }
 
             http_response_code($e->getCode());
@@ -94,41 +93,41 @@ class UserController extends BaseController {
         }
     }
 
-    public function changePassword($userId)
+    public function changePassword($userId = null)
     {
         try {
             Middleware::checkIsLoggedIn();
 
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "PATCH":
-                    $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
-                    $data = json_decode(file_get_contents('php://input'), true);
+                    if ($userId) {
+                        $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
+                        $data = json_decode(file_get_contents('php://input'), true);
 
-                    $hashedPassword = $this->hashPassword($data['current_password']);
-                    $hashedNewPassword = $this->hashPassword($data['password']);
+                        $currentPass = $data['current_password'];
+                        $newHashedPass = $this->hashPassword($data['password']);
 
-                    $userService = new UserService();
-                    $userService->changePassword($userId, $hashedPassword, $hashedNewPassword);
+                        $userService = new UserService();
+                        $userService->changePassword($userId, $currentPass, $newHashedPass);
 
-                    $response = array("success" => true, "status_message" => "Password changed successfully");
+                        $response = array("success" => true, "status_message" => "Password changed successfully");
 
-                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                        http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
-                    // Set the Content-Type header to indicate JSON
-                    header('Content-Type: application/json');
+                        // Set the Content-Type header to indicate JSON
+                        header('Content-Type: application/json');
 
-                    // Return the JSON response
-                    echo json_encode($response);
+                        // Return the JSON response
+                        echo json_encode($response);
+                        return;
+                    }
+                    ResponseHelper::responseNotAllowedMethod();
                     break;
                 default:
                     ResponseHelper::responseNotAllowedMethod();
                     break;
             }
         } catch (Exception $e) {
-            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
-                $this->view('layouts/error');
-            }
-
             http_response_code($e->getCode());
             $response = array("success" => false, "error_message" => $e->getMessage());
             echo json_encode($response);
@@ -169,50 +168,57 @@ class UserController extends BaseController {
         } catch (Exception $e) {
             if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
                 $this->view('layouts/error');
+                return;
             }
+
             http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
     }
 
-    public function status($userId)
+    public function status($userId = null)
     {
         try {
-            Middleware::checkIsLoggedIn();
             Middleware::checkIsAdmin();
+            Middleware::checkIsLoggedIn();
 
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "PATCH":
-                    $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
-                    $data = json_decode(file_get_contents('php://input'), true);
+                    if ($userId) {
+                        $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
+                        $data = json_decode(file_get_contents('php://input'), true);
 
-                    $allowedStatus = [0, 1];
-                    if (!in_array($data['status'], $allowedStatus)) {
-                        throw new Exception('Invalid user status value', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+                        $allowedStatus = [0, 1];
+                        if (!in_array($data['status'], $allowedStatus)) {
+                            throw new Exception('Invalid user status value', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+                        }
+                        $userStatus = $data['status'];
+
+                        $userService = new UserService();
+                        $userService->updateStatus($userId, $userStatus);
+
+                        $response = array("success" => true, "status_message" => "User status updated successfully");
+                        http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+                        // Set the Content-Type header to indicate JSON
+                        header('Content-Type: application/json');
+
+                        // Return the JSON response
+                        echo json_encode($response);
+                        return;
                     }
-                    $userStatus = $data['status'];
-
-                    $userService = new UserService();
-                    $userService->updateStatus($userId, $userStatus);
-
-                    $response = array("success" => true, "status_message" => "User status updated successfully");
-                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
-
-                    // Set the Content-Type header to indicate JSON
-                    header('Content-Type: application/json');
-
-                    // Return the JSON response
-                    echo json_encode($response);
+                    ResponseHelper::responseNotAllowedMethod();
                     break;
                 default:
                     ResponseHelper::responseNotAllowedMethod();
                     break;
             }
         } catch (Exception $e) {
-            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
-                $this->view('layouts/error');
-            }
             http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
     }
@@ -227,6 +233,7 @@ class UserController extends BaseController {
 
                     $authService = new AuthService();
                     $authService->logout();
+
                     RedirectHelper::redirectHome();
                     break;
                 default:
@@ -234,10 +241,9 @@ class UserController extends BaseController {
                     break;
             }
         } catch (Exception $e) {
-            if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
-                $this->view('layouts/error');
-            }
             http_response_code($e->getCode());
+            $response = array("success" => false, "error_message" => $e->getMessage());
+            echo json_encode($response);
             exit;
         }
     }

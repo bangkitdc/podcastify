@@ -9,7 +9,7 @@
       <div class="profile-body">
         <img id="profile-image" class="profile-image" src="' . $avatarURL . '" alt="Profile Image">
         <div class="profile-info">
-          <p>Profile</p>
+          <p class="profile-text">Profile</p>
           <h1 id="profile-username">' . $user->username . '</h1>
           <div class="profile-ext-info">
             <p id="profile-fullname">' . $user->first_name . " " . $user->last_name . '</p>
