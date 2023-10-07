@@ -55,40 +55,30 @@ const playAudio = () => {
 
   audioPlayer.src = audioFile;
 
-  if (!localStorage.getItem("totalPlayed")) {
-    localStorage.setItem("totalPlayed", 0);
+  if (!sessionStorage.getItem("totalPlayed")) {
+    sessionStorage.setItem("totalPlayed", 0);
   }
 
-  var totalPlayed = parseInt(localStorage.getItem("totalPlayed"));
-  console.log(totalPlayed);
+  var totalPlayed = parseInt(sessionStorage.getItem("totalPlayed"));
 
-  if (totalPlayed >= 3) {
-    showNotificationDanger("Please login to listen more");
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "/episode/validate/" + totalPlayed);
+  xhr.send();
 
-    setTimeout(() => {
-      location.replace("/login");
-    }, 3000);
-    return;
-  } else {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "/episode/validate/" + totalPlayed);
-    xhr.send();
+  xhr.onload = () => {
+    const response = JSON.parse(xhr.responseText);
+    if (!response.success) {
+      showNotificationDanger("Please login to listen more");
 
-    xhr.onload(() => {
-      const response = JSON.parse(xhr.responseText);
-      if (!response.success) {
-        showNotificationDanger("Please login to listen more");
-
-        setTimeout(() => {
-          location.replace("/login");
-        }, 3000);
-        return;
-      }
-    });
-  }
+      setTimeout(() => {
+        location.replace("/login");
+      }, 3000);
+      return;
+    }
+  };
 
   if (playButton.classList.contains("audio-active")) {
-    localStorage.setItem("totalPlayed", totalPlayed + 1);
+    sessionStorage.setItem("totalPlayed", totalPlayed + 1);
     playButton.classList.remove("audio-active");
     audioPlayer.play();
     audioPlayer.currentTime = storedTime;
