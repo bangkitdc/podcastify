@@ -2,8 +2,8 @@ const audioPlayer = document.getElementById("audio-player");
 const progressSlider = document.getElementById("range");
 const audioPlayerButton = document.getElementById("play-btn");
 const mediaCover = document.getElementById("media-cover");
-const currentTimeDisplay = document.getElementById("slider-current-time")
-const totalTimeDisplay = document.getElementById("slider-total-time")
+const currentTimeDisplay = document.getElementById("slider-current-time");
+const totalTimeDisplay = document.getElementById("slider-total-time");
 const volumeSlider = document.getElementById("volume-slider");
 const muteButton = document.getElementById("mute-button");
 const muteButtonImg = document.getElementById("mute-button-img");
@@ -18,25 +18,25 @@ const addCover = (divElmt) => {
   let creator = document.getElementById("episode-detail-foot-creator-name");
   let creator_id = document.getElementById("creator_id").value;
 
-  let audioImg = document.createElement('img');
+  let audioImg = document.createElement("img");
   audioImg.classList.add("player-poster");
   audioImg.src = poster.src;
 
-  let audioDesc = document.createElement('div');
+  let audioDesc = document.createElement("div");
   audioDesc.classList.add("player-desc");
 
-  let audioTitle = document.createElement('p');
+  let audioTitle = document.createElement("p");
   audioTitle.classList.add("player-title");
   audioTitle.textContent = title.textContent;
 
-  let audioCreator = document.createElement('p');
+  let audioCreator = document.createElement("p");
   audioCreator.classList.add("player-creator");
   audioCreator.textContent = creator.textContent;
-  audioCreator.onclick = function() {
-    window.location.href='/podcast/show/' + creator_id;
+  audioCreator.onclick = function () {
+    window.location.href = "/podcast/show/" + creator_id;
   };
 
-  if(!mediaCover.classList.contains("media-cover-active")){
+  if (!mediaCover.classList.contains("media-cover-active")) {
     audioDesc.appendChild(audioTitle);
     audioDesc.appendChild(audioCreator);
 
@@ -44,10 +44,9 @@ const addCover = (divElmt) => {
     divElmt.appendChild(audioDesc);
     mediaCover.classList.add("media-cover-active");
   }
-}
+};
 
 const playAudio = () => {
-  
   let audioPlayer = document.getElementById("audio-player");
   let buttonImage = document.getElementById("button-image");
 
@@ -55,8 +54,41 @@ const playAudio = () => {
   let audioFile = document.getElementById("audio-file").value;
 
   audioPlayer.src = audioFile;
-  
+
+  if (!localStorage.getItem("totalPlayed")) {
+    localStorage.setItem("totalPlayed", 0);
+  }
+
+  var totalPlayed = parseInt(localStorage.getItem("totalPlayed"));
+  console.log(totalPlayed);
+
+  if (totalPlayed >= 3) {
+    showNotificationDanger("Please login to listen more");
+
+    setTimeout(() => {
+      location.replace("/login");
+    }, 3000);
+    return;
+  } else {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/episode/validate/" + totalPlayed);
+    xhr.send();
+
+    xhr.onload(() => {
+      const response = JSON.parse(xhr.responseText);
+      if (!response.success) {
+        showNotificationDanger("Please login to listen more");
+
+        setTimeout(() => {
+          location.replace("/login");
+        }, 3000);
+        return;
+      }
+    });
+  }
+
   if (playButton.classList.contains("audio-active")) {
+    localStorage.setItem("totalPlayed", totalPlayed + 1);
     playButton.classList.remove("audio-active");
     audioPlayer.play();
     audioPlayer.currentTime = storedTime;
@@ -72,14 +104,14 @@ const playAudio = () => {
     buttonImage.classList.remove("audio-active");
   }
 
-  if(storedTime == audioPlayer.duration){
+  if (storedTime == audioPlayer.duration) {
     audioPlayer.currentTime = 0;
   }
-  audioPlayerButton.addEventListener('click', playAudio);
-  if(!isCover){
+  audioPlayerButton.addEventListener("click", playAudio);
+  if (!isCover) {
     addCover(mediaCover);
   }
-}
+};
 
 audioPlayer.addEventListener("timeupdate", function () {
   const currentTime = audioPlayer.currentTime;
@@ -91,13 +123,13 @@ audioPlayer.addEventListener("timeupdate", function () {
   currentTimeDisplay.textContent = currentTimeFormatted;
 
   if (!isNaN(duration)) {
-      const progress = (currentTime / duration) * 100;
-      progressSlider.value = progress;
-      totalTimeDisplay.textContent = totalTimeFormatted;
+    const progress = (currentTime / duration) * 100;
+    progressSlider.value = progress;
+    totalTimeDisplay.textContent = totalTimeFormatted;
   }
   storedTime = currentTime;
 
-  if(duration == storedTime){
+  if (duration == storedTime) {
     audioPlayer.currentTime = 0;
 
     let buttonImage = document.getElementById("button-image");
@@ -107,22 +139,22 @@ audioPlayer.addEventListener("timeupdate", function () {
     playButton.classList.add("audio-active");
     // mediaCover.classList.remove("media-cover-active");
   }
-})
+});
 
 audioPlayer.addEventListener("error", function (e) {
   console.error("Error loading audio:", e.message);
   showNotificationDanger("No Audio File Found.");
-})
+});
 
 progressSlider.addEventListener("input", function () {
   const seekTime = (progressSlider.value / 100) * audioPlayer.duration;
   audioPlayer.currentTime = seekTime;
-})
+});
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
-  return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
 }
 
 const updateVolume = () => {
