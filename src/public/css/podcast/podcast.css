@@ -117,6 +117,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @media (max-width: 640px) {
+      font-size: 12px;
+    }
   }
 
   .podcast-creator-container {
@@ -134,6 +138,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @media (max-width: 768px) {
+      font-size: 10px;
+    }
   }
 
   .podcast-edit-box {
@@ -228,6 +236,7 @@
 
       @media (max-width: 600px) {
         min-width: 150px;
+        height: 40px;
       }
     }
 
