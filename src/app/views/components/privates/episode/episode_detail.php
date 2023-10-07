@@ -3,15 +3,15 @@ function episode_detail($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
   $creator_id = $episode ? $episode->podcast_id : '';
-  $poster = $episode->image_url ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png";
+  $poster = is_file(Storage::EPISODE_IMAGE_PATH . $episode->image_url) ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png";
   $title = $episode ? $episode->title : '';
   $duration = $episode ? $episode->duration / 60 : '';
   $upload_date = $episode ? formatDate($episode->created_at) : '';
   $description = $episode ? $episode->description : '';
 
   $creator_img = $episode ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->creator_img) : '';
-  $creator_name = $episode ? $episode->creator_name : '';
-  $audio_file = $episode ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url) : '';
+  $podcast_title = $episode ? $episode->podcast_title : '';
+  $audio_file = $episode->audio_url ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url) : "/src/public/assets/audio/spotify-ad.mp3";
 
   echo"
   <head>
@@ -59,7 +59,7 @@ function episode_detail($episode = null)
         <input id=\"audio-file\" value=\"$audio_file\" hidden>
         <input id=\"creator_id\" value=\"$creator_id\" hidden>
           <img alt=\"creator-image\" class=\"episode-detail-foot-creator-image\" src=\"$creator_img\">
-          <p id=\"episode-detail-foot-creator-name\" class=\"episode-detail-foot-creator-name\" onclick=\"window.location.href='/podcast/show/$creator_id'\">$creator_name</p>
+          <p id=\"episode-detail-foot-creator-name\" class=\"episode-detail-foot-creator-name\" onclick=\"window.location.href='/podcast/show/$creator_id'\">$podcast_title</p>
         </div>
 
       </div>
