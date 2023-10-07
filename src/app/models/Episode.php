@@ -31,6 +31,13 @@ class Episode {
     return $result;
   }
 
+  public function getTotalRows() {
+    $query = "SELECT COUNT(*) AS count FROM episodes";
+    $this->db->query($query);
+
+    return $this->db->fetch()->count;
+  }
+
   public function findAllEpisodeCard($page = 1, $limit = 10) {
     $query = "SELECT episodes.episode_id, episodes.title, podcasts.creator_name, episodes.duration, episodes.image_url, episodes.created_at FROM episodes, podcasts WHERE episodes.podcast_id = podcasts.podcast_id LIMIT $limit OFFSET :offset";
     $this->db->query($query);
