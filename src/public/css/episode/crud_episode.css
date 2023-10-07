@@ -80,3 +80,61 @@
   padding-right: 20px;
   padding-left: 20px;
 }
+
+@media (max-width: 768px) {
+  .add-episode-container-title,
+  .edit-episode-container-title {
+      font-size: 2rem; /* Adjust font size for smaller screens */
+  }
+
+  .add-episode-form-select,
+  .edit-episode-form-select {
+      width: 75%; /* Make the select element full width on smaller screens */
+      margin-right: 0; /* Remove right margin */
+      padding: 5px;
+  }
+
+  .add-episode-form input,
+  .edit-episode-form input {
+      width: 75%; /* Make the input elements full width on smaller screens */
+      padding: 5px;
+      font-size: 12px;
+  }
+
+  .add-episode-form p, .edit-episode-form p {
+    font-weight: lighter;
+    font-size: 20px;
+  }
+
+  .add-episode-file p, .edit-episode-file p {
+    font-size: 20px;
+  }
+
+  .add-episode-buttons,
+  .edit-episode-buttons {
+      flex-direction: column; /* Stack buttons vertically on smaller screens */
+  }
+
+  .file-uploader-label {
+    font-size: 10px;
+  }
+
+  .confirm-add-episode-button,
+  .confirm-edit-episode-button,
+  .delete-edit-episode-button {
+      /* width: 100%; Make buttons full width on smaller screens */
+      margin-top: 10px; /* Add some space between stacked buttons */
+  }
+}
+
+@media (max-width: 420px) {
+  .add-episode-form-select,
+  .edit-episode-form-select {
+      width: 100%; /* Make the select element full width on smaller screens */
+  }
+
+  .add-episode-form input,
+  .edit-episode-form input {
+      width: 100%; /* Make the input elements full width on smaller screens */
+  }
+}

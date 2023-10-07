@@ -29,6 +29,7 @@ p {
 
 .episode-detail-head-title {
   font-size: 20px;
+  text-align: center;
 }
 
 .episode-detail-head-duration {
@@ -87,6 +88,8 @@ p {
   margin-top: 100px;
   padding: 10px;
   gap: 10px;
+  justify-content: center;
+    align-items: center;
 }
 
 .episode-detail-foot-creator-image {
@@ -104,4 +107,63 @@ p {
   cursor: pointer;
   color: var(--clr-text-primary);
   text-decoration: underline;
+}
+
+@media (max-width: 402px) {
+  .episode-detail-head-image, .episode-detail-head-image-empty  {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+
+  .episode-detail-head-title {
+    font-size: 16px;
+  }
+
+  .episode-detail-head-duration {
+    font-size: 14px;
+  }
+
+  .episode-detail-foot-date {
+    font-size: 10px;
+  }
+  
+  .episode-detail-foot-description {
+    font-size: 10px;
+  }
+
+  .episode-detail-foot-creator {
+    width: 75%;
+    margin-top: 20px;
+  }
+
+  .episode-detail-foot-creator-name {
+    font-size: 14px;
+  }
+}
+
+@media (max-width:374px) {
+  .episode-detail-foot-creator {
+    padding: 5px;
+  }
+
+  .episode-detail-foot-creator-name {
+    font-size: 10px;
+  }
+
+  .episode-detail-foot-creator-image {
+    flex: 1;
+    max-width: 15px;
+    max-height: 15px;
+  }
+}
+
+@media(max-width: 250px) {
+  .episode-detail-foot-creator {
+    width: 100%;
+    padding: 2px;
+  }
+  .episode-detail-foot-creator-name {
+    text-align: center;
+  }
 }

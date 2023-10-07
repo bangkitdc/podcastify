@@ -1,5 +1,7 @@
 <head>
   <link rel="stylesheet" href="<?= CSS_DIR ?>episode/crud_episode.css">
+  <title>Add Episode</title> 
+  <meta name="description" content="Add Episode page. For adding new episode">
 </head>
 <div id="template">
   <div class="add-episode-container">

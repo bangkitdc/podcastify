@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="<?= CSS_DIR ?>episode/crud_episode.css">
+  <title>Edit Episode</title> 
 </head>
 <div id="template">
   <div class="edit-episode-container">
