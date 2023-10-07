@@ -1,0 +1,88 @@
+.base-input {
+  border-radius: 12px;
+  color: black;
+  padding: 4px 8px;
+  outline: none;
+  border: 2px solid;
+  font-size: 1rem;
+  padding-inline: 10px;
+  transition: all 0.3s ease;
+
+  &:hover {
+      border-color: white;
+  }
+}
+
+.form-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 1rem;
+  display: block;
+  width: fit-content;
+}
+
+.form-group input {
+  padding: 14px 12px;
+  background: var(--clr-background-base-two);
+  border: 0;
+  box-shadow: 0 0 0 1px var(--essential-subdued, #878787);
+  border-radius: var(--rounded);
+  transition: box-shadow 0.3s ease;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:hover {
+  box-shadow: 0 0 0 1px var(--clr-text-primary);
+}
+
+.form-group input:focus {
+  box-shadow: 0 0 0 1.5px var(--clr-text-primary);
+}
+
+.form-group input.alert-show {
+  box-shadow: 0 0 0 1px var(--essential-subdued, var(--clr-text-danger));
+}
+
+.form-group input.alert-show:hover {
+  box-shadow: 0 0 0 1px var(--clr-text-danger);
+}
+
+.form-group input.alert-show:focus {
+  box-shadow: 0 0 0 1.5px var(--clr-text-danger);
+}
+
+.relative-container {
+  position: relative;
+}
+
+.btn-eye {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  height: 20px;
+}
+
+.eye-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.eye-icon.visible {
+  content: url('/src/public/assets/icons/eye-open.svg');
+}
+
+.eye-icon.hidden {
+  content: url('/src/public/assets/icons/eye-closed.svg');
+}

@@ -1,0 +1,17 @@
+/* Podcast management */
+.podcast-management-container {
+    font-size: 1.2rem;
+    padding-top: 24px;
+    height: 100%;
+
+    > p {
+        margin-top: 12px;
+    }
+
+    .podcast-management-action {
+        display: flex;
+        column-gap: 12px;
+        justify-content: end;
+        margin-top: 24px;
+    }
+}

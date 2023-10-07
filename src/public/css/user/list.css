@@ -1,0 +1,111 @@
+p {
+  padding-top: 4px;
+  font-size: 14px;
+  color: var(--clr-background-highlight-three);
+  padding-left: 2px;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.title {
+  padding: 1rem 0.5rem 2rem;
+}
+
+.modal-body {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.modal-image {
+  width: 180px;
+  height: 180px;
+  border-radius: var(--rounded-full);
+  grid-column: span 3 / span 7;
+  box-shadow: var(--shadow-rounded);
+}
+
+.modal-form {
+  grid-column: span 4 / span 7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+select.option-bar {
+  height: 40px;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: var(--clr-text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 8px;
+  border: none;
+  border-radius: var(--rounded-md);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+select.option-bar option {
+  background-color: var(--clr-background-modal);
+  color: var(--clr-text-primary);
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn-save {
+  height: 2.5rem;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+  padding: 0.5rem 2rem;
+  width: min-content;
+}
+
+.btn-save:hover {
+  transform: scale(1.05);
+}
+
+.pagination-wrapper {
+  padding-top: 1rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1024px) {
+  .modal-image {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .modal-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  select.option-bar {
+    height: 34px;
+    font-size: 12px;
+  }
+
+  select.option-bar option {
+    font-size: 10px;
+  }
+
+  .btn-save {
+    height: 1.75rem;
+    font-weight: 500;
+    padding: 0.25rem 1.25rem;
+    font-size: 12px;
+  }
+}

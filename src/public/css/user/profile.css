@@ -1,0 +1,281 @@
+.profile-body {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.profile-image {
+  width: 232px;
+  height: 232px;
+  border-radius: var(--rounded-full);
+  box-shadow: var(--shadow-rounded);
+}
+
+.profile-info {
+  grid-column: span 3 / span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.profile-info h1 {
+  font-size: 6rem;
+  font-weight: 900;
+  margin: 0.08em 0 0.12em;
+  line-height: 6.5rem;
+  letter-spacing: 0;
+  padding-bottom: 0.5rem;
+}
+
+.profile-info p {
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 4px;
+}
+
+.profile-ext-info {
+  display: flex;
+}
+
+
+/* Bottom section */
+.edit-wrapper {
+  padding: 1rem 0;
+}
+
+.btn-edit {
+  opacity: 0.7;
+  padding: 0;
+  border-radius: 0;
+  height: 32px;
+  background-color: transparent;
+}
+
+.btn-edit:hover {
+  opacity: 1;
+  background-color: transparent;
+}
+
+/* Modals Update */
+#userModalEdit .modal-content {
+  width: var(--md);
+}
+
+#userModalEdit .modal-body {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+#userModalEdit .modal-image {
+  grid-column: span 3 / span 7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 4rem;
+}
+
+#edit-preview-avatar {
+  width: 240px;
+  height: 240px;
+  border-radius: var(--rounded-full);
+  box-shadow: var(--shadow-rounded);
+  position: relative;
+  cursor: pointer;
+}
+
+.sub-text {
+  font-size: 12px;
+  color: var(--clr-text-primary);
+  margin-top: 1rem;
+}
+
+#userModalEdit .modal-form {
+  grid-column: span 4 / span 7;
+  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modals Change Password */
+#changePasswordModal .modal-body {
+  margin: 1.5rem 0;
+}
+
+#changePasswordModal .modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-wrapper-submit {
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.custom label {
+  font-size: 12px;
+}
+
+.custom input {
+  background: hsla(0,0%,100%,.1);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--clr-text-primary);
+  font-size: 13px;
+  height: 36px;
+  padding: 0 12px;
+  box-shadow: none;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.change-pass-wrapper {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  padding-top: 10px;
+}
+
+.btn-change-pass {
+  color: var(--clr-background-highlight-three);
+  background-color: transparent;
+}
+
+.btn-change-pass:hover {
+  text-decoration: underline;
+}
+
+.btn-save {
+  height: 2.5rem;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+  padding: 0.5rem 2rem;
+  width: min-content;
+}
+
+.btn-save:hover {
+  transform: scale(1.05);
+}
+
+/* Media Queries */
+@media screen and (max-width: 1024px) {
+  .profile-image {
+    width: 216px;
+    height: 216px;
+  }
+
+  .profile-info h1 {
+    font-size: 5rem;
+    margin: 0.04em 0 0.08em;
+    line-height: 5rem;
+  }
+
+  #userModalEdit .modal-content {
+    width: var(--sm);
+  }
+
+  #edit-preview-avatar {
+    width: 192px;
+    height: 192px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile-image {
+    width: 180px;
+    height: 180px;
+  }
+
+  .profile-info h1 {
+    font-size: 4rem;
+    margin: 0.04em 0 0.08em;
+    line-height: 4rem;
+  }
+
+  .btn-save {
+    height: 1.75rem;
+    font-weight: 500;
+    padding: 0.25rem 1.25rem;
+    font-size: 12px;
+  }
+
+  #edit-preview-avatar {
+    width: 168px;
+    height: 168px;
+  }
+
+  .sub-text {
+    font-size: 9px;
+    text-align: center;
+  }
+
+  .btn-change-pass {
+    font-size: 10px;
+  }
+
+  #userModalEdit .modal-form {
+    gap: 0.5rem;
+  }
+
+  #userModalEdit .modal-content {
+    width: 90%;
+  }
+
+  .custom label {
+    font-size: 9px;
+  }
+
+  .custom input {
+    font-size: 10px;
+    height: 28px;
+    box-shadow: none;
+  }
+
+  .form-group {
+    gap: 0.25rem
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile-image {
+    width: 156px;
+    height: 156px;
+  }
+
+  .profile-info {
+    justify-content:center ;
+  }
+
+  .profile-info h1 {
+    font-size: 3rem;
+    margin: 0;
+    line-height: 3rem;
+  }
+
+  .profile-info p {
+    font-size: 12px;
+    padding-left: 4px;
+  }
+
+  .profile-ext-info #profile-fullname, .profile-ext-info span {
+    display: none;
+  }
+
+  .profile-text {
+    display: none;
+  }
+
+  #edit-preview-avatar {
+    width: 120px;
+    height: 120px;
+  }
+}

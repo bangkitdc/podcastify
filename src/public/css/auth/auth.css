@@ -1,0 +1,99 @@
+.login-wrapper, .register-wrapper {
+  row-gap: normal;
+  padding: 2rem 0;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 3rem 0px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.login-form, .register-form {
+  display: flex;
+  gap: 1.25rem;
+  flex-direction: column;
+  width: 80%;
+  max-width: var(--xs);
+  margin: 0px auto;
+  padding-bottom: 0px;
+}
+
+.form-button {
+  margin-top: 1.5rem;
+}
+
+.btn-submit {
+  width: 100%;
+  color: var(--clr-text-black);
+  background: var(--clr-text-info);
+  padding: 1rem 2rem;
+  border-radius: var(--rounded-full);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.btn-submit:hover {
+  transform: scale(1.05);
+}
+
+.form-hyperlink {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.form-hyperlink span {
+  color: var(--clr-background-highlight-three);
+}
+
+.form-hyperlink a {
+  color: var(--clr-text-primary);
+  text-decoration: underline;
+}
+
+.form-hyperlink a:hover {
+  color: var(--clr-text-info);
+  text-decoration: underline;
+}
+
+hr {
+  margin: 3rem 10%;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  border-image: initial;
+  border-top: 1px solid rgb(41, 41, 41);
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+    margin: 0 2rem 2rem;
+    text-align: left;
+  }
+
+  .login-form, .register-form {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 2rem;
+  }
+
+  .form-hyperlink {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .form-hyperlink span,
+  .form-hyperlink a {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0.5rem 0;
+  }
+}

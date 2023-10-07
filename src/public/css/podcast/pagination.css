@@ -1,0 +1,34 @@
+.eps-list-nav,
+.pod-list-nav {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  align-items: center;
+  opacity: 0.7;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+
+  #eps-list-start,
+  #eps-list-prev,
+  #eps-list-next,
+  #eps-list-end,
+  #pod-list-start,
+  #pod-list-prev,
+  #pod-list-next,
+  #pod-list-end {
+    align-items: center;
+    background-color: black;
+    opacity: 0.7;
+    border: none;
+    border-radius: var(--rounded-full);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+  }
+}

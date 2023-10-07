@@ -1,0 +1,148 @@
+.tables {
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tables td,
+.tables th {
+  color: var(--clr-text-secondary);
+  font-weight: 500;
+  font-size: 14px;
+  padding-left: 15px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tables td {
+  font-weight: 300;
+}
+
+.content-tables {
+  transition: all 0.2s linear;
+}
+
+.content-tables:hover {
+  background-color: var(--clr-background-highlight-two);
+  cursor: pointer;
+}
+
+.tables th {
+  padding-top: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid hsla(0,0%,100%,.1);
+}
+
+.tables td {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.gap {
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.3rem !important;
+}
+
+/* Content */
+
+.content-title {
+  align-items: center;
+  display: inline-flex;
+}
+
+.content-img {
+  margin-right: 12px;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+}
+
+.content-text {
+  display: inline-block;
+  align-items: center;
+}
+
+.content-first {
+  color: var(--clr-text-primary);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content-second {
+  color: var(--clr-text-secondary);
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 820px) {
+  .tables th {
+      font-size: 14px; /* Reduce font size for smaller screens */
+  }
+
+  .tables td, .tables th {
+      padding: 6px; /* Reduce cell padding for smaller screens */
+  }
+
+  /* Hide the first column (index) on smaller screens */
+  .tables td:first-child, .tables th:first-child {
+      display: none;
+  }
+
+  /* Adjust the width of table columns for smaller screens */
+  .tables th:nth-child(2) {
+      width: 50%;
+  }
+
+  .tables th:nth-child(3) {
+      width: 30%;
+  }
+
+  .tables th:nth-child(4) {
+      width: 20%;
+  }
+
+  .content-img {
+    max-width: 30px; /* Adjust the desired width */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
+
+@media (max-width: 775px) {
+  .tables th, .tables td, .content-first {
+    font-size: 10px; /* Reduce font size for smaller screens */
+}
+
+.tables td, .tables th {
+    padding: 5px; /* Reduce cell padding for smaller screens */
+}
+
+/* Hide the first column (index) on smaller screens */
+.tables td:first-child, .tables th:first-child {
+    display: none;
+}
+}
+
+@media (max-width: 547px) {
+  .tables td, .tables th {
+    padding: 2px; /* Reduce cell padding for smaller screens */
+}
+  .tables td:nth-child(4), th:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 396px) {
+  .tables td:nth-child(3), th:nth-child(3) {
+    display: none;
+  }
+}

@@ -1,0 +1,232 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  align-items: center;
+  z-index: 2;
+}
+
+.btn-flex {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-topbar {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: var(--clr-background-highlight-one);
+  opacity: 1;
+  border: none;
+  border-radius: var(--rounded-full);
+  color: var(--clr-text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+}
+
+.profile-img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background-color: var(--clr-background-highlight-one);
+  cursor: pointer;
+  float: right;
+  border-radius: var(--rounded-full);
+  border: none;
+  color: var(--clr-text-primary);
+  font-family: CircularStd;
+  align-items: center;
+  display: inline-flex;
+  font-size: 1rem;
+  transition: all 0.1s;
+  height: 2rem;
+  padding: 0 0.25rem;
+  max-width: 182.5px;
+}
+
+.text-username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--clr-text-primary) !important;
+}
+
+.dropdown-btn:hover {
+  transform: scale(1.02);
+}
+
+.dropdown-btn p {
+  font-size: 15px;
+  margin: 0 10px;
+  padding-top: 0.125rem;
+}
+
+.arrow-icon {
+  width: 0.75rem;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+  padding-bottom: 2px;
+}
+
+.arrow-icon.up {
+  transform: rotate(180deg);
+  padding-bottom: 2px;
+}
+
+/* Dropdown */
+.dropdown-container {
+  position: fixed;
+  z-index: 2;
+  display: none;
+}
+
+.dropdown-menu {
+  list-style: none;
+  padding: 0.25rem;
+  margin: 0;
+  background-color: var(--clr-background-highlight-two);
+  border-radius: var(--rounded);
+  position: absolute;
+  top: 100%;
+  z-index: 2;
+  box-shadow: var(--shadow-lg);
+  width: 180px;
+  position: fixed;
+  top: 4rem;
+  right: 2rem;
+}
+
+.dropdown-link {
+  display: block;
+  padding: 0.75rem;
+  border-radius: var(--rounded-sm);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--clr-text-primary);
+  transition: background-color 0.3s;
+  background-color: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: default;
+}
+
+.dropdown-link:hover {
+  background-color: var(--clr-hover-dropdown);
+}
+
+.dropdown-container.active {
+  display: block;
+}
+
+.bottom-link {
+  border-top: 0.5px solid var(--clr-hover-dropdown);
+}
+
+/* Show More */
+.burger-btn {
+  display: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.show-more {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.left-menu {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 200px;
+  height: 100vh;
+  background-color: var(--clr-background-highlight-two);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 0.25em;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.list {
+  list-style: none;
+}
+
+.show-more.active .left-menu {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.close-btn {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.left-menu button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  background: none;
+  transition: background-color 0.3s;
+  border-radius: var(--rounded);
+}
+
+.left-menu button:hover {
+  background-color: var(--clr-hover-dropdown);
+}
+
+/* Media Queries */
+@media screen and (max-width: 1024px) {
+  .burger-btn {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .topbar {
+    padding: 1rem 1rem;
+  }
+
+  .dropdown-menu {
+    right: 1.5rem;
+  }
+
+  .left-menu {
+    width: 180px;
+  }
+
+  .left-menu img {
+    height: 16px;
+  }
+
+  .left-menu button {
+    padding: 0.75rem;
+  }
+}

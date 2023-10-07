@@ -1,0 +1,259 @@
+:root {
+  /* Color  */
+  --clr-background-base-one: #000000;
+  --clr-background-base-two: #121212;
+  --clr-background-highlight-one: #1a1a1a;
+  --clr-background-highlight-two: #2a2a2a;
+  --clr-background-highlight-three: #a7a7a7;
+  --clr-text-primary: #f9f9f9;
+  --clr-text-secondary: #b3b3b3;
+  --clr-text-secondary-darken: #808080;
+  --clr-text-info: #1ed760;
+  --clr-text-info-hover: #0ab346;
+  --clr-text-warning: #ffa42b;
+  --clr-text-danger: #f15e6c;
+  --clr-text-announcement: #3d91f4;
+  --clr-text-black: #000000;
+
+  --clr-background-card: #181818;
+  --clr-hover-dropdown: #3E3E3E;
+  --clr-background-modal: #282828;
+
+  --background-noise: url('../assets/icons/bg.svg');
+
+  /* Font size */
+  --fs-album-title-pc: 4rem;
+  --fs-album-subtitle-pc: 1.5rem;
+  --fs-heading: 1rem;
+  --fs-title: 0.875rem;
+  --fs-caption: 11px;
+
+  --fs-mobile-album-title: 1.5rem;
+  --fs-mobile-title: 1.125rem;
+
+  /* Font Family  */
+  --ff-main: CircularStd;
+
+  /* Breakpoint  */
+  --xs: 324px;
+  --sm: 640px;
+  --md: 768px;
+  --lg: 1024px;
+  --xl: 1280px;
+  --2xl: 1536px;
+
+  /* Others  */
+  --rounded-sm: 0.125rem;
+  --rounded: 0.25rem;
+  --rounded-md: 0.375rem;
+  --rounded-lg: 0.5rem;
+  --rounded-xl: 0.75rem;
+  --rounded-2xl: 1rem;
+  --rounded-3xl: 1.5rem;
+  --rounded-full: 1000rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  --shadow-rounded: 0 4px 60px rgba(0,0,0,.5);
+}
+
+/* Fonts */
+
+/* Book weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Book.otf") format("opentype");
+  font-weight: 200;
+}
+
+/* Book Italic weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-BookItalic.otf") format("opentype");
+  font-weight: 200;
+  font-style: italic;
+}
+
+/* Light weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Light.otf") format("opentype");
+  font-weight: 300;
+}
+
+/* Light weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Medium weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Medium.otf") format("opentype");
+  font-weight: 500;
+}
+
+/* Medium Italic weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Bold weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+/* Bold Italic weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Black weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-Black.otf") format("opentype");
+  font-weight: 800;
+}
+
+/* BlackItalic weight */
+@font-face {
+  font-family: CircularStd;
+  src: url("/src/public/assets/fonts/CircularStd-BlackItalic.otf") format("opentype");
+  font-weight: 800;
+  font-style: italic;
+}
+
+body {
+  background-color: var(--clr-background-base-one);
+  font-family: CircularStd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  /* z-index: 1; */
+  font-family: var(--ff-main);
+  color: var(--clr-text-primary);
+}
+
+h1 {
+  font-size: var(--fs-album-title-pc);
+  color: var(--clr-text-primary);
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  margin: 2rem;
+}
+
+h2 {
+  font-size: var(--fs-album-subtitle-pc);
+  color: var(--clr-text-primary);
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  margin: 2rem 50px;
+}
+
+h3 {
+  font-size: var(--fs-heading);
+  color: var(--clr-text-primary);
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  margin: 0 50px;
+}
+
+p {
+  font-weight: 500;
+}
+
+/* Button  */
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: var(--rounded-full);
+  background-color: var(--clr-background-base-two);
+  color: var(--clr-text-primary);
+  font-family: CircularStd;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.btn:hover {
+  background-color: var(--clr-background-highlight-two);
+}
+
+.primary {
+  background-color: var(--clr-text-info);
+  color: var(--clr-text-black);
+  transition: var(--transition);
+}
+
+.primary:hover {
+  background-color: var(--clr-text-info-hover);
+  transition: var(--transition);
+}
+
+.secondary {
+  background-color: var(--clr-text-primary);
+  color: var(--clr-text-black);
+  border: 1px solid var(--clr-background-highlight-two);
+}
+
+.secondary:hover {
+  background-color: var(--clr-text-primary);
+  border: 0.7px solid var(--clr-text-black);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--clr-text-secondary-darken);
+}
+
+/* On hover, change the background-color and opacity of the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--clr-text-secondary);
+}
+
+.alert-hide {
+  display: none;
+}
+
+.alert-show {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.alert-show p{
+  padding-top: 0.15rem;
+  color: var(--clr-text-danger);
+  font-size: 12px;
+}
