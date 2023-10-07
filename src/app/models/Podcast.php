@@ -93,7 +93,7 @@ class Podcast {
         $query = "INSERT INTO podcasts (title, description, creator_name, image_url, category_id, created_at, updated_at) VALUES (:title, :description, :creator_name, :image_url, :category_id, NOW(), NOW())";
         $this->db->query($query);
 
-        $this->db->bind(":title", $title);
+        $this->db->bind(":title", strtolower($title));
         $this->db->bind(":description", $description);
         $this->db->bind(":creator_name", $creator_name);
         $this->db->bind(":image_url", $image_url);
@@ -145,7 +145,7 @@ class Podcast {
             $this->db->query($query);
         }
 
-        $this->db->bind(":title", $title);
+        $this->db->bind(":title", strtolower($title));
         $this->db->bind(":description", $description);
         $this->db->bind(":creator_name", $creator_name);
         $this->db->bind(":category_id", $category_id);
@@ -234,7 +234,7 @@ class Podcast {
 
         $this->db->query($query);
 
-        $this->db->bind(":title", $title);
+        $this->db->bind(":title", strtolower($title));
         $result = $this->db->fetch();
 
         if ($this->db->rowCount() == 0) {
@@ -247,7 +247,7 @@ class Podcast {
         $query = "SELECT * FROM podcasts ORDER BY RAND() LIMIT :limit";
 
         $this->db->query($query);
-        $this->db->bind(":limit", $limit);
+        $this->db->bind(":limit", $limit, PDO::PARAM_INT);
 
         $result = $this->db->fetchAll();
 
