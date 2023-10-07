@@ -10,7 +10,6 @@ const uploadEditedEpsFile = (url, async = true, data = null) => {
 
 const updateEpisode = (json, episodeId) => {
   let xhr = new XMLHttpRequest();
-  console.log(EPISODE_EDIT_BASE_URL + episodeId + "?edit=true");
   xhr.open(
     "PATCH",
     EPISODE_EDIT_BASE_URL + "/" + episodeId + "?edit=true",
@@ -104,8 +103,19 @@ handleFormSubmit("edit-episode-form", function () {
       let xhr = updateEpisode(json, episodeId);
 
       xhr.onload = () => {
+
+        const response = JSON.parse(xhr.responseText);
+        
         if (xhr.status === 200) {
-          window.location.href = "/episode";
+          // window.location.href = "/episode";
+          if (response.success) {
+            showNotificationSuccess(response.status_message);
+            setTimeout(() => {
+              location.replace(response.redirect_url);
+            }, 3000);
+          } else {
+            showNotificationDanger(response.status_message);
+          }
         } else {
           console.error("Request failed with status:", xhr.status);
         }
@@ -201,8 +211,19 @@ if (document.getElementById("delete-episode")) {
       try {
         let xhr = deleteEpisode(id);
         xhr.onload = () => {
+
+          const response = JSON.parse(xhr.responseText);
+
           if (xhr.status === 200) {
-            window.location.href = "/episode";
+            // window.location.href = "/episode";
+            if (response.success) {
+              showNotificationSuccess(response.status_message);
+              setTimeout(() => {
+                location.replace(response.redirect_url);
+              }, 3000);
+            } else {
+              showNotificationDanger(response.status_message);
+            }
           } else {
             console.error("Request failed with status:", xhr.status);
           }
