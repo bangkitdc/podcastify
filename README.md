@@ -45,20 +45,33 @@ Podcastify is built using the following technologies:
 ## Responsive Layouts & Lighthouse
 <div align="center">
     <h1>Responsive Layouts</h1>
-    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/login/laptop.png" width=350>
-    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/login/tablet.png" width=250>
-    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/login/mobile.png" width=150>
+    <img src="readme/responsive/login/laptop.png" width=350>
+    <img src="readme/responsive/login/tablet.png" width=250>
+    <img src="readme/responsive/login/mobile.png" width=150>
     <p align="center"><em>Login Page</em></p>
     </br>
-    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/register/laptop.png" width=350>
-    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/register/tablet.png" width=250>
-    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/register/mobile.png" width=150>
+    <img src="readme/responsive/register/laptop.png" width=350>
+    <img src="readme/responsive/register/tablet.png" width=250>
+    <img src="readme/responsive/register/mobile.png" width=150>
     <p align="center"><em>Sign Up Page</em></p>
     <br/>
     <img src="readme/responsive/home/laptop.png" width=350>
     <img src="readme/responsive/home/tablet.png" width=250>
     <img src="readme/responsive/home/mobile.png" width=150>
     <p align="center"><em>Home Page</em></p>
+    <br/>
+    <img src="readme/responsive/profile/laptop.png" width=350>
+    <img src="readme/responsive/profile/tablet.png" width=250>
+    <img src="readme/responsive/profile/mobile.png" width=150>
+    <img src="readme/responsive/modals/laptop.png" width=350>
+    <img src="readme/responsive/modals/tablet.png" width=250>
+    <img src="readme/responsive/modals/mobile.png" width=150>
+    <p align="center"><em>Profile Page</em></p>
+    <br/>
+    <img src="readme/responsive/user/laptop.png" width=350>
+    <img src="readme/responsive/user/tablet.png" width=250>
+    <img src="readme/responsive/user/mobile.png" width=150>
+    <p align="center"><em>User List Page</em></p>
     <br/>
     <img src="readme/responsive/podcast/laptop_main.png" width=350>
     <img src="readme/responsive/podcast/tablet_main.png" width=250>
@@ -73,13 +86,36 @@ Podcastify is built using the following technologies:
     <img src="readme/responsive/podcast/tablet_edit.png" width=250>
     <img src="readme/responsive/podcast/mobile_edit.png" width=150>
     <p align="center"><em>Podcast Page</em></p>
+    <br/>
+    <img src="readme/responsive/error/laptop.png" width=350>
+    <img src="readme/responsive/error/tablet.png" width=250>
+    <img src="readme/responsive/error/mobile.png" width=150>
+    <p align="center"><em>Error Page</em></p>
+    <br/>
     <h1>Lighthouse</h1>
+    <img src="readme/lighthouse/login/login.jpg" width=350>
+    <p align="center"><em>Login Page</em></p>
+    <br/>
+    <img src="readme/lighthouse/register/register.jpg" width=350>
+    <p align="center"><em>Sign Up Page</em></p>
+    <br/>
     <img src="readme/lighthouse/home/home.png" width=350>
     <p align="center"><em>Home Page</em></p>
+    <br/>
+    <img src="readme/lighthouse/profile/profile.jpg" width=350>
+    <p align="center"><em>Profile Page</em></p>
+    <br/>
+    <img src="readme/lighthouse/user/user.jpg" width=350>
+    <p align="center"><em>User List Page</em></p>
+    <br/>
     <img src="readme/lighthouse/podcast/podcast_main.png" width=350>
     <img src="readme/lighthouse/podcast/podcast_detail.png" width=350>
     <img src="readme/lighthouse/podcast/podcast_edit.png" width=350>
     <img src="readme/lighthouse/podcast/podcast_add.png" width=350>
     <p align="center"><em>Podcast Page</em></p>
+    <br/>
+    <img src="readme/lighthouse/error/error.jpg" width=350>
+    <p align="center"><em>Error Page</em></p>
+    <br/>
 </b>
 </div>
