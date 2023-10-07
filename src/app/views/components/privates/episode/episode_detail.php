@@ -3,7 +3,7 @@ function episode_detail($episode = null)
 {
   $id = $episode ? $episode->episode_id : '';
   $creator_id = $episode ? $episode->podcast_id : '';
-  $poster = $episode ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : '';
+  $poster = $episode->image_url ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png";
   $title = $episode ? $episode->title : '';
   $duration = $episode ? $episode->duration / 60 : '';
   $upload_date = $episode ? formatDate($episode->created_at) : '';
