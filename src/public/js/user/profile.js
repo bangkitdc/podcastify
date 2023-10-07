@@ -87,32 +87,21 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
     }
 
     xhr.onload = function () {
+      const response = JSON.parse(xhr.responseText);
       if (xhr.status === 200) {
-        try {
-          const response = JSON.parse(xhr.responseText);
-
-          // TODO: notification
-          if (response.success) {
-            closeModal(modalId, true);
-            updateProfileUser(formData);
-          } else {
-            console.error(response.error_message);
-          }
-        } catch (error) {
-          console.error("Error parsing JSON response:", error);
+        if (response.success) {
+          closeModal(modalId, true);
+          updateProfileUser(formData);
+          showNotificationSuccess(response.status_message);
         }
       } else {
-        console.error("Request failed with status:", xhr.status);
+        showNotificationDanger(response.error_message);
       }
-    };
-
-    xhr.onerror = function () {
-      console.error("Error during XMLHttpRequest");
     };
 
     xhr.send(formData);
   } catch (error) {
-    console.error("Error during XMLHttpRequest:", error);
+    showNotificationDanger("Error during XMLHttpRequest: " + error);
   }
 };
 
@@ -138,80 +127,81 @@ document
   });
 
 const showModalEditUser = (userId, modalId) => {
-  const xhr = new XMLHttpRequest();
+  try {
+    const xhr = new XMLHttpRequest();
 
-  xhr.open("GET", `/user/${userId}`, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.open("GET", `/user/${userId}`, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
 
-  // Define the callback for when the request completes
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      try {
-        const user = JSON.parse(xhr.responseText);
+    // Define the callback for when the request completes
+    xhr.onload = function () {
+      const response = JSON.parse(xhr.responseText);
+      if (xhr.status === 200) {
+        if (response.success) {
+          const user = response.data;
 
-        // Update modal with user data
-        document.querySelector(`#${modalId} .avatar`).src = user.avatar_url ? `src/storage/user/${user.avatar_url}` : "/src/public/assets/images/avatar-template.png";        
-        document.querySelector(`#${modalId} [name='user_id']`).value =
-          user.user_id;
-        document.querySelector(`#${modalId} [name='email']`).value = user.email;
-        document.querySelector(`#${modalId} [name='username']`).value =
-          user.username;
-        document.querySelector(`#${modalId} [name='first_name']`).value =
-          user.first_name;
-        document.querySelector(`#${modalId} [name='last_name']`).value =
-          user.last_name;
+          // Update modal with user data
+          document.querySelector(`#${modalId} .avatar`).src = user.avatar_url
+            ? `src/storage/user/${user.avatar_url}`
+            : "/src/public/assets/images/avatar-template.png";
+          document.querySelector(`#${modalId} [name='user_id']`).value =
+            user.user_id;
+          document.querySelector(`#${modalId} [name='email']`).value =
+            user.email;
+          document.querySelector(`#${modalId} [name='username']`).value =
+            user.username;
+          document.querySelector(`#${modalId} [name='first_name']`).value =
+            user.first_name;
+          document.querySelector(`#${modalId} [name='last_name']`).value =
+            user.last_name;
 
-        // Update alert
-        validateInput(
-          "email",
-          emailRegex,
-          "Invalid email format.",
-          emailValidation
-        );
+          // Update alert
+          validateInput(
+            "email",
+            emailRegex,
+            "Invalid email format.",
+            emailValidation
+          );
 
-        validateInput(
-          "username",
-          usernameRegex,
-          "Username must consist of a minimum of 6 characters, can be letters, numbers, or underscores.",
-          usernameValidation
-        );
+          validateInput(
+            "username",
+            usernameRegex,
+            "Username must consist of a minimum of 6 characters, can be letters, numbers, or underscores.",
+            usernameValidation
+          );
 
-        validateInput(
-          "first_name",
-          nameRegex,
-          "First name must consist of letters only.",
-          firstNameValidation
-        );
+          validateInput(
+            "first_name",
+            nameRegex,
+            "First name must consist of letters only.",
+            firstNameValidation
+          );
 
-        validateInput(
-          "last_name",
-          nameRegex,
-          "Last name must consist of letters only.",
-          lastNameValidation
-        );
+          validateInput(
+            "last_name",
+            nameRegex,
+            "Last name must consist of letters only.",
+            lastNameValidation
+          );
 
-        // Open the modal
-        openModal(modalId);
+          // Open the modal
+          openModal(modalId);
 
-        // Set up form submission
-        const elementForm = `#${modalId}-form`;
-        document.querySelector(elementForm).onsubmit = (e) =>
-          submitUpdateForm(e, elementForm, modalId);
-      } catch (error) {
-        console.error("Error parsing JSON response:", error);
+          // Set up form submission
+          const elementForm = `#${modalId}-form`;
+          document.querySelector(elementForm).onsubmit = (e) =>
+            submitUpdateForm(e, elementForm, modalId);
+        }
+      } else {
+        showNotificationDanger(response.error_message);
       }
-    } else {
-      console.error("Request failed with status:", xhr.status);
-    }
-  };
+    };
 
-  // Define the callback for network errors
-  xhr.onerror = function () {
-    console.error("Error during XMLHttpRequest");
-  };
-
-  // Send the request
-  xhr.send();
+    // Send the request
+    xhr.send();
+  } catch (error) {
+    showNotificationDanger("Error during XMLHttpRequest: " + error);
+  }
 };
 
 const updateProfileUser = (formData) => {
@@ -230,7 +220,7 @@ const updateProfileUser = (formData) => {
   document.querySelector("#profile-email").innerHTML = email;
   
   // Check if a file is selected
-  if (fileInput instanceof File) {
+  if (fileInput instanceof File && fileInput.name.trim() !== "") {
     // Create a URL for the file
     const fileURL = URL.createObjectURL(fileInput);
     // Set the src attribute of the image element
@@ -369,30 +359,19 @@ const submitChangePasswordForm = async (e, elementForm, modalId) => {
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onload = function () {
+      const response = JSON.parse(xhr.responseText);
       if (xhr.status === 200) {
-        try {
-          const response = JSON.parse(xhr.responseText);
-
-          // TODO: notification
-          if (response.success) {
-            closeModal(modalId, true);
-          } else {
-            console.error(response.error_message);
-          }
-        } catch (error) {
-          console.error("Error parsing JSON response:", error);
+        if (response.success) {
+          closeModal(modalId, true);
+          showNotificationSuccess(response.status_message);
         }
       } else {
-        console.error("Request failed with status:", xhr.status);
+        showNotificationDanger(response.error_message);
       }
-    };
-
-    xhr.onerror = function () {
-      console.error("Error during XMLHttpRequest");
     };
 
     xhr.send(jsonData);
   } catch (error) {
-    console.error("Error during XMLHttpRequest:", error);
+    showNotificationDanger("Error during XMLHttpRequest: " + error);
   }
 };

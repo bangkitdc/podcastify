@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Discover a world of captivating stories and insightful conversations on Podcastify. Explore a diverse range of podcasts, from engaging interviews to gripping narratives. Dive into a seamless listening experience and stay connected to your favorite topics. Start your podcast journey with Podcastify today.">
   <link rel="stylesheet" href="<?= CSS_DIR ?>global.css">
   <link rel="stylesheet" href="<?= CSS_DIR ?>guest.css">
-  <title></title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     <div class="header">
       <button class="btn-logo" onclick="window.location.href = '/'">
         <div class="icon">
-          <img src="<?= ICONS_DIR ?>logo-bw.svg" alt="Logo" width="36px">
+          <img class="icon-img" src="<?= ICONS_DIR ?>logo-bw.svg" alt="Logo">
         </div>
         <h2>Podcastify</h2>
       </button>

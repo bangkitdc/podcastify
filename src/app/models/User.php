@@ -137,7 +137,7 @@ class User {
         return $this->db->fetch()->count > 0;
     }
 
-    public function isCurrentPasswordWrong($userId, $hashedPassword)
+    public function isCurrentPassword($userId, $hashedPassword)
     {
         $query = "SELECT COUNT(*) AS count FROM users WHERE user_id = :user_id AND password = :password";
         $this->db->query($query);

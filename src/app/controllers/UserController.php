@@ -68,7 +68,7 @@ class UserController extends BaseController {
                             $imageUploadService->replaceAvatarImage($currentAvatarURL, $imageUrl);
                         }
 
-                        $response = array("success" => true, "status_message" => "Update Profile Successful.");
+                        $response = array("success" => true, "status_message" => "Profile updated successfully");
 
                         http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
@@ -110,7 +110,7 @@ class UserController extends BaseController {
                     $userService = new UserService();
                     $userService->changePassword($userId, $hashedPassword, $hashedNewPassword);
 
-                    $response = array("success" => true, "status_message" => "Password Changed Successfully.");
+                    $response = array("success" => true, "status_message" => "Password changed successfully");
 
                     http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
@@ -195,7 +195,7 @@ class UserController extends BaseController {
                     $userService = new UserService();
                     $userService->updateStatus($userId, $userStatus);
 
-                    $response = array("success" => true, "status_message" => "User status updated successfully.");
+                    $response = array("success" => true, "status_message" => "User status updated successfully");
                     http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
                     // Set the Content-Type header to indicate JSON

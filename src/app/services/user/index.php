@@ -69,7 +69,7 @@ class UserService {
 
     public function changePassword($userId, $currentHashedPassword, $newHashedPassword)
     {
-        if ($this->user->isCurrentPasswordWrong($userId, $currentHashedPassword)) {
+        if (!$this->user->isCurrentPassword($userId, $currentHashedPassword)) {
             throw new Exception('Current password is wrong', ResponseHelper::HTTP_STATUS_FORBIDDEN);
         }
 
