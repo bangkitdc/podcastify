@@ -120,93 +120,72 @@ handleFormSubmit("add-episode-form", function () {
     let imgUrl = "/upload?type=image";
     let fileField = document.getElementById("poster-file-upload");
     let imgFormData = new FormData();
-    if(fileField.files[0]){
+    if (fileField.files[0]) {
       imgFormData.append("filename", fileField.files[0].name);
       imgFormData.append("data", fileField.files[0]);
-    } else{
+    } else {
       imgFormData.append("data", null);
     }
 
     try {
       let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
       xhrImg.onload = () => {
-        formData.append("preview-poster-filename", xhrImg.responseText);
+        const response = JSON.parse(xhrImg.responseText);
+        if (xhrImg.status === 200) {
+          formData.append("preview-poster-filename", xhrImg.responseText);
 
-        try {
-          // upload audio to server
-          let audioUrl = "/upload?type=audio";
-          let audioFileField = document.getElementById("audio-file-upload");
-          let audioFormData = new FormData();
-          audioFormData.append("filename", audioFileField.files[0].name);
-          audioFormData.append("data", audioFileField.files[0]);
+          try {
+            // upload audio to server
+            let audioUrl = "/upload?type=audio";
+            let audioFileField = document.getElementById("audio-file-upload");
+            let audioFormData = new FormData();
+            audioFormData.append("filename", audioFileField.files[0].name);
+            audioFormData.append("data", audioFileField.files[0]);
 
-          let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
-          xhrAudio.onload = () => {
-            formData.append("audio-filename", xhrAudio.responseText);
+            let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
+            xhrAudio.onload = () => {
+              const response = JSON.parse(xhrAudio.responseText);
+              if (xhrAudio.status === 200) {
+                formData.append("audio-filename", xhrAudio.responseText);
 
-            try {
-              let xhr = createEpisode(formData);
-              xhr.onload = () => {
+                try {
+                  let xhr = createEpisode(formData);
+                  xhr.onload = () => {
+                    const response = JSON.parse(xhr.responseText);
 
-                const response = JSON.parse(xhr.responseText);
-                
-                if (xhr.status === 200) {
-                  // window.location.href = "/episode";
-                  if (response.success) {
-                    showNotificationSuccess(response.status_message);
-                    setTimeout(() => {
-                      location.replace(response.redirect_url);
-                    }, 3000);
-                  } else {
-                    showNotificationDanger(response.status_message);
-                  }
-                } else {
-                  console.error("Request failed with status:", xhr.status);
+                    if (xhr.status === 200) {
+                      if (response.success) {
+                        showNotificationSuccess(response.status_message);
+                        setTimeout(() => {
+                          location.replace(response.redirect_url);
+                        }, 3000);
+                      } else {
+                        showNotificationDanger(response.status_message);
+                      }
+                    } else {
+                      console.error("Request failed with status:", xhr.status);
+                    }
+                  };
+
+                  xhr.onerror = function () {
+                    console.error("Error during XMLHttpRequest");
+                  };
+                } catch (error) {
+                  console.error("Error creating episode:", error);
                 }
-              };
-
-              xhr.onerror = function () {
-                console.error("Error during XMLHttpRequest");
-              };
-            } catch (error) {
-              console.error("Error creating episode:", error);
-            }
-          };
-        } catch (error) {
-          console.error("Error uploading audio:", error);
+              } else {
+                showNotificationDanger(response.error_message);
+              }
+            };
+          } catch (error) {
+            console.error("Error uploading audio:", error);
+          }
+        } else {
+          showNotificationDanger(response.error_message);
         }
       };
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   });
-});
-
-handleFormSubmit("delete-episode-form", function () {
-  let form = document.getElementById("delete-episode-form");
-  let formData = new FormData(form);
-
-  let episodeId = 0;
-  for (let [key, value] of formData.entries()) {
-    if (key == "episode_id") {
-      episodeId = value;
-    }
-  }
-  try {
-    let xhr = deleteEpisode(episodeId);
-
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        window.location.href = "/episode";
-      } else {
-        console.error("Request failed with status:", xhr.status);
-      }
-    };
-
-    xhr.onerror = function () {
-      console.error("Error during XMLHttpRequest");
-    };
-  } catch (error) {
-    console.error("Error during XMLHttpRequest:", error);
-  }
 });
