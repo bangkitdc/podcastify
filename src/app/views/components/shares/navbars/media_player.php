@@ -4,7 +4,7 @@ echo '<link rel="stylesheet" href="' . CSS_DIR . 'navbars/media_player.css">';
 
 echo '
   <div class="media-player">
-  <!--<input id="range" type="range" class="timeline-slider small-screen" min="0" max="100" step="1" value="0"/>-->
+  <input id="range" type="range" class="timeline-slider small-screen" min="0" max="100" step="1" value="0"/>
     <div id="media-cover" class="media-cover"></div>
     <div class="player">
       <div class="player-controls">

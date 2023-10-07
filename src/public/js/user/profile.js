@@ -121,7 +121,7 @@ document
         document.getElementById("edit-preview-avatar").src = e.target.result;
       };
       reader.readAsDataURL(this.files[0]);
-
+    } else {
       this.value = "";
     }
   });

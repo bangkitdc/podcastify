@@ -28,6 +28,7 @@ class ProfileController extends BaseController {
         } catch (Exception $e) {
             if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
                 $this->view('layouts/error');
+                return;
             }
             http_response_code($e->getCode());
             exit;

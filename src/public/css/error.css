@@ -50,3 +50,14 @@ p {
   font-weight: 500;
   padding-bottom: 2.5rem;
 }
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  p {
+    font-weight: 300;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+}

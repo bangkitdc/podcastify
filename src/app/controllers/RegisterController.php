@@ -43,7 +43,7 @@ class RegisterController extends BaseController {
                     break;
             }
         } catch (Exception $e) {
-            http_response_code(500);
+            http_response_code($e->getCode());
             $response = array("success" => false, "error_message" => $e->getMessage());
             echo json_encode($response);
         }

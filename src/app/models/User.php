@@ -137,14 +137,15 @@ class User {
         return $this->db->fetch()->count > 0;
     }
 
-    public function isCurrentPassword($userId, $hashedPassword)
+    public function isCurrentPassword($userId, $currentPassword)
     {
-        $query = "SELECT COUNT(*) AS count FROM users WHERE user_id = :user_id AND password = :password";
+        $query = "SELECT password AS password FROM users WHERE user_id = :user_id";
         $this->db->query($query);
         $this->db->bind('user_id', $userId);
-        $this->db->bind('password', $hashedPassword);
 
-        return $this->db->fetch()->count > 0;
+        $hashedPassword = $this->db->fetch()->password;
+
+        return $this->checkPassword($currentPassword, $hashedPassword);
     }
 
     public function updatePassword($userId, $hashedPassword)
@@ -201,5 +202,11 @@ class User {
         $result = $this->db->fetch()->avatar;
 
         return $result;
+    }
+
+    private function checkPassword($password, $hashedPassword)
+    {
+        $isPasswordCorrect = password_verify($password, $hashedPassword);
+        return $isPasswordCorrect;
     }
 }

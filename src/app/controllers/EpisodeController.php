@@ -97,7 +97,9 @@ class EpisodeController extends BaseController
     } catch (Exception $e) {
       if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
         $this->view('layouts/error');
+        return;
       }
+
       http_response_code($e->getCode());
       $response = array("success" => false, "error_message" => $e->getMessage());
       echo json_encode($response);
@@ -148,7 +150,9 @@ class EpisodeController extends BaseController
     } catch (Exception $e) {
       if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
         $this->view('layouts/error');
+        return;
       }
+      
       http_response_code($e->getCode());
       $response = array("success" => false, "error_message" => $e->getMessage());
       echo json_encode($response);
@@ -181,12 +185,13 @@ class EpisodeController extends BaseController
     } catch (Exception $e) {
       if ($e->getCode() == ResponseHelper::HTTP_STATUS_UNAUTHORIZED) {
         $this->view('layouts/error');
-    }
+        return;
+      }
 
-    http_response_code($e->getCode());
-    $response = array("success" => false, "error_message" => $e->getMessage());
-    echo json_encode($response);
-    return;
+      http_response_code($e->getCode());
+      $response = array("success" => false, "error_message" => $e->getMessage());
+      echo json_encode($response);
+      return;
     }
   }
 };
