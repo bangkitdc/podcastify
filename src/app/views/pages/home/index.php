@@ -9,31 +9,14 @@
       <h2>Podcasts</h2>
       <div class="cards-container">
         <div class="card">
-          <img src="<?= IMAGES_DIR ?>sample-podcast-1.jpg" class="card-img" />
-          <p class="card-name">Teman Tidur</p>
-          <p class="card-description">Dera Firmansyah</p>
+        <div class="card-img-placeholder">
+            <img src="" alt="podcastImage" class="card-img">
         </div>
-        <div class="card">
-          <img src="<?= IMAGES_DIR ?>sample-podcast-2.jpg" class="card-img" />
-          <p class="card-name">Close The Door Podcast</p>
-          <p class="card-description">Deddy Corbuzier</p>
-        </div>
-      </div>
-    </div>
-    <div class="episode-list">
-      <h2>Episodes</h2>
-      <div class="cards-container">
-        <div class="card">
-          <img src="<?= IMAGES_DIR ?>sample-podcast-1.jpg" class="card-img" />
-          <p class="card-name">Teman Tidur</p>
-          <p class="card-description">Dera Firmansyah</p>
-        </div>
-        <div class="card">
-          <img src="<?= IMAGES_DIR ?>sample-podcast-2.jpg" class="card-img" />
-          <p class="card-name">Close The Door Podcast</p>
-          <p class="card-description">Deddy Corbuzier</p>
+          <p class="card-name"></p>
+          <p class="card-description"></p>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script src="<?= JS_DIR ?>home/home.js"></script>
