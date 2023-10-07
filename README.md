@@ -87,6 +87,20 @@ Podcastify is built using the following technologies:
     <img src="readme/responsive/podcast/mobile_edit.png" width=150>
     <p align="center"><em>Podcast Page</em></p>
     <br/>
+    <img src="readme/responsive/episode/laptop_list.png" width=350>
+    <img src="readme/responsive/episode/ipad_list.png" width=250>
+    <img src="readme/responsive/episode/iphone_list.png" width=150>
+    <img src="readme/responsive/episode/laptop_detail.png" width=350>
+    <img src="readme/responsive/episode/ipad_detail.png" width=250>
+    <img src="readme/responsive/episode/iphone_detail.png" width=150>
+    <img src="readme/responsive/episode/laptop_add.png" width=350>
+    <img src="readme/responsive/episode/ipad_add.png" width=250>
+    <img src="readme/responsive/episode/iphone_add.png" width=150>
+    <img src="readme/responsive/episode/laptop_edit.png" width=350>
+    <img src="readme/responsive/episode/ipad_edit.png" width=250>
+    <img src="readme/responsive/episode/iphone_edit.png" width=150>
+    <p align="center"><em>Episode Page</em></p>
+    <br/>
     <img src="readme/responsive/error/laptop.png" width=350>
     <img src="readme/responsive/error/tablet.png" width=250>
     <img src="readme/responsive/error/mobile.png" width=150>
@@ -113,6 +127,12 @@ Podcastify is built using the following technologies:
     <img src="readme/lighthouse/podcast/podcast_edit.png" width=350>
     <img src="readme/lighthouse/podcast/podcast_add.png" width=350>
     <p align="center"><em>Podcast Page</em></p>
+    <br/>
+    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_add.png" width=350>
+    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_detail.png" width=350>
+    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_edit.png" width=350>
+    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_list.png" width=350>
+    <p align="center"><em>Episode Page</em></p>
     <br/>
     <img src="readme/lighthouse/error/error.jpg" width=350>
     <p align="center"><em>Error Page</em></p>
