@@ -189,4 +189,16 @@ class EpisodeController extends BaseController
     return;
     }
   }
+
+  public function validate($totalPlayed) {
+    if (Middleware::isLoggedIn() || $totalPlayed <= 3) {
+        $response = array("success" => true);
+        echo json_encode($response);
+        return;
+    }
+
+    $response = array("success" => false);
+    echo json_encode($response);
+    return;
+  }
 };
