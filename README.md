@@ -40,13 +40,13 @@ Podcastify is built using the following technologies:
 
 | 13521055                            | 13521072               | 13521102                   |
 | ----------------------------------- | :--------------------: | -------------------------- |
-| Setup Docker, DB, and Structure     |                        |                            |
-| Migration                           |                        |                            |
-| Login, Register, Logout             |                        |                            |
-| CRUD User                           |                        |                            |
-| Profile                             |                        |                            |
-| Change Password                     |                        |                            |
-| Home, Routing, Error Handling       |                        |                            |
+| Setup Docker, DB, and Structure     |                        | Database Entity Design     |
+| Migration                           |                        | CRUD Podcast               |
+| Login, Register, Logout             |                        | Pagination                 |
+| CRUD User                           |                        | Search Bar                 |
+| Profile                             |                        | File Uploader              |
+| Change Password                     |                        | Home Content               |
+| Home, Routing, Error Handling       |                        | Guest Role Limit           |
 | Middleware and Helpers              |                        |                            |
 | Storage                             |                        |                            |
 
@@ -54,11 +54,11 @@ Podcastify is built using the following technologies:
 
 | 13521055                            | 13521072               | 13521102                   |
 | ----------------------------------- | :--------------------: | -------------------------- |
-| Layouts                             |                        |                            |
-| Components                          |                        |                            |
-| Input Validation                    |                        |                            |
-| Login and Register Page             |                        |                            |
-| User List Page                      |                        |                            |
+| Layouts                             |                        | Components                 |
+| Components                          |                        | Home Page Load             |
+| Input Validation                    |                        | Podcast CRUD Page          |
+| Login and Register Page             |                        | Podcast List Page          |
+| User List Page                      |                        | Responsiveness             |
 | Profile Page                        |                        |                            |
 | Error Page                          |                        |                            |
 | Navbars and Home Page               |                        |                            |
