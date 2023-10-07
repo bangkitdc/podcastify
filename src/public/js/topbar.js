@@ -15,3 +15,11 @@ document.getElementById("dropdown-btn").addEventListener("click", function () {
   document.querySelector("#dropdown-topbar").classList.toggle("active");
   document.querySelector(".arrow-icon").classList.toggle("up");
 });
+
+document.getElementById("burger-btn").addEventListener("click", function () {
+  document.querySelector("#show-more").classList.add("active");
+})
+
+document.getElementById("close-btn").addEventListener("click", function () {
+  document.querySelector("#show-more").classList.remove("active");
+})

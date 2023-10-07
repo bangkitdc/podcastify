@@ -2,15 +2,81 @@
 
 echo '<link rel="stylesheet" href="' . CSS_DIR .'navbars/topbar.css">';
 
+
+// <div class="btn-flex">
+//       <button class="btn-topbar">
+//         <img src="' . ICONS_DIR . 'left-arrow.svg" />
+//       </button>
+//       <button class="btn-topbar">
+//         <img src="' . ICONS_DIR . 'right-arrow.svg" />
+//       </button>
+//     </div>
 echo '
   <div class="topbar">
     <div class="btn-flex">
-      <button class="btn-topbar">
-        <img src="' . ICONS_DIR . 'left-arrow.svg" />
+      <button id="burger-btn" class="burger-btn">
+        <img src="' . ICONS_DIR . 'burger.svg" alt="Show More">
       </button>
-      <button class="btn-topbar">
-        <img src="' . ICONS_DIR . 'right-arrow.svg" />
-      </button>
+    </div>
+    <div id="show-more" class="show-more">
+      <div class="left-menu" aria-labelledby="show-more-btn">
+        <div id="close-btn" class="close-btn" onclick="">
+          <img src="' . ICONS_DIR . 'close.svg" alt="Close Button">
+        </div>
+        <ul class="list">
+          <li>
+            <button onclick="window.location.href = \'/home\'">
+              <img src="' . ICONS_DIR . 'home-active.svg" alt="Home" />
+              Home
+            </button>
+          </li>
+          <li>
+            <button onclick="window.location.href = \'/podcast\'">
+              <img src="' . ICONS_DIR . 'search-inactive.svg" alt="Search" />
+              Search
+            </button>
+          </li>
+          <li>
+            <button onclick="window.location.href = \'/podcast\'">
+              <img src="' . ICONS_DIR . 'podcast.svg" alt="Podcast" />
+              Podcast
+            </button>
+          </li>
+          <li>
+            <button onclick="window.location.href = \'/episode\'">
+              <img src="' . ICONS_DIR . 'episode.svg" alt="Episode" />
+              Episode
+            </button>
+          </li>
+  ';
+
+if (Middleware::isAdmin()) {
+  echo
+  '
+          <li>
+            <button onclick="window.location.href = \'/podcast/add\'">
+              <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Podcast" />
+              Add Podcast
+            </button>
+          </li>
+          <li>
+            <button onclick="window.location.href = \'/episode/add\'">
+              <img src="' . ICONS_DIR . 'add-circle.svg" alt="Add Episode" />
+              Add Episode
+            </button>
+          </li>
+          <li>
+            <button onclick="window.location.href = \'/user\'">
+              <img src="' . ICONS_DIR . 'user.svg" alt="Users List" />
+              Users List
+            </button>
+          </li>
+  ';
+}
+
+echo '
+        </ul>
+      </div>
     </div>
     <div class="btn-flex">
       <button id="dropdown-btn" class="dropdown-btn">
