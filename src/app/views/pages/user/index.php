@@ -1,4 +1,5 @@
 <head>
+  <title>Podcastify | Users</title>
   <link rel="stylesheet" href="<?= CSS_DIR ?>base_components/base_tables.css">
   <link rel="stylesheet" href="<?= CSS_DIR ?>user/list.css">
 </head>
@@ -11,18 +12,18 @@
 
   <div id="user-table">
     <?php
-      require_once COMPONENTS_PRIVATES_DIR . 'user/tables.php';
+    require_once COMPONENTS_PRIVATES_DIR . 'user/tables.php';
 
-      $users = $data['users'];
-      $currentPage = $data['currentPage'];
-      renderUserTable($data['users'], $data['currentPage']);
+    $users = $data['users'];
+    $currentPage = $data['currentPage'];
+    renderUserTable($data['users'], $data['currentPage']);
     ?>
   </div>
 
   <?php
-    require_once COMPONENTS_SHARES_DIR . 'modals/updateModal.php';
+  require_once COMPONENTS_SHARES_DIR . 'modals/updateModal.php';
 
-    echoUpdateModalTop("userModalUpdate", "User status");
+  echoUpdateModalTop("userModalUpdate", "User status");
   ?>
 
   <form method="" class="modal-body" id="userModalUpdate-form">
@@ -40,8 +41,8 @@
   </form>
 
   <?php
-    $description = "By proceeding, you agree to change Podcastify users's status. Please make sure you have the rights.";
-    echoUpdateModalBottom($description);
+  $description = "By proceeding, you agree to change Podcastify users's status. Please make sure you have the rights.";
+  echoUpdateModalBottom($description);
   ?>
 
   <div class="pagination-wrapper">
