@@ -128,10 +128,10 @@ Podcastify is built using the following technologies:
     <img src="readme/lighthouse/podcast/podcast_add.png" width=350>
     <p align="center"><em>Podcast Page</em></p>
     <br/>
-    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_add.png" width=350>
-    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_detail.png" width=350>
-    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_edit.png" width=350>
-    <img src="/Users/irsyadnb/Downloads/ITB Jaya/SMT 5/WBD/podcastify/readme/lighthouse/episode/episode_list.png" width=350>
+    <img src="readme/lighthouse/episode/episode_add.png" width=350>
+    <img src="readme/lighthouse/episode/episode_detail.png" width=350>
+    <img src="readme/lighthouse/episode/episode_edit.png" width=350>
+    <img src="readme/lighthouse/episode/episode_list.png" width=350>
     <p align="center"><em>Episode Page</em></p>
     <br/>
     <img src="readme/lighthouse/error/error.jpg" width=350>
