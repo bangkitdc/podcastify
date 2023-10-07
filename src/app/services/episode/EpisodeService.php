@@ -21,6 +21,10 @@ class EpisodeService {
     return $episodes;
   }
 
+  public function getTotalEpisode() {
+    return $this->episode_model->getTotalRows();
+  }
+
   public function getEpisodeById($id) {
     $episode_data = $this->episode_model->findById($id);
 

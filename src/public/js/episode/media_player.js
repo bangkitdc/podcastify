@@ -109,6 +109,11 @@ audioPlayer.addEventListener("timeupdate", function () {
   }
 })
 
+audioPlayer.addEventListener("error", function (e) {
+  console.error("Error loading audio:", e.message);
+  showNotificationDanger("No Audio File Found.");
+})
+
 progressSlider.addEventListener("input", function () {
   const seekTime = (progressSlider.value / 100) * audioPlayer.duration;
   audioPlayer.currentTime = seekTime;

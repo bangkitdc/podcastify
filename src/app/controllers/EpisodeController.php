@@ -28,12 +28,12 @@ class EpisodeController extends BaseController
           $data['episodes'] = [];
           $data['episode'] = [''];
 
-          $total_episodes = $this->episode_service->getAllEpisode();
+          $total_episodes = $this->episode_service->getTotalEpisode();
 
-          $data['episodes'] = $this->episode_service->getAllEpisodeCard(1, 2);
+          $data['episodes'] = $this->episode_service->getAllEpisodeCard(1, 10);
 
           $data['currentPage'] = 1;
-          $data['totalPages'] = ceil(count($total_episodes) / 2);
+          $data['totalPages'] = ceil($total_episodes / 10);
 
           if (isset($_GET['edit'])) { // go to edit page (?edit)
             Middleware::checkIsAdmin();
@@ -44,7 +44,7 @@ class EpisodeController extends BaseController
 
           if (isset($_GET['page'])) {
             $data['currentPage'] = $_GET['page'];
-            $episodes = $this->episode_service->getAllEpisodeCard($data['currentPage'], 2);
+            $episodes = $this->episode_service->getAllEpisodeCard($data['currentPage'], 10);
             $data['episodes'] = $episodes;
 
             $this->view("pages/episode/index", $data);
@@ -71,10 +71,23 @@ class EpisodeController extends BaseController
 
           $this->episode_service->updateEpisode($episode_id, $title, $description, $image_url, $audio_url);
 
+          $response = array("success" => true, "redirect_url" => "/episode/$id", "status_message" => "Changes Saved.");
+          http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+          header('Content-Type: application/json');
+
+          echo json_encode($response);
           break;
         case 'DELETE':
           Middleware::checkIsAdmin();
           $this->episode_service->deleteEpisode($id);
+
+          $response = array("success" => true, "redirect_url" => "/episode", "status_message" => "Episode Successfully Deleted.");
+          http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+          header('Content-Type: application/json');
+
+          echo json_encode($response);
           break;
 
         default:
@@ -115,10 +128,17 @@ class EpisodeController extends BaseController
           // var_dump($podcast_id);
           $title = $_POST['episode-title-input'];
           $description = $_POST['episode-description-input'];
-          $image_file = $_POST['preview-poster-filename'] ?? '';
+          $image_file = $_POST['preview-poster-filename'] ? $_POST['preview-poster-filename'] : null;
           $audio_file = $_POST['audio-filename'] ?? '';
 
           $this->episode_service->addEpisode($podcast_id, 1, $title, $description, 60, $image_file, $audio_file);
+
+          $response = array("success" => true, "redirect_url" => "/episode", "status_message" => "Episode Successfully Added.");
+          http_response_code(ResponseHelper::HTTP_STATUS_OK);
+
+          header('Content-Type: application/json');
+
+          echo json_encode($response);
           break;
 
         default:

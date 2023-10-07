@@ -16,7 +16,7 @@ class Storage
 
     private function doesFileExist($fileName)
     {
-        return file_exists($this->storageDir . $fileName);
+        return file_exists($this->storageDir . $fileName) && is_file($this->storageDir . $fileName);
     }
 
     public static function getFileUrl($PATH, $filename) {

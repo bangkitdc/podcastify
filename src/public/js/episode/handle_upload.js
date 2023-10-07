@@ -19,7 +19,6 @@ const createEpisode = (formData) => {
 
 const updateEpisode = (json, episodeId) => {
   let xhr = new XMLHttpRequest();
-  console.log(EPISODE_BASE_URL + episodeId + "?edit=true");
   xhr.open("PATCH", EPISODE_BASE_URL + "/" + episodeId + "?edit=true", true);
   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xhr.send(json);
@@ -121,8 +120,12 @@ handleFormSubmit("add-episode-form", function () {
     let imgUrl = "/upload?type=image";
     let fileField = document.getElementById("poster-file-upload");
     let imgFormData = new FormData();
-    imgFormData.append("filename", fileField.files[0].name);
-    imgFormData.append("data", fileField.files[0]);
+    if(fileField.files[0]){
+      imgFormData.append("filename", fileField.files[0].name);
+      imgFormData.append("data", fileField.files[0]);
+    } else{
+      imgFormData.append("data", null);
+    }
 
     try {
       let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
@@ -144,8 +147,19 @@ handleFormSubmit("add-episode-form", function () {
             try {
               let xhr = createEpisode(formData);
               xhr.onload = () => {
+
+                const response = JSON.parse(xhr.responseText);
+                
                 if (xhr.status === 200) {
-                  window.location.href = "/episode";
+                  // window.location.href = "/episode";
+                  if (response.success) {
+                    showNotificationSuccess(response.status_message);
+                    setTimeout(() => {
+                      location.replace(response.redirect_url);
+                    }, 3000);
+                  } else {
+                    showNotificationDanger(response.status_message);
+                  }
                 } else {
                   console.error("Request failed with status:", xhr.status);
                 }
