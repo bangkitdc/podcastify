@@ -1,5 +1,5 @@
 const audioPlayer = document.getElementById("audio-player");
-const progressSlider = document.getElementById("range");
+const progressSlider = document.querySelectorAll("#range");
 const audioPlayerButton = document.getElementById("play-btn");
 const mediaCover = document.getElementById("media-cover");
 const currentTimeDisplay = document.getElementById("slider-current-time");
@@ -11,6 +11,8 @@ const muteButtonImg = document.getElementById("mute-button-img");
 let storedTime = 0;
 audioPlayer.volume = 1;
 let isCover = false;
+const sliderSmall = progressSlider[0];
+const sliderBig = progressSlider[1];
 
 const addCover = (divElmt) => {
   let poster = document.getElementById("episode-detail-head-image");
@@ -114,7 +116,8 @@ audioPlayer.addEventListener("timeupdate", function () {
 
   if (!isNaN(duration)) {
     const progress = (currentTime / duration) * 100;
-    progressSlider.value = progress;
+    sliderSmall.value = progress;
+    sliderBig.value = progress;
     totalTimeDisplay.textContent = totalTimeFormatted;
   }
   storedTime = currentTime;
@@ -136,8 +139,13 @@ audioPlayer.addEventListener("error", function (e) {
   showNotificationDanger("No Audio File Found.");
 });
 
-progressSlider.addEventListener("input", function () {
-  const seekTime = (progressSlider.value / 100) * audioPlayer.duration;
+sliderSmall.addEventListener("input", function () {
+  const seekTime = (sliderSmall.value / 100) * audioPlayer.duration;
+  audioPlayer.currentTime = seekTime;
+});
+
+sliderBig.addEventListener("input", function () {
+  const seekTime = (sliderBig.value / 100) * audioPlayer.duration;
   audioPlayer.currentTime = seekTime;
 });
 

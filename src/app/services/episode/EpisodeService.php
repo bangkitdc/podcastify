@@ -4,9 +4,11 @@ require_once BASE_URL . '/src/app/models/Episode.php';
 
 class EpisodeService {
   private $episode_model;
+  private $podcast_model;
 
   public function __construct() {
     $this->episode_model = new Episode();
+    $this->podcast_model = new Podcast();
   }
 
   public function getAllEpisode() {
@@ -73,8 +75,9 @@ class EpisodeService {
     return $episode_detail;
   }
 
-  public function addEpisode($podcast_id, $category_id, $title, $description, $duration, $image_url, $audio_url) {
-    $this->episode_model->createEpisode($podcast_id, $category_id, $title, $description, $duration, $image_url, $audio_url);
+  public function addEpisode($podcast_title, $category_id, $title, $description, $duration, $image_url, $audio_url) {
+    $id = $this->podcast_model->getPodcastIdByTitle($podcast_title);
+    $this->episode_model->createEpisode($id, $category_id, $title, $description, $duration, $image_url, $audio_url);
   }
 
   public function updateEpisode($episode_id, $title, $description, $image_url, $audio_url) {

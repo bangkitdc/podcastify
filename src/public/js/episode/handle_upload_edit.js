@@ -157,11 +157,17 @@ handleFormSubmit("edit-episode-form", function () {
         try {
           let xhrImg = uploadEditedEpsFile(imgUrl, true, imgFormData);
           xhrImg.onload = () => {
-            formData.append(
-              "edit-preview-poster-filename",
-              xhrImg.responseText
-            );
-            resolve();
+            const response = JSON.parse(xhrImg.responseText);
+
+            if(xhrImg.status === 200) {
+              formData.append(
+                "edit-preview-poster-filename",
+                xhrImg.responseText
+              );
+              resolve();
+            } else {
+              showNotificationDanger(response.error_message);
+            }
           };
           xhrImg.onerror = reject;
         } catch (error) {
@@ -184,8 +190,14 @@ handleFormSubmit("edit-episode-form", function () {
         try {
           let xhrAudio = uploadEditedEpsFile(audioUrl, true, audioFormData);
           xhrAudio.onload = () => {
-            formData.append("edit-audio-filename", xhrAudio.responseText);
-            resolve();
+            const response = JSON.parse(xhrAudio.responseText);
+            console.log(xhrAudio.responseText);
+            if (xhrAudio.status === 200) {
+              formData.append("edit-audio-filename", xhrAudio.responseText);
+              resolve();
+            } else {
+              showNotificationDanger(response.error_message);
+            }
           };
           xhrAudio.onerror = reject;
         } catch (error) {
