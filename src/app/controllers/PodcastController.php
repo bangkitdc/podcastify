@@ -37,6 +37,7 @@ class PodcastController extends BaseController
                     // If it"s not an AJAX request, include the full HTML structure
                     $this->view("layouts/default", $data);
                 }
+                http_response_code(ResponseHelper::HTTP_STATUS_OK);
                 return;
 
             default:
@@ -57,6 +58,7 @@ class PodcastController extends BaseController
                     $data["category"] = $this->category_service->getCategoryNameById($data["podcast"]->category_id);
 
                     $this->view("layouts/default", $data);
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     return;
 
                 default:
@@ -81,6 +83,7 @@ class PodcastController extends BaseController
 
                     $data["episodes"] = $this->podcast_service->getEpisodesByPodcastId($id, PodcastController::MAX_EPS_PER_PODCAST_DETAIL, $page);
 
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     return episodeList($data["episodes"]);
 
                 default:
@@ -106,6 +109,7 @@ class PodcastController extends BaseController
                     $data["is_ajax"] = true;
 
                     $this->view('pages/podcast/index', $data);
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     return;
 
                 default:
@@ -150,7 +154,8 @@ class PodcastController extends BaseController
                     $data['is_ajax'] = true;
 
                     $this->view('pages/podcast/index', $data);
-                    return ResponseHelper::HTTP_STATUS_OK;
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                    return;
 
                 default:
                     ResponseHelper::responseNotAllowedMethod();
@@ -179,12 +184,13 @@ class PodcastController extends BaseController
                     $data["podcast_category"] = $this->category_service->getCategoryNameById($data["podcast"]->category_id);
 
                     $this->view("layouts/default", $data);
-                    return ResponseHelper::HTTP_STATUS_OK;
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                    return;
 
                 case "PATCH":
                     $data = json_decode(file_get_contents('php://input'), true);
 
-                    $title = strtoupper(filter_var($data['podcast-name-input'], FILTER_SANITIZE_STRING));
+                    $title = filter_var($data['podcast-name-input'], FILTER_SANITIZE_STRING);
                     $creator_name = filter_var($data['podcast-creator-input'], FILTER_SANITIZE_STRING);
                     $description = filter_var($data['podcast-desc-input'], FILTER_SANITIZE_STRING);
                     $category_name = filter_var($data['podcast-category-selection'], FILTER_SANITIZE_STRING);
@@ -198,10 +204,12 @@ class PodcastController extends BaseController
                     }
 
                     $this->podcast_service->updatePodcast($id, $title, $description, $creator_name, $image_url, $category_id);
-                    return ResponseHelper::HTTP_STATUS_OK;
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                    return;
 
                 case "DELETE":
                     $this->podcast_service->deletePodcast($id);
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     return;
 
                 default:
@@ -230,10 +238,11 @@ class PodcastController extends BaseController
                     $data["type"] = "create";
                     $data["categories"] = $this->category_service->getAllCategoryNames();
                     $this->view("layouts/default", $data);
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     break;
 
                 case "POST":
-                    $title = strtoupper(filter_var($_POST['podcast-name-input'], FILTER_SANITIZE_STRING));
+                    $title = filter_var($_POST['podcast-name-input'], FILTER_SANITIZE_STRING);
                     $creator_name = filter_var($_POST['podcast-creator-input'], FILTER_SANITIZE_STRING);
                     $description = filter_var($_POST['podcast-desc-input'], FILTER_SANITIZE_STRING);
                     $image_url = filter_var($_POST['preview-image-filename'], FILTER_SANITIZE_STRING);
@@ -242,6 +251,7 @@ class PodcastController extends BaseController
                     $category_id = $this->category_service->getCategoryIdByName($category_name);
 
                     $this->podcast_service->createPodcast($title, $description, $creator_name, $image_url, $category_id);
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     break;
 
                 default:
@@ -264,7 +274,7 @@ class PodcastController extends BaseController
     public function random($limit) {
         try {
             $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
-
+            http_response_code(ResponseHelper::HTTP_STATUS_OK);
             return $this->podcast_service->getRandomPodcasts($limit);
         } catch (Exception $e) {
             http_response_code($e->getCode());
@@ -282,6 +292,7 @@ class PodcastController extends BaseController
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "POST":
                     $this->upload_service->upload("image");
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     return;
 
                 default:
