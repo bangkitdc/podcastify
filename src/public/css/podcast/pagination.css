@@ -10,10 +10,14 @@
   cursor: pointer;
   margin-top: 10px;
 
+  #eps-list-start,
   #eps-list-prev,
   #eps-list-next,
+  #eps-list-end,
+  #pod-list-start,
   #pod-list-prev,
-  #pod-list-next {
+  #pod-list-next,
+  #pod-list-end {
     align-items: center;
     background-color: black;
     opacity: 0.7;

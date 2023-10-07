@@ -1,5 +1,6 @@
 <head>
   <title>Podcastify | Podcasts</title>
+  <meta name="description" content="Find your favorites podcast.">
   <link rel="stylesheet" href="<?= CSS_DIR ?>podcast/podcast.css">
 </head>
 <div id="template">
@@ -28,7 +29,7 @@
             <div class="search-bar-container">
                 <div class="search-bar">
                     <img src="'. ICONS_DIR . 'search-inactive.svg" alt="search_icon" />
-                    <input type="text" class="search-bar-input" id="search-bar" placeholder="Search for podcast..." autocomplete="off" />
+                    <input type="text" class="search-bar-input" id="search-bar" placeholder="Search for podcast..." autocomplete="off" aria-label="Search for podcast" />
                     <button class="clear-search-bar" onclick="clearSearchBar()">
                         <img src="'. ICONS_DIR . 'clear_white.svg" alt="clear_icon" />
                     </button>
