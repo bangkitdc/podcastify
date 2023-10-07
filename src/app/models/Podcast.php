@@ -21,7 +21,7 @@ class Podcast {
 
         $result = $this->db->fetchAll();
         if (!$result) {
-            throw new Exception("No podcast in database.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
+            throw new Exception("No podcast in database", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
         return $result;
     }
@@ -34,7 +34,7 @@ class Podcast {
 
         $result = $this->db->fetch();
         if (!$result) {
-            throw new Exception("Podcast with ID $podcast_id not found.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
+            throw new Exception("Podcast with ID $podcast_id not found", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
         return $result;
     }
@@ -57,7 +57,7 @@ class Podcast {
         $result = $this->db->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("No podcasts found for the given page.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
+            throw new Exception("No podcasts found for the given page", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
 
         return $result;
@@ -71,7 +71,7 @@ class Podcast {
         $result = $this->db->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("No creator found.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
+            throw new Exception("No creator found", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
 
         return $result;
@@ -102,7 +102,7 @@ class Podcast {
         $this->db->execute();
 
         if ($this->db->rowCount() == 0) {
-            throw new Exception("Failed to create podcast.", 500);
+            throw new Exception("Failed to create podcast", 500);
         }
     }
 
@@ -119,7 +119,7 @@ class Podcast {
         $this->db->execute();
 
         if ($this->db->rowCount() == 0) {
-            throw new Exception("Podcast with ID $podcast_id not found.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
+            throw new Exception("Podcast with ID $podcast_id not found", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
     }
 
@@ -252,7 +252,7 @@ class Podcast {
         $result = $this->db->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("No podcast in database.", ResponseHelper::HTTP_STATUS_NOT_FOUND);
+            throw new Exception("No podcast in database", ResponseHelper::HTTP_STATUS_NOT_FOUND);
         }
 
         return $result;
