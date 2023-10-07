@@ -21,5 +21,5 @@ function baseButton($label, $id = "", $type = "default", $is_disabled = false, $
     }
     $disable_status = $is_disabled ? "disabled" : "";
     $submit_status = $type == "submit" ? "submit" : "button";
-    echo "<button id=\"$id\" class=\"$class\" $disable_status type=\"$submit_status\">$label</button>";
+    echo "<button id=\"$id\" name=\"$id\" class=\"$class\" $disable_status type=\"$submit_status\">$label</button>";
 }

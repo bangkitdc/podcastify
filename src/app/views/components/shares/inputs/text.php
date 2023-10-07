@@ -7,7 +7,7 @@ function baseInputText($placeholder, $value, $id = "", $is_required = true, $cla
     $required_status = $is_required ? 'required' : '';
     echo
     '
-        <input type="text" placeholder="'. $placeholder .'" value="' . $value . '" class="base-input ' . $class . '" id="' . $id . '"' . $required_status . 'name="' . $id . '" />
+        <input type="text" placeholder="'. $placeholder .'" value="' . $value . '" class="base-input ' . $class . '" id="' . $id . '"' . $required_status . 'name="' . $id . '" aria-label="base-input" />
         <div id="' . $id . '-alert" class="alert-hide">
             <img src="' . ICONS_DIR . 'warning.svg" alt="Warning No ' . $id . '" width="14px">
             <p></p>
