@@ -103,4 +103,15 @@ INSERT INTO podcasts (title, description, creator_name, category_id) VALUES
 
 INSERT INTO episodes (podcast_id, category_id, title, description, duration, audio_url) VALUES
     (1, 1, 'KISAH WANITA BERMATA TUJUH!', 'Ada yang LASER!! Ghina Khansa', 3000, ''),
-    (2, 4, 'Jalanin terus, mau sampe kapan?', 'Malam hari ini ada cerita dari Anka (namanya sudah disamarkan) Anka menceritakan hubungan tanpa status yang dijalani dengan sahabat dari mantan pacarnya. Seperti apa ceritanya? Selamat mendengarkan dan selamat tidur!', 1800, '');
+    (2, 4, 'Jalanin terus, mau sampe kapan?', 'Malam hari ini ada cerita dari Anka (namanya sudah disamarkan) Anka menceritakan hubungan tanpa status yang dijalani dengan sahabat dari mantan pacarnya. Seperti apa ceritanya? Selamat mendengarkan dan selamat tidur!', 1800, ''),
+    (3, 1, 'Zeppelin', 'Ledding a zepplin could be dangerous', 60, ''), 
+    (7, 1, 'Crying', 'Crying out loud is the best way to relief stress', 60, ''), 
+    (8, 1, 'Radio or Head', 'Radiohead it is!', 6000, ''), 
+    (6, 1, 'Daily Dose', 'Daily Dose Of Internet!', 60, ''), 
+    (7, 1, 'Serial The Killer', 'Jealousy, turn in things into ...', 1260, ''), 
+    (10, 1, '8EH? BEH?', 'Anything', 6060, ''), 
+    (5, 1, 'Dummy Ex Dummy', 'Dummy is for Dummies', 600, ''), 
+    (9, 1, 'Tim the human', 'Tim Ferries is french fries', 60, ''), 
+    (1, 1, 'Ice Cold', 'Is it her? Or him?', 60, ''), 
+    (2, 1, 'Eppy Call', 'Zzzzz Zzzzz Zzzz', 1560, ''), 
+    (10, 1, 'Freakaholics', 'Holiicann', 4560, '');
