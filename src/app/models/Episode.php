@@ -39,7 +39,7 @@ class Episode {
   }
 
   public function findAllEpisodeCard($page = 1, $limit = 10) {
-    $query = "SELECT episodes.episode_id, episodes.title, podcasts.creator_name, episodes.duration, episodes.image_url, episodes.created_at FROM episodes, podcasts WHERE episodes.podcast_id = podcasts.podcast_id LIMIT $limit OFFSET :offset";
+    $query = "SELECT episodes.episode_id, podcasts.title AS podcast_title, episodes.title, podcasts.creator_name, episodes.duration, episodes.image_url, episodes.created_at FROM episodes, podcasts WHERE episodes.podcast_id = podcasts.podcast_id LIMIT $limit OFFSET :offset";
     $this->db->query($query);
 
     $offset = ($page - 1) * $limit;
@@ -50,7 +50,7 @@ class Episode {
   }
 
   public function findByIdEpisodeDetail($episode_id) {
-    $query = "SELECT episodes.episode_id, podcasts.podcast_id, episodes.category_id, episodes.image_url, episodes.title, episodes.duration, episodes.created_at, episodes.description, podcasts.image_url AS creator_img, podcasts.creator_name, episodes.audio_url FROM episodes, podcasts WHERE episodes.podcast_id = podcasts.podcast_id and episode_id = $episode_id";
+    $query = "SELECT episodes.episode_id, podcasts.podcast_id, podcasts.title AS podcast_title, episodes.category_id, episodes.image_url, episodes.title, episodes.duration, episodes.created_at, episodes.description, podcasts.image_url AS creator_img, podcasts.creator_name, episodes.audio_url FROM episodes, podcasts WHERE episodes.podcast_id = podcasts.podcast_id and episode_id = $episode_id";
     $this->db->query($query);
     $result = $this->db->fetchAll();
     return $result;

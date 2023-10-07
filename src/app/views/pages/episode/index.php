@@ -15,9 +15,9 @@
       foreach ($data['episodes'] as $episode) {
         $id = $episode ? $episode->episode_id : '';
         $title = $episode ? $episode->title : '';
-        $creator = $episode ? $episode->creator_name : '';
+        $creator = $episode ? $episode->podcast_title : '';
         $duration = $episode ? $episode->duration / 60 : '';
-        $image = $episode->image_url ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png";
+        $image = is_file(Storage::EPISODE_IMAGE_PATH . $episode->image_url) ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png";
         $upload_date = $episode->created_at ? formatDate($episode->created_at) : '';
 
         echoTableContent(["num", "img", "title", "creator", "duration", "upload_date"], [$ctr, $image, $title, $creator, $duration . " minutes", $upload_date], "window.location.href='/episode/$id'", "episode-list");
