@@ -40,7 +40,7 @@ function baseContentBox($podcast = null, $is_skeleton = false, $click_evt = "") 
                     echo
                     "
                     <span class=\"podcast-edit-box\" onclick=\"editPodcast($podcast->podcast_id, event)\">
-                        <button class=\"podcast-edit-icon\"><img src=\"". ICONS_DIR . "/edit.svg\" /></button>
+                        <button class=\"podcast-edit-icon\" name=\"edit-icon\" ><img src=\"". ICONS_DIR . "/edit.svg\" alt=\"edit-icon\" /></button>
                         <span class=\"podcast-edit-tooltip\">Edit Podcast</span>
                     </span>
                     ";
