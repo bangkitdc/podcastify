@@ -89,9 +89,18 @@ INSERT INTO users (email, username, password, first_name, last_name, role_id) VA
     ('user14@gmail.com', 'user14', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Olivia', 'Thompson', 2),
     ('user15@gmail.com', 'user15', '$2y$10$zB1TCZSYw3NXIXuu5tu.bO5Pnc7jaZSu/TC62aQ6I42sYM1bD4HJa', 'Christopher', 'Hill', 2);
 
-INSERT INTO podcasts (title, description, creator_name, category_id, total_eps) VALUES
-    ('Close The Door Podcast', '3 2 1 Close the door!', 'Deddy Corbuzier', 1, 9),
-    ('Teman Tidur', 'Mengantarkan kamu ke dunia mimpi.', 'Dera Firmansyah', 4, 3);
+INSERT INTO podcasts (title, description, creator_name, category_id) VALUES
+    ('Close The Door Podcast', '3 2 1 Close the door!', 'Deddy Corbuzier', 1),
+    ('Teman Tidur', 'Mengantarkan kamu ke dunia mimpi.', 'Dera Firmansyah', 4),
+    ('Science Vs', 'The show that pits facts against popular myths and misconceptions.', 'Wondery', 2),
+    ('The Joe Rogan Experience', 'Long-form conversations with celebrities, authors, scientists, and more.', 'Joe Rogan', 3),
+    ('How I Built This', 'Conversations with entrepreneurs, innovators, and business leaders.', 'Guy Raz', 2),
+    ('The Daily', 'A news podcast by The New York Times, covering top stories.', 'The New York Times', 5),
+    ('Serial', 'A true crime podcast that tells one story over multiple episodes.', 'Sarah Koenig', 3),
+    ('Radiolab', 'A journey of mind-bending scientific and philosophical ideas.', 'Jad Abumrad', 2),
+    ('The Tim Ferriss Show', 'Interviews with top performers from various fields.', 'Tim Ferriss', 3),
+    ('Freakonomics Radio', 'Exploring the hidden side of everyday life using economics.', 'Stephen Dubner', 2);
+
 
 INSERT INTO episodes (podcast_id, category_id, title, description, duration, audio_url) VALUES
     (1, 1, 'KISAH WANITA BERMATA TUJUH!', 'Ada yang LASER!! Ghina Khansa', 3000, ''),
