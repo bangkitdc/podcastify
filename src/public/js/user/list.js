@@ -20,32 +20,21 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onload = function () {
+      const response = JSON.parse(xhr.responseText);
       if (xhr.status === 200) {
-        try {
-          const response = JSON.parse(xhr.responseText);
-
-          // TODO: notification
-          if (response.success) {
-            closeModal(modalId, true);
-            updateStatusUser(formData.get("user_id"), formData.get("status"));
-          } else {
-            console.error(response.error_message);
-          }
-        } catch (error) {
-          console.error("Error parsing JSON response:", error);
+        if (response.success) {
+          closeModal(modalId, true);
+          updateStatusUser(formData.get("user_id"), formData.get("status"));
+          showNotificationSuccess(response.status_message);
         }
       } else {
-        console.error("Request failed with status:", xhr.status);
+        showNotificationDanger(response.error_message);
       }
-    };
-
-    xhr.onerror = function () {
-      console.error("Error during XMLHttpRequest");
     };
 
     xhr.send(jsonData);
   } catch (error) {
-    console.error("Error during XMLHttpRequest:", error);
+    showNotificationDanger("Error during XMLHttpRequest: " + error);
   }
 };
 

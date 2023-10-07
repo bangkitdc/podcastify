@@ -1,20 +1,29 @@
-## Panduan Pengerjaan
-Berikut adalah hal yang harus diperhatikan untuk pengumpulan tugas ini:
-1. Buatlah grup pada Gitlab dengan format "IF3110-2023-01-XX", dengan XX adalah nomor kelompok (untuk K1 dan K2) atau kode kelompok (untuk K3).
-2. Tambahkan anggota tim pada grup anda.
-3. **Fork** pada repository ini dengan organisasi yang telah dibuat.
-4. Ubah hak akses repository hasil Fork anda menjadi **private**.
-5. Hal-hal yang harus diperhatikan.
-    * Silakan commit pada repository anda (hasil fork)
-    * Lakukan beberapa commit dengan pesan yang bermakna, contoh: “add register form”, “fix logout bug”, jangan seperti “final”, “benerin dikit”, “fix bug”.
-    * Disarankan untuk tidak melakukan commit dengan perubahan yang besar karena akan mempengaruhi penilaian (contoh: hanya melakukan satu commit kemudian dikumpulkan).
-    * Commit dari setiap anggota tim akan mempengaruhi penilaian.
-    * Jadi, setiap anggota tim harus melakukan commit yang berpengaruh terhadap proses pembuatan aplikasi.
-    * Sebagai panduan bisa mengikuti [semantic commit](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716).
-6. Buatlah file README yang berisi:
-    * Deskripsi aplikasi web
-    * Daftar requirement
-    * Cara instalasi
-    * Cara menjalankan server
-    * Screenshot tampilan aplikasi (tidak perlu semua kasus, minimal 1 per halaman), dan 
-    * Penjelasan mengenai pembagian tugas masing-masing anggota (lihat formatnya pada bagian pembagian tugas).
+# Podcastify - Your Daily Podcast App
+
+|              Name              |   NIM    |
+| :----------------------------: | :------: |
+| Muhammad Bangkit Dwi Cahyono   | 13521055 |
+| Irsyad Nurwidianto Basuki      | 13521072 |
+| Jimly Firdaus                  | 13521102 |
+
+## Functionality
+
+## Tech Stacks
+
+## How to Get Started
+
+## Tasks
+
+## Responsive Layouts & Lighthouse
+<div align="center">
+    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/login/laptop.png" width=350>
+    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/login/tablet.png" width=250>
+    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/login/mobile.png" width=150>
+    <p align="center"><em>Login Page</em></p>
+    </br>
+    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/register/laptop.png" width=350>
+    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/register/tablet.png" width=250>
+    <img src="https://github.com/bangkitdc/podcastify/blob/main/readme/responsive/register/mobile.png" width=150>
+    <p align="center"><em>Sign Up Page</em></p>
+</b>
+</div>

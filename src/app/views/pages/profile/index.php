@@ -109,6 +109,7 @@
 <!-- Override Styles -->
 
 <head>
+  <title>Podcastify | Profile</title>
   <link rel=" stylesheet" href="<?= CSS_DIR ?>user/profile.css">
 </head>
 

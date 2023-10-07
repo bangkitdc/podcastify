@@ -14,7 +14,8 @@ h1 {
   display: flex;
   gap: 1.25rem;
   flex-direction: column;
-  width: var(--xs);
+  width: 80%;
+  max-width: var(--xs);
   margin: 0px auto;
   padding-bottom: 0px;
 }
@@ -59,10 +60,40 @@ h1 {
 }
 
 hr {
-  margin: 3rem 100px;
+  margin: 3rem 10%;
   border-right: none;
   border-bottom: none;
   border-left: none;
   border-image: initial;
   border-top: 1px solid rgb(41, 41, 41);
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+    margin: 0 2rem 2rem;
+    text-align: left;
+  }
+
+  .login-form, .register-form {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 2rem;
+  }
+
+  .form-hyperlink {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .form-hyperlink span,
+  .form-hyperlink a {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0.5rem 0;
+  }
 }

@@ -46,3 +46,33 @@ h2 {
   background-color: var(--clr-text-black);
   border-radius: var(--rounded-lg);
 }
+
+.btn-logo .icon-img {
+  width: 36px;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .content {
+    background: var(--clr-background-base-one);
+    padding: 0;
+  }
+
+  .header {
+    padding: 1.85rem 2rem 1.5rem;
+  }
+
+  .btn-logo .icon-img {
+    width: 24px;
+  }
+
+  .icon {
+    height: 24px;
+  }
+
+  h2 {
+    padding-top: 0;
+    font-weight: 500;
+    font-size: 20px;
+  }
+}

@@ -24,6 +24,7 @@
   font-weight: 500;
   font-size: 15px;
   letter-spacing: 0.025em;
+  text-align: center;
 }
 
 .notification.success {
@@ -34,4 +35,17 @@
 .notification.danger {
   opacity: 1;
   background-color: var(--clr-text-danger);
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 768px) {
+  .notification {
+    width: 90%;
+    top: 8%;
+  }
+
+  .notification-text {
+    font-size: 14px;
+  }
 }
