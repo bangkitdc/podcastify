@@ -141,15 +141,21 @@ handleFormSubmit("create-podcast", function () {
 
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
-            window.location.href = "/podcast";
+            showNotificationSuccess("Successfully created a podcast!");
+
+            setTimeout(() => {
+              window.location.href = "/podcast";
+            }, 3000);
           } else {
             const response = JSON.parse(xhr.responseText);
-            console.error(response.error_message);
+
+            showNotificationDanger(response.error_message);
           }
         };
       } else {
         const response = JSON.parse(xhr.responseText);
-        console.error(response.error_message);
+
+        showNotificationDanger(response.error_message);
       }
     };
   });
@@ -175,10 +181,15 @@ handleFormSubmit("update-form", function () {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          window.location.href = "/podcast";
+          showNotificationSuccess("Successfully updated a podcast!");
+
+          setTimeout(() => {
+            window.location.href = "/podcast";
+          }, 3000);
         } else {
           const response = JSON.parse(xhr.responseText);
-          console.error(response.error_message);
+
+          showNotificationDanger(response.error_message);
         }
       };
     };
@@ -220,7 +231,8 @@ handleFormSubmit("update-form", function () {
           sendPodcastEditPayload(formData);
         } else {
           const response = JSON.parse(xhr.responseText);
-          console.error(response.error_message);
+
+          showNotificationDanger(response.error_message);
         }
       };
     } else {
@@ -239,10 +251,15 @@ if (document.getElementById("delete-podcast")) {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          window.location.href = "/podcast";
+          showNotificationSuccess("Successfully deleted a podcast!");
+
+          setTimeout(() => {
+            window.location.href = "/podcast";
+          }, 3000);
         } else {
           const response = JSON.parse(xhr.responseText);
-          console.error(response.error_message);
+
+          showNotificationDanger(response.error_message);
         }
       };
     });
