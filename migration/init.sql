@@ -101,7 +101,6 @@ INSERT INTO podcasts (title, description, creator_name, category_id) VALUES
     ('The Tim Ferriss Show', 'Interviews with top performers from various fields.', 'Tim Ferriss', 3),
     ('Freakonomics Radio', 'Exploring the hidden side of everyday life using economics.', 'Stephen Dubner', 2);
 
-
 INSERT INTO episodes (podcast_id, category_id, title, description, duration, audio_url) VALUES
     (1, 1, 'KISAH WANITA BERMATA TUJUH!', 'Ada yang LASER!! Ghina Khansa', 3000, ''),
     (2, 4, 'Jalanin terus, mau sampe kapan?', 'Malam hari ini ada cerita dari Anka (namanya sudah disamarkan) Anka menceritakan hubungan tanpa status yang dijalani dengan sahabat dari mantan pacarnya. Seperti apa ceritanya? Selamat mendengarkan dan selamat tidur!', 1800, '');
