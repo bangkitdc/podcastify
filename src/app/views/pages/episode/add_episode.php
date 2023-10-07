@@ -8,6 +8,7 @@
     <?php
 
     require_once VIEWS_DIR . "/components/shares/inputs/text.php";
+    require_once VIEWS_DIR . "/components/shares/inputs/select.php";
     require_once VIEWS_DIR . "/components/shares/upload/baseFileUploader.php";
     require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
     require_once VIEWS_DIR . "/components/shares/modals/baseModal.php";
@@ -21,13 +22,11 @@
 
       <div>
         <p>Select Podcast: </p>
-        <select class="add-episode-form-select" id="dropdown" name="podcast_id">
-          <?php
-          foreach ($data['podcasts'] as $name => $id) {
-            echo "<option value=\"$id\">$name</option>";
-          }
-          ?>
-        </select>
+        <?php 
+        $podcasts = $data['podcasts'];
+        baseSelect($podcasts, '', 'podcast_title');
+        ?>
+
       </div>
 
       <div>
