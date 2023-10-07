@@ -12,8 +12,6 @@ class UserController extends BaseController {
             
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
-                    Middleware::checkIsAdmin();
-
                     if ($userId !== null) {
                         $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
 
@@ -235,7 +233,7 @@ class UserController extends BaseController {
 
                     $authService = new AuthService();
                     $authService->logout();
-                    
+
                     RedirectHelper::redirectHome();
                     break;
                 default:

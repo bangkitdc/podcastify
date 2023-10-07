@@ -29,6 +29,7 @@ services:
       - .env
     volumes:
       - ./mysql:/var/lib/mysql
+      - ./php.ini:/usr/local/etc/php/conf.d/init.ini
       - ./migration/init.sql:/docker-entrypoint-initdb.d/init.sql
   
   podcastify-app-phpmyadmin:

@@ -8,6 +8,7 @@ RUN apt-get update && \
 WORKDIR /var/www/html
 
 COPY ./index.php .
+COPY ./php.ini /usr/local/etc/php/conf.d/init.ini
 COPY ./.htaccess .
 
 RUN a2enmod rewrite

@@ -25,7 +25,7 @@ define("CSS_DIR", "/src/public/css/");
 define("JS_DIR", "/src/public/js/");
 
 // File
-define('MAX_SIZE', 16 * 1024 * 1024); // 16 mb
+define('MAX_SIZE', 8 * 1024 * 1024); // 8 mb
 define('ALLOWED_AUDIOS', [
   'audio/mpeg' => '.mp3',
   'audio/aac' => '.aac',

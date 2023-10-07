@@ -88,11 +88,14 @@ const submitUpdateForm = async (e, elementForm, modalId) => {
 
     xhr.onload = function () {
       const response = JSON.parse(xhr.responseText);
+      console.log(response);
+
       if (xhr.status === 200) {
         if (response.success) {
+          showNotificationSuccess(response.status_message);
+
           closeModal(modalId, true);
           updateProfileUser(formData);
-          showNotificationSuccess(response.status_message);
         }
       } else {
         showNotificationDanger(response.error_message);
@@ -362,8 +365,9 @@ const submitChangePasswordForm = async (e, elementForm, modalId) => {
       const response = JSON.parse(xhr.responseText);
       if (xhr.status === 200) {
         if (response.success) {
-          closeModal(modalId, true);
           showNotificationSuccess(response.status_message);
+
+          closeModal(modalId, true);
         }
       } else {
         showNotificationDanger(response.error_message);
