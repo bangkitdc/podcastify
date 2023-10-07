@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="<?= CSS_DIR ?>episode/episode_card.css">
+  <title>Episode</title> 
 </head>
 <div id="template">
   <div id="episode-list-container" class="episode-list-container">

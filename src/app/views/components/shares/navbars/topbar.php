@@ -82,7 +82,7 @@ echo '
       <button id="dropdown-btn" class="dropdown-btn">
         <img class="profile-img" src="' . IMAGES_DIR . 'avatar-template.png" alt="avatar">
         <p class="text-username">' . (isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest') . '</p>
-        <img src="' . ICONS_DIR . 'down-arrow.svg" class="arrow-icon" />
+        <img alt="topbar-dropdown" src="' . ICONS_DIR . 'down-arrow.svg" class="arrow-icon" />
       </button>
     </div>
     <div id="dropdown-topbar" class="dropdown-container">
