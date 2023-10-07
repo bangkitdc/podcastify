@@ -40,7 +40,7 @@ Podcastify is built using the following technologies:
 
 | 13521055                            | 13521072               | 13521102                   |
 | ----------------------------------- | :--------------------: | -------------------------- |
-| Setup Docker, DB, and Structure     |                        | Database Entity Design     |
+| Setup Docker, DB, and Structure     | CRUD Episode           | Database Entity Design     |
 | Migration                           |                        | CRUD Podcast               |
 | Login, Register, Logout             |                        | Pagination                 |
 | CRUD User                           |                        | Search Bar                 |
@@ -54,11 +54,11 @@ Podcastify is built using the following technologies:
 
 | 13521055                            | 13521072               | 13521102                   |
 | ----------------------------------- | :--------------------: | -------------------------- |
-| Layouts                             |                        | Components                 |
-| Components                          |                        | Home Page Load             |
-| Input Validation                    |                        | Podcast CRUD Page          |
-| Login and Register Page             |                        | Podcast List Page          |
-| User List Page                      |                        | Responsiveness             |
+| Layouts                             | UI Design              | Components                 |
+| Components                          | Episode List Page      | Home Page Load             |
+| Input Validation                    | Episode CURD Page      | Podcast CRUD Page          |
+| Login and Register Page             | Audio Player           | Podcast List Page          |
+| User List Page                      | Responsivenese         | Responsiveness             |
 | Profile Page                        |                        |                            |
 | Error Page                          |                        |                            |
 | Navbars and Home Page               |                        |                            |
