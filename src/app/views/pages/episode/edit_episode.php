@@ -56,7 +56,7 @@
 
       <div class="edit-episode-buttons">
         <?php baseButton('Cancel', 'cancel-change') ?>
-        <?php baseButton("Save Changes", "save-change-epispde", "submit"); ?>
+        <?php baseButton("Save Changes", "save-change-episode", "submit"); ?>
         <?php baseButton("Delete Podcast", "delete-episode", "negative"); ?>
       </div>
 
