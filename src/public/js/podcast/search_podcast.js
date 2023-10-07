@@ -9,7 +9,11 @@ filterBtn.addEventListener("mousedown", () => {
     searchFunctionBox.style.maxHeight = "0px";
     searchFunctionBox.style.overflow = "hidden";
   } else {
-    searchFunctionBox.style.maxHeight = "100px";
+    if (window.innerWidth < 800) {
+      searchFunctionBox.style.maxHeight = "200px";
+    } else {
+      searchFunctionBox.style.maxHeight = "100px";
+    }
     searchFunctionBox.style.overflow = "visible";
   }
 });
