@@ -1,2 +1,4 @@
 .env
 mysql
+!src/storage/.gitkeep
+src/storage/*

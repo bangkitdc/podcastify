@@ -11,15 +11,6 @@ class HomeController extends BaseController
                         $this->view('layouts/error');
                         return;
                     }
-                    
-                    // $search_service = new SearchService();
-                    // if (isset($_GET['page']) and $_GET['page'] > 0) {
-                    //     $page = $_GET['page'];
-                    // } else {
-                    //     $page = 1;
-                    // }
-
-                    // $data = $search_service->search_all_song($page);
 
                     $this->view('layouts/default');
                     return;

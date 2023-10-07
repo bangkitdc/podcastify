@@ -4,9 +4,8 @@ echo '<link rel="stylesheet" href="' . CSS_DIR . 'navbars/media_player.css">';
 
 echo '
   <div class="media-player">
-    <div id="media-cover" class="media-cover">
-      
-    </div>
+    <input id="range" type="range" class="timeline-slider small-screen" min="0" max="100" step="1" value="0"/>
+    <div id="media-cover" class="media-cover"></div>
     <div class="player">
       <div class="player-controls">
       <audio id="audio-player" hidden></audio>
@@ -16,7 +15,7 @@ echo '
       </div>
       <div class="player-timeline">
         <span id="slider-current-time" class="current-time">-:--</span>
-        <input id="range" type="range" class="timeline-slider" min="0" max="100" step="1" value="0"/>
+        <input id="range" type="range" class="timeline-slider large-screen" min="0" max="100" step="1" value="0"/>
         <span id="slider-total-time" class="total-time">-:--</span>
       </div>
     </div>
