@@ -247,7 +247,7 @@ class Podcast {
         $query = "SELECT * FROM podcasts ORDER BY RAND() LIMIT :limit";
 
         $this->db->query($query);
-        $this->db->bind(":limit", $limit);
+        $this->db->bind(":limit", $limit, PDO::PARAM_INT);
 
         $result = $this->db->fetchAll();
 

@@ -274,8 +274,14 @@ class PodcastController extends BaseController
     public function random($limit) {
         try {
             $limit = filter_var($limit, FILTER_SANITIZE_NUMBER_INT);
+            $data = $this->podcast_service->getRandomPodcasts($limit);
+            $response = array("success" => true, "status_message" => "Fetched successfully", "data" => $data);
             http_response_code(ResponseHelper::HTTP_STATUS_OK);
-            return $this->podcast_service->getRandomPodcasts($limit);
+
+            header('Content-Type: application/json');
+
+            echo json_encode($response);
+            return;
         } catch (Exception $e) {
             http_response_code($e->getCode());
             $response = array("success" => false, "error_message" => $e->getMessage());
