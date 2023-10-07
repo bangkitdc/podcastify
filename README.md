@@ -20,7 +20,8 @@ Podcastify is built using the following technologies:
 2. On the root of this project, run the following commands:
 ```bash
     docker build -t tubes-1:latest .
-	docker-compose up -d --build
+    
+    docker-compose up -d --build
 ```
 3. To shut down the app, run
 ```bash
