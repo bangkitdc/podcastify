@@ -56,9 +56,9 @@ Podcastify is built using the following technologies:
 | ----------------------------------- | :--------------------: | -------------------------- |
 | Layouts                             | UI Design              | Components                 |
 | Components                          | Episode List Page      | Home Page Load             |
-| Input Validation                    | Episode CURD Page      | Podcast CRUD Page          |
+| Input Validation                    | Episode CRUD Page      | Podcast CRUD Page          |
 | Login and Register Page             | Audio Player           | Podcast List Page          |
-| User List Page                      | Responsivenese         | Responsiveness             |
+| User List Page                      | Responsiveness         | Responsiveness             |
 | Profile Page                        |                        |                            |
 | Error Page                          |                        |                            |
 | Navbars and Home Page               |                        |                            |
