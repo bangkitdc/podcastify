@@ -105,7 +105,7 @@ handleFormSubmit("edit-episode-form", function () {
       xhr.onload = () => {
 
         const response = JSON.parse(xhr.responseText);
-        
+
         if (xhr.status === 200) {
           // window.location.href = "/episode";
           if (response.success) {
@@ -114,7 +114,7 @@ handleFormSubmit("edit-episode-form", function () {
               location.replace(response.redirect_url);
             }, 3000);
           } else {
-            showNotificationDanger(response.status_message);
+            showNotificationDanger(response.error_message);
           }
         } else {
           console.error("Request failed with status:", xhr.status);
@@ -157,7 +157,6 @@ handleFormSubmit("edit-episode-form", function () {
         try {
           let xhrImg = uploadEditedEpsFile(imgUrl, true, imgFormData);
           xhrImg.onload = () => {
-            const response = JSON.parse(xhrImg.responseText);
 
             if(xhrImg.status === 200) {
               formData.append(
@@ -166,6 +165,7 @@ handleFormSubmit("edit-episode-form", function () {
               );
               resolve();
             } else {
+              const response = JSON.parse(xhrImg.responseText);
               showNotificationDanger(response.error_message);
             }
           };
@@ -190,12 +190,12 @@ handleFormSubmit("edit-episode-form", function () {
         try {
           let xhrAudio = uploadEditedEpsFile(audioUrl, true, audioFormData);
           xhrAudio.onload = () => {
-            const response = JSON.parse(xhrAudio.responseText);
-            console.log(xhrAudio.responseText);
+            
             if (xhrAudio.status === 200) {
               formData.append("edit-audio-filename", xhrAudio.responseText);
               resolve();
             } else {
+              const response = JSON.parse(xhrAudio.responseText);
               showNotificationDanger(response.error_message);
             }
           };

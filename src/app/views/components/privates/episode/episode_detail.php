@@ -9,7 +9,7 @@ function episode_detail($episode = null)
   $upload_date = $episode ? formatDate($episode->created_at) : '';
   $description = $episode ? $episode->description : '';
 
-  $creator_img = $episode ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->creator_img) : '';
+  $creator_img = $episode->podcast_img ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->creator_img) : IMAGES_DIR . "podcast-template.png";
   $podcast_title = $episode ? $episode->podcast_title : '';
   $audio_file = $episode->audio_url ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url) : "/src/public/assets/audio/spotify-ad.mp3";
 
