@@ -1,13 +1,10 @@
 const showNotificationSuccess = (responseMessage) => {
   const notification = document.querySelector("#notification");
+  notification.classList.remove("danger");
   notification.classList.add("success");
 
   const notificationText = document.querySelector("#notification-text");
   notificationText.innerHTML = responseMessage;
-
-  // Set to local storage
-  localStorage.setItem("notificationText", responseMessage);
-  localStorage.setItem("notificationStatus", "success");
 
   setTimeout(() => {
     hideNotification(notification);
@@ -16,6 +13,7 @@ const showNotificationSuccess = (responseMessage) => {
 
 const showNotificationDanger = (responseMessage) => {
   const notification = document.querySelector("#notification");
+  notification.classList.remove("success");
   notification.classList.add("danger");
 
   const notificationText = document.querySelector("#notification-text");

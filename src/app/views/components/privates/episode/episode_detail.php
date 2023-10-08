@@ -41,7 +41,7 @@ function episode_detail($episode = null)
   if (Middleware::isAdmin()) {
     echo "       
         <button class=\"episode-detail-head-edit-button\" onclick=\"showEditEpisode($id)\">
-        <img alt=\"edit-button\" src=\"" . ICONS_DIR . "/edit.svg\" />
+        <img id=\"edit-button-image\" alt=\"edit-button\" src=\"" . ICONS_DIR . "/edit.svg\" />
         </button>";
   }
   echo "

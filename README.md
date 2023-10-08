@@ -36,11 +36,33 @@ Podcastify is built using the following technologies:
 
 ## Tasking
 
-|              Name              |   NIM    | Client Side | Server Side |
-| :----------------------------: | :------: | :---------: | :---------: |
-| Muhammad Bangkit Dwi Cahyono   | 13521055 |             |             |
-| Irsyad Nurwidianto Basuki      | 13521072 |             |             |
-| Jimly Firdaus                  | 13521102 |             |             |
+### Server side
+
+| 13521055                            | 13521072               | 13521102                   |
+| ----------------------------------- | :--------------------: | -------------------------- |
+| Setup Docker, DB, and Structure     | CRUD Episode           | Database Entity Design     |
+| Migration                           |                        | CRUD Podcast               |
+| Login, Register, Logout             |                        | Pagination                 |
+| CRUD User                           |                        | Search Bar                 |
+| Profile                             |                        | File Uploader              |
+| Change Password                     |                        | Home Content               |
+| Home, Routing, Error Handling       |                        | Guest Role Limit           |
+| Middleware and Helpers              |                        |                            |
+| Storage                             |                        |                            |
+
+### Client Side
+
+| 13521055                            | 13521072               | 13521102                   |
+| ----------------------------------- | :--------------------: | -------------------------- |
+| Layouts                             | UI Design              | Components                 |
+| Components                          | Episode List Page      | Home Page Load             |
+| Input Validation                    | Episode CURD Page      | Podcast CRUD Page          |
+| Login and Register Page             | Audio Player           | Podcast List Page          |
+| User List Page                      | Responsivenese         | Responsiveness             |
+| Profile Page                        |                        |                            |
+| Error Page                          |                        |                            |
+| Navbars and Home Page               |                        |                            |
+| Responsiveness                      |                        |                            |
 
 ## Responsive Layouts & Lighthouse
 <div align="center">
@@ -87,6 +109,20 @@ Podcastify is built using the following technologies:
     <img src="readme/responsive/podcast/mobile_edit.png" width=150>
     <p align="center"><em>Podcast Page</em></p>
     <br/>
+    <img src="readme/responsive/episode/laptop_list.png" width=350>
+    <img src="readme/responsive/episode/ipad_list.png" width=250>
+    <img src="readme/responsive/episode/iphone_list.png" width=150>
+    <img src="readme/responsive/episode/laptop_detail.png" width=350>
+    <img src="readme/responsive/episode/ipad_detail.png" width=250>
+    <img src="readme/responsive/episode/iphone_detail.png" width=150>
+    <img src="readme/responsive/episode/laptop_add.png" width=350>
+    <img src="readme/responsive/episode/ipad_add.png" width=250>
+    <img src="readme/responsive/episode/iphone_add.png" width=150>
+    <img src="readme/responsive/episode/laptop_edit.png" width=350>
+    <img src="readme/responsive/episode/ipad_edit.png" width=250>
+    <img src="readme/responsive/episode/iphone_edit.png" width=150>
+    <p align="center"><em>Episode Page</em></p>
+    <br/>
     <img src="readme/responsive/error/laptop.png" width=350>
     <img src="readme/responsive/error/tablet.png" width=250>
     <img src="readme/responsive/error/mobile.png" width=150>
@@ -113,6 +149,12 @@ Podcastify is built using the following technologies:
     <img src="readme/lighthouse/podcast/podcast_edit.png" width=350>
     <img src="readme/lighthouse/podcast/podcast_add.png" width=350>
     <p align="center"><em>Podcast Page</em></p>
+    <br/>
+    <img src="readme/lighthouse/episode/episode_add.png" width=350>
+    <img src="readme/lighthouse/episode/episode_detail.png" width=350>
+    <img src="readme/lighthouse/episode/episode_edit.png" width=350>
+    <img src="readme/lighthouse/episode/episode_list.png" width=350>
+    <p align="center"><em>Episode Page</em></p>
     <br/>
     <img src="readme/lighthouse/error/error.jpg" width=350>
     <p align="center"><em>Error Page</em></p>
