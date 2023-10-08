@@ -23,6 +23,7 @@ define("IMAGES_DIR", "/src/public/assets/images/");
 define("FONTS_DIR", "/src/public/assets/fonts/");
 define("CSS_DIR", "/src/public/css/");
 define("JS_DIR", "/src/public/js/");
+define("ICONS_WEB_DIR", "/src/public/icon/");
 
 // File
 define('MAX_SIZE', 8 * 1024 * 1024); // 8 mb
