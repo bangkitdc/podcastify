@@ -151,7 +151,7 @@ class PodcastController extends BaseController
 
                     list($data['total_rows'], $data['podcasts']) = $this->podcast_service->getPodcastBySearch($q, $sort_method, $sort_key, $filter_names, $filter_categories, $page, PodcastController::MAX_PODCAST_PER_PAGE);
 
-                    $data['is_ajax'] = true;
+                    $data['is_ajax'] = false;
 
                     $this->view('pages/podcast/index', $data);
                     http_response_code(ResponseHelper::HTTP_STATUS_OK);
