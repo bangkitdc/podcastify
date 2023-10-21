@@ -168,7 +168,7 @@ const submitRegisterForm = async (e) => {
     xhr.onload = function () {
       const response = JSON.parse(xhr.responseText);
 
-      if (xhr.status === 200) {
+      if (xhr.status === 201) {
         if (response.success) {
           showNotificationSuccess(response.status_message);
 

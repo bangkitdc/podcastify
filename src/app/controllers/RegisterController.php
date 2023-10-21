@@ -28,7 +28,7 @@ class RegisterController extends BaseController {
 
                     $userService->register($_POST['email'], $_POST['username'], $hashedPassword, $_POST['first_name'], $_POST['last_name']);
 
-                    $response = array("success" => true, "redirect_url" => "/login", "status_message" => "Register Successful.");
+                    $response = array("success" => true, "redirect_url" => "/login", "status_message" => "Register Successful");
 
                     // Set the Content-Type header to indicate JSON
                     header('Content-Type: application/json');
