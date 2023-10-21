@@ -72,7 +72,7 @@ window.onload = () => {
   };
 
   xhrPodcast.onerror = function () {
-    showNotificationDanger("Request failed.");
+    showNotificationDanger("Request failed");
   };
 
   xhrPodcast.send();

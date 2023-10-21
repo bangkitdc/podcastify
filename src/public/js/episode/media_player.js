@@ -136,7 +136,7 @@ audioPlayer.addEventListener("timeupdate", function () {
 
 audioPlayer.addEventListener("error", function (e) {
   console.error("Error loading audio:", e.message);
-  showNotificationDanger("No Audio File Found.");
+  showNotificationDanger("No Audio File Found");
 });
 
 sliderSmall.addEventListener("input", function () {

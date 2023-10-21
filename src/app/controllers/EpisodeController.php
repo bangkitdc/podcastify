@@ -71,7 +71,7 @@ class EpisodeController extends BaseController
 
           $this->episode_service->updateEpisode($episode_id, $title, $description, $image_url, $audio_url);
 
-          $response = array("success" => true, "redirect_url" => "/episode/$id", "status_message" => "Changes Saved.");
+          $response = array("success" => true, "redirect_url" => "/episode/$id", "status_message" => "Changes Saved");
           http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
           header('Content-Type: application/json');
@@ -82,7 +82,7 @@ class EpisodeController extends BaseController
           Middleware::checkIsAdmin();
           $this->episode_service->deleteEpisode($id);
 
-          $response = array("success" => true, "redirect_url" => "/episode", "status_message" => "Episode Successfully Deleted.");
+          $response = array("success" => true, "redirect_url" => "/episode", "status_message" => "Episode Successfully Deleted");
           http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
           header('Content-Type: application/json');
@@ -135,7 +135,7 @@ class EpisodeController extends BaseController
 
           $this->episode_service->addEpisode($podcast_title, 1, $title, $description, 60, $image_file, $audio_file);
 
-          $response = array("success" => true, "redirect_url" => "/episode", "status_message" => "Episode Successfully Added.");
+          $response = array("success" => true, "redirect_url" => "/episode", "status_message" => "Episode Successfully Added");
           http_response_code(ResponseHelper::HTTP_STATUS_OK);
 
           header('Content-Type: application/json');
