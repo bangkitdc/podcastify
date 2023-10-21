@@ -124,13 +124,13 @@ handleFormSubmit("add-episode-form", function () {
       imgFormData.append("filename", fileField.files[0].name);
       imgFormData.append("data", fileField.files[0]);
     } else {
-      imgFormData.append("data", null);
+      imgFormData = null;
     }
 
     try {
       let xhrImg = uploadEpsFile(imgUrl, true, imgFormData);
       xhrImg.onload = () => {
-        const response = JSON.parse(xhrImg.responseText);
+        
         if (xhrImg.status === 200) {
           formData.append("preview-poster-filename", xhrImg.responseText);
 
@@ -144,7 +144,7 @@ handleFormSubmit("add-episode-form", function () {
 
             let xhrAudio = uploadEpsFile(audioUrl, true, audioFormData);
             xhrAudio.onload = () => {
-              const response = JSON.parse(xhrAudio.responseText);
+
               if (xhrAudio.status === 200) {
                 formData.append("audio-filename", xhrAudio.responseText);
 
@@ -160,7 +160,7 @@ handleFormSubmit("add-episode-form", function () {
                           location.replace(response.redirect_url);
                         }, 3000);
                       } else {
-                        showNotificationDanger(response.status_message);
+                        showNotificationDanger(response.error_message);
                       }
                     } else {
                       console.error("Request failed with status:", xhr.status);
@@ -174,6 +174,7 @@ handleFormSubmit("add-episode-form", function () {
                   console.error("Error creating episode:", error);
                 }
               } else {
+                const response = JSON.parse(xhrAudio.responseText);
                 showNotificationDanger(response.error_message);
               }
             };
@@ -181,6 +182,7 @@ handleFormSubmit("add-episode-form", function () {
             console.error("Error uploading audio:", error);
           }
         } else {
+          const response = JSON.parse(xhrImg.responseText);
           showNotificationDanger(response.error_message);
         }
       };
