@@ -1,5 +1,7 @@
 const PODCAST_MANAGE_BASE_URL = "/podcast";
 
+let isSubmittingForm = false;
+
 const uploadPodcastImage = (url, async = true, data = null) => {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", PODCAST_MANAGE_BASE_URL + url, async);
@@ -66,7 +68,9 @@ const handleFormSubmit = (formId, callback) => {
   if (formElement) {
     formElement.addEventListener("submit", function (event) {
       event.preventDefault();
-      callback(this);
+      if (!isSubmittingForm) {
+        callback(this);
+      }
     });
   }
 };
@@ -104,6 +108,9 @@ handleFormSubmit("create-podcast", function () {
 
   // Send form when okay button is clicked
   createModal.addEventListener("okayClicked", () => {
+    if (isSubmittingForm) return;
+    isSubmittingForm = true;
+
     let form = document.getElementById("create-podcast");
     let formData = new FormData(form);
 
@@ -157,6 +164,7 @@ handleFormSubmit("create-podcast", function () {
 
         showNotificationDanger(response.error_message);
       }
+      isSubmittingForm = false;
     };
   });
 });
@@ -167,6 +175,9 @@ handleFormSubmit("update-form", function () {
 
   // Send form when okay button is clicked
   saveChangesModal.addEventListener("okayClicked", () => {
+    if (isSubmittingForm) return;
+    isSubmittingForm = true;
+
     const sendPodcastEditPayload = (payloadForm) => {
       let data = {};
       let podcastId = 0;
@@ -191,6 +202,7 @@ handleFormSubmit("update-form", function () {
 
           showNotificationDanger(response.error_message);
         }
+        isSubmittingForm = false;
       };
     };
 
