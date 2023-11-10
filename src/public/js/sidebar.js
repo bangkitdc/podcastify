@@ -50,6 +50,12 @@ var navItems = [
     imgActive: "/user.svg",
     imgInactive: "/user.svg",
   },
+  {
+    id: "membership-nav",
+    href: "/membership",
+    imgActive: "/membership.svg",
+    imgInactive: "/membership.svg",
+  },
 ];
 
 for (var i = 0; i < navItems.length; i++) {

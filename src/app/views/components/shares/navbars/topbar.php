@@ -2,15 +2,6 @@
 
 echo '<link rel="stylesheet" href="' . CSS_DIR .'navbars/topbar.css">';
 
-
-// <div class="btn-flex">
-//       <button class="btn-topbar">
-//         <img src="' . ICONS_DIR . 'left-arrow.svg" />
-//       </button>
-//       <button class="btn-topbar">
-//         <img src="' . ICONS_DIR . 'right-arrow.svg" />
-//       </button>
-//     </div>
 echo '
   <div class="topbar">
     <div class="btn-flex">
@@ -45,6 +36,12 @@ echo '
           <li>
             <button onclick="window.location.href = \'/episode\'">
               <img src="' . ICONS_DIR . 'episode.svg" alt="Episode" />
+              Episode
+            </button>
+          </li>
+          <li>
+            <button onclick="window.location.href = \'/membership\'">
+              <img src="' . ICONS_DIR . 'membership.svg" alt="Membership" />
               Episode
             </button>
           </li>

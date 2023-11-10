@@ -1,0 +1,51 @@
+p {
+  padding-top: 4px;
+  font-size: 14px;
+  color: var(--clr-background-highlight-three);
+  padding-left: 2px;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.title {
+  padding: 1rem 0.5rem 2rem;
+}
+
+.membership-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .no-membership-info {
+    margin-top: 150px;
+    text-align: center;
+  }
+
+  .membership-box-area{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    overflow: hidden;
+    @media (max-width: 860px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &.hidden {
+      visibility: hidden;
+    }
+
+    &.visible {
+      visibility: visible;
+    }
+  }
+
+  .membership-box-area {
+    position: relative;
+  }
+}
