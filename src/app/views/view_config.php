@@ -65,6 +65,13 @@ if (!$pathArray[0]) {
                 include VIEWS_DIR . "pages" . $path . "/index.php";
                 break;
             }
+        case 'membership':
+            if (isset($pathArray[1])) {
+
+            } else {
+                include VIEWS_DIR . "pages/membership/index.php";
+                break;
+            }
         default:
             include VIEWS_DIR . "pages/errors/404.php";
             break;

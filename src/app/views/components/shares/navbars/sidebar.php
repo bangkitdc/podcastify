@@ -38,6 +38,17 @@ echo '
       </a>
 ';
 
+if (Middleware::isLoggedIn()) {
+  echo '
+    <a href="/membership" class="icon-text">
+      <div id="membership-nav" class="link-flex">
+        <img src="' . ICONS_DIR . 'membership.svg" alt="Membership" />
+        <div>Join Membership</div>
+      </div>
+    </a>
+  ';
+}
+
 if (Middleware::isAdmin() && Middleware::isLoggedIn()) {
   echo '
       <a href="/podcast/add" class="icon-text">
