@@ -10,26 +10,34 @@
   </div>
 
   <?php
-    require_once VIEWS_DIR . "components/shares/paginations/primary.php";
-    require_once VIEWS_DIR . "components/privates/membership/cards.php";
+  require_once VIEWS_DIR . "components/shares/paginations/primary.php";
+  require_once VIEWS_DIR . "components/privates/membership/cards.php";
 
-    $memberships = $data['memberships'];
-    $currentPage = $data['currentPage'] ?? 1;
-    $totalPages = $data['totalPages'] ?? 1;
+  $creators = $data['creators'];
+  $currentPage = $data['currentPage'] ?? 1;
+  $totalPages = $data['totalPages'] ?? 1;
 
-    // Membership container view
-    echo "<div id=\"membership-container\" class=\"membership-container\">";
-    if (count($memberships) > 0) {
-      echo "<div class=\"membership-box-area\">";
-      foreach ($memberships as $membership) {
-        baseContentBox($membership, false, "showMembership($membership->membership_id)");
-      }
-      echo "</div>";
-
-      echoPaginationNav("membership", $currentPage, $totalPages, $function);
-    } else {
-      echo "<div class=\"membership-info-wrapper\"><h1 class=\"no-membership-info\">No Membership Available</h1></div>";
-    }
+  // Membership container view
+  echo "<div id=\"membership-container\" class=\"membership-container\">";
+  if (count($creators) > 0) {
+    echo "<div id=\"creator-cards\" class=\"membership-box-area\">";
+    renderCreatorCardList($creators);
     echo "</div>";
+
+    $function = [
+      "loadCreatorList(true, false, false, false, $totalPages)",
+      "loadCreatorList(false, true, false, false, $totalPages)",
+      "loadCreatorList(false, false, true, false, $totalPages)",
+      "loadCreatorList(false, false, false, true, $totalPages)"
+    ];
+
+    echoPaginationNav("creator", $currentPage, $totalPages, $function);
+  } else {
+    echo "<div class=\"membership-info-wrapper\"><h1 class=\"no-membership-info\">No Membership Available</h1></div>";
+  }
+  echo "</div>";
   ?>
 </div>
+
+<script src="<?= JS_DIR ?>/membership/pagination.js"></script>
+<script src="<?= JS_DIR ?>/membership/creator.js"></script>
