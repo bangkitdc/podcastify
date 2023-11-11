@@ -220,6 +220,82 @@ class MembershipController extends BaseController
     }
   }
 
+  public function subscribe() {
+
+    try {
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case "POST":
+                Middleware::checkIsLoggedIn();
+                $data = json_decode(file_get_contents('php://input'), true);
+                $creator_id = $data['creator_id'];
+                $creator_name = $data['creator_name'];
+                $subscriber_id = $data['subscriber_id'];
+                $subscriber_name = $data['subscriber_name'];
+
+                $apiUrl = SOAP_SERVICE_URL . '/subscription';
+                $envelope = <<<EOT
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.podcastify.com/">
+                    <soapenv:Header/>
+                    <soapenv:Body>
+                    <ser:subscribe>
+                        <subscriber_id>$subscriber_id</subscriber_id>
+                        <creator_id>$creator_id</creator_id>
+                        <subscriber_name>$subscriber_name</subscriber_name>
+                        <creator_name>$creator_name</creator_name>
+                    </ser:subscribe>
+                    </soapenv:Body>
+                </soapenv:Envelope>
+                EOT;
+
+                $ch = curl_init();
+
+                // Setup to send request to SOAP service
+                curl_setopt($ch, CURLOPT_URL, $apiUrl);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: text/xml',
+                    'x-api-key: ' . APP_API_KEY,
+                ));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $envelope);
+
+                // Return the response instead of outputting it
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                // Get response status
+                $xml = new SimpleXMLElement($response);
+
+                // Register the namespaces
+                $xml->registerXPathNamespace('ns2', 'http://service.podcastify.com/');
+
+                // Extract the statusCode and message
+                $statusCode = $xml->xpath('//ns2:subscribeResponse/return/statusCode')[0];
+                if ($statusCode == 202) {
+                    $response = array("success" => true, "message" => "Succesfully sent a subscription request");
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                    header('Content-Type: application/json');
+
+                    echo json_encode($response);
+                } else {
+                    throw new Exception();
+                }
+                break;
+
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+        }
+    } catch (Exception $e) {
+        $response = array("success" => false, "message" => "Failed to sent a subscription request");
+        http_response_code(ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+        header('Content-Type: application/json');
+
+        echo json_encode($response);
+    }
+  }
+
   public function prem_episode($episode_id) {
     // disini ya cad
   }
