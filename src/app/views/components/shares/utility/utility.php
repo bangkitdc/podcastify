@@ -29,3 +29,7 @@ function timeAgo($timestamp)
   // If none of the above conditions are met, return the formatted date
   return date('Y-m-d H:i:s', $timestamp);
 }
+
+function secondsToMinutesSeconds($seconds) {
+  return gmdate("i:s", $seconds);
+}
