@@ -36,20 +36,19 @@ sliderVolumeEl.addEventListener("input", (event) => {
 });
 
 // Poll for new notification
-const SUBSCRIPTION_NOTIFICATION_BASE_PATH = "/subscription";
-const SELF_BASE_PATH = "/user/self";
+const SUBSCRIPTION_NOTIFICATION_BASE_URL = "/subscription";
+const SELF_BASE_URL = "/user/self";
 
-const getUserID = async () => {
+const getSelf = async () => {
   return new Promise((resolve, reject) => {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", SELF_BASE_PATH, true);
+    xhr.open("GET", SELF_BASE_URL, true);
     xhr.onload = function () {
       if (xhr.status === 200) {
         var data = JSON.parse(xhr.responseText);
-        console.log(data.data);
         resolve(data.data);
       } else {
-        resolve(-1);
+        resolve({ user_id: -1 });
       }
     };
     xhr.send();
@@ -65,10 +64,10 @@ const subscriptionNotificationText = (creatorName, fail = false) => {
 const fetchNewNotification = async () => {
   var xhr = new XMLHttpRequest();
 
-  let userID = await getUserID();
+  let userID = (await getSelf()).user_id;
   xhr.open(
     "GET",
-    SUBSCRIPTION_NOTIFICATION_BASE_PATH + "?user_id=" + userID,
+    SUBSCRIPTION_NOTIFICATION_BASE_URL + "?user_id=" + userID,
     true
   );
   xhr.onload = async () => {
