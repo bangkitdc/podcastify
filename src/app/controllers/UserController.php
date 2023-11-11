@@ -9,7 +9,7 @@ class UserController extends BaseController {
     {
         try {
             Middleware::checkIsLoggedIn();
-            
+
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
                     if ($userId !== null) {
@@ -53,10 +53,10 @@ class UserController extends BaseController {
                         $currentAvatarURL = $userService->getUserAvatar($userId);
 
                         $userService->updatePersonalInfo(
-                            $userId, 
-                            $email, 
-                            $username, 
-                            $firstName, 
+                            $userId,
+                            $email,
+                            $username,
+                            $firstName,
                             $lastName,
                             $imageUrl
                         );
@@ -252,5 +252,26 @@ class UserController extends BaseController {
     {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         return $hashedPassword;
+    }
+
+    public function self() {
+        try {
+            Middleware::checkIsLoggedIn();
+
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case "GET":
+                    $userID = $_SESSION['user_id'];
+
+                    $response = array("success" => true, "data" => $userID);
+                    http_response_code(ResponseHelper::HTTP_STATUS_OK);
+                    header('Content-Type: application/json');
+
+                    echo json_encode($response);
+                    break;
+                default:
+                    ResponseHelper::responseNotAllowedMethod();
+                    break;
+            }
+        } catch (Exception $e) {}
     }
 }

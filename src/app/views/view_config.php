@@ -80,6 +80,8 @@ if (!$pathArray[0]) {
                 include VIEWS_DIR . "pages/membership/index.php";
                 break;
             }
+        case 'subscription':
+            break;
         default:
             include VIEWS_DIR . "pages/errors/404.php";
             break;
