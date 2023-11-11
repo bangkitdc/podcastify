@@ -1,6 +1,8 @@
 <?php
 function creator_detail($creator = null)
 {
+  require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
+
   $creator_id = $creator['user_id'];
   $poster = IMAGES_DIR . "avatar-template.png";
   $email = $creator['email'];
@@ -9,9 +11,12 @@ function creator_detail($creator = null)
 
   echo "
   <head>
-  <title>Podacstify Membership | $title</title> 
+  <title>Podacstify Membership | $title</title>
   </head>
-   <input type=\"hidden\" id=\"creator-id\" value=\"$creator_id\" />";
+   <input type=\"hidden\" id=\"creator-id\" value=\"$creator_id\" />
+   <input type=\"hidden\" id=\"creator-name\" value=\"$title\" />
+   ";
+
   echo "
       <div class=\"creator-detail-head\">
     ";
@@ -31,11 +36,16 @@ function creator_detail($creator = null)
         <p class=\"creator-email\">$email</p>
         <p class=\"creator-detail-head-status\">Status : $status</p>
       ";
+
+  if ($status != "Subscribed") {
+    baseButton("Subscribe", "subscribe", "submit");
+  }
+
   echo "
       </div>
 
       <div class=\"creator-detail-line\">
-    
+
       </div>
     ";
 

@@ -15,6 +15,7 @@ define("ENCRYPTION_KEY", $_ENV['ENCRYPTION_KEY']);
 
 // SERVICE URL
 define("REST_SERVICE_URL", $_ENV['REST_SERVICE_URL']);
+define("SOAP_SERVICE_URL", $_ENV['SOAP_SERVICE_URL']);
 
 // Directory
 define("MODELS_DIR", BASE_URL . "/src/app/models/");
