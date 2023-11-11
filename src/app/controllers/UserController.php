@@ -272,6 +272,11 @@ class UserController extends BaseController {
                     ResponseHelper::responseNotAllowedMethod();
                     break;
             }
-        } catch (Exception $e) {}
+        } catch (Exception $e) {
+            $response = array("success" => true, "data" => "-1");
+            header('Content-Type: application/json');
+
+            echo json_encode($response);
+        }
     }
 }

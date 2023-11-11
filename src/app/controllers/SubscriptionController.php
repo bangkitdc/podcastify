@@ -45,8 +45,9 @@ class SubscriptionController extends BaseController
 
             }
         } catch (Exception $e) {
-            http_response_code($e->getCode());
-            $response = array("success" => false, "error_message" => $e->getMessage());
+            $response = array("success" => false, "data" => []);
+            header('Content-Type: application/json');
+            
             echo json_encode($response);
             exit;
         }
