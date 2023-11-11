@@ -42,7 +42,7 @@ echo '
           <li>
             <button onclick="window.location.href = \'/membership\'">
               <img src="' . ICONS_DIR . 'membership.svg" alt="Membership" />
-              Episode
+              Membership
             </button>
           </li>
   ';

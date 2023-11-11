@@ -5,8 +5,9 @@ echo '<link rel="stylesheet" href="' . CSS_DIR . 'base_components/base_paginatio
 // paginationId, currentPage, totalpages, onClick event
 function echoPaginationNav($paginationId, $currentPage, $totalPages, $onClick = [])
 {
-  echo
-  '
+  if ($totalPages > 0) {
+    echo
+    '
     <div class="list-nav">
       <button name="nav-btn" class="nav-btn" onclick="' . $onClick[0] . '">
         <img alt="nav-btn" src="' . ICONS_DIR . 'skip_previous.svg" width="20px" />
@@ -25,4 +26,5 @@ function echoPaginationNav($paginationId, $currentPage, $totalPages, $onClick = 
       </button>
     </div>
     ';
+  }
 }
