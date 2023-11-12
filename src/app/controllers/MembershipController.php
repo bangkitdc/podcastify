@@ -121,7 +121,7 @@ class MembershipController extends BaseController
           case "GET":
             $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
 
-            $encryptedUserId = openssl_encrypt($creatorId, 'aes-256-cbc', ENCRYPTION_KEY, OPENSSL_RAW_DATA, $iv);
+            $encryptedUserId = openssl_encrypt($_SESSION['user_id'], 'aes-256-cbc', ENCRYPTION_KEY, OPENSSL_RAW_DATA, $iv);
 
             // Concatenate IV and encrypted user ID
             $combinedData = $iv . $encryptedUserId;
