@@ -65,6 +65,23 @@ if (!$pathArray[0]) {
                 include VIEWS_DIR . "pages" . $path . "/index.php";
                 break;
             }
+            break;
+        case 'membership':
+            if (isset($pathArray[1])) {
+                switch ($pathArray[1]) {
+                    case 'creator':
+                        include VIEWS_DIR . "pages/membership/prem_eps_list.php";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            } else {
+                include VIEWS_DIR . "pages/membership/index.php";
+                break;
+            }
+        case 'subscription':
+            break;
         default:
             include VIEWS_DIR . "pages/errors/404.php";
             break;
