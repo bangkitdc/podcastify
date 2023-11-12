@@ -37,7 +37,7 @@ function creator_detail($creator = null)
         <p class=\"creator-detail-head-status\">Status : $status</p>
       ";
 
-  if ($status != "Subscribed") {
+  if ($status == "Not Subscribed") {
     baseButton("Subscribe", "subscribe", "submit");
   }
 
