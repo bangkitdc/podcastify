@@ -72,6 +72,8 @@ if (!$pathArray[0]) {
                     case 'creator':
                         include VIEWS_DIR . "pages/membership/prem_eps_list.php";
                         break;
+                    case 'prem_episode':
+                        include VIEWS_DIR . "pages/membership/prem_ep_detail.php";
                     default:
                         break;
                 }

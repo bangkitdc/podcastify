@@ -1,21 +1,37 @@
 <?php
-function episode_detail($episode = null)
+function episode_detail($episode = null, $premium = false)
 {
-  $id = $episode ? $episode->episode_id : '';
-  $creator_id = $episode ? $episode->podcast_id : '';
-  $poster = is_file(Storage::EPISODE_IMAGE_PATH . $episode->image_url) ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png";
-  $title = $episode ? $episode->title : '';
-  $duration = $episode ? $episode->duration / 60 : '';
-  $upload_date = $episode ? formatDate($episode->created_at) : '';
-  $description = $episode ? $episode->description : '';
+  require_once VIEWS_DIR . "/components/shares/buttons/baseButton.php";
 
-  $creator_img = $episode->podcast_img ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->creator_img) : IMAGES_DIR . "podcast-template.png";
-  $podcast_title = $episode ? $episode->podcast_title : '';
-  $audio_file = $episode->audio_url ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url) : "/src/public/assets/audio/spotify-ad.mp3";
+  $id = $episode ? ($premium ? $episode['episode_id'] : $episode->episode_id) : '';
+  $creator_id = $episode ? ($premium ? $episode['creator_id'] : $episode->podcast_id) : '';
+  $episode_id = $episode ? ($premium ? $episode['episode_id'] : $episode->$episode_id) : '';
 
-  echo"
+  $poster = $episode ? ($premium ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode['image_url']) : Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url)) : IMAGES_DIR . "episode-template.png";
+  $title = $episode ? ($premium ? $episode['title'] : $episode->title) : '';
+  $duration = $episode ? ($premium ? round($episode['duration'] / 60) : round($episode->duration / 60)) : '';
+  $upload_date = $episode ? ($premium ? formatDateDetail($episode['created_at']) : formatDateDetail($episode->created_at)) : '';
+  $description = $episode ? ($premium ? $episode['description'] : $episode->description) : '';
+
+  $audio_file = $episode ? ($premium ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode['audio_url']) : Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url)) : AUDIO_DIR . "spotify-ad.mp3";
+
+  $podcast_title = $episode
+    ? ($premium ? ($episode['user']['first_name'] . " " . $episode['user']['last_name'] ?? '')
+      : $episode->podcast_title)
+    : '';
+
+  $creator_img = $episode ? ($premium
+    ? IMAGES_DIR . "avatar-template.png"
+    : ($episode->podcast_img
+      ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->creator_img)
+      : IMAGES_DIR . "podcast-template.png"))
+    : IMAGES_DIR . "avatar-template.png";
+
+  $likes = $premium ? $episode['episodeLikesCount'] : '';
+
+  echo "
   <head>
-  <title>$title</title> 
+  <title>Podcastify | $title</title> 
   </head>";
   echo "
       <div class=\"episode-detail-head\">
@@ -38,11 +54,35 @@ function episode_detail($episode = null)
         <img alt=\"play-button\" class=\"\" id=\"button-image\" src=\"" . ICONS_DIR . "play.svg\" />
         </button>
       ";
-  if (Middleware::isAdmin()) {
+  if (Middleware::isAdmin() && !$premium) {
     echo "       
         <button class=\"episode-detail-head-edit-button\" onclick=\"showEditEpisode($id)\">
         <img id=\"edit-button-image\" alt=\"edit-button\" src=\"" . ICONS_DIR . "/edit.svg\" />
         </button>";
+  }
+
+  if ($premium) {
+
+    echo "       
+        <div class=\"episode-detail-head-like-button\">
+        ";
+    if ($episode['episodeLiked']) {
+      echo "
+        <img id=\"like-button-image\" alt=\"like-button\" src=\"" . ICONS_DIR . "heart-fill.svg\" />
+        ";
+    } else {
+      echo "
+        <img id=\"like-button-image\" alt=\"like-button\" src=\"" . ICONS_DIR . "heart.svg\" />
+        ";
+    }
+
+    echo "
+    </div>
+        <div class=\"like-info\">
+        <p id=\"like-count\"> " . $likes . "</p>
+        <p>likes</p>
+        </div>
+        ";
   }
   echo "
       </div>
@@ -59,18 +99,54 @@ function episode_detail($episode = null)
         <input id=\"audio-file\" value=\"$audio_file\" hidden>
         <input id=\"creator_id\" value=\"$creator_id\" hidden>
           <img alt=\"creator-image\" class=\"episode-detail-foot-creator-image\" src=\"$creator_img\">
+          ";
+  if ($premium) {
+    echo "
+          <p id=\"episode-detail-foot-creator-name\" class=\"episode-detail-foot-creator-name\" onclick=\"window.location.href='/membership/creator/$creator_id'\">$podcast_title</p>
+        ";
+  } else {
+    echo "
           <p id=\"episode-detail-foot-creator-name\" class=\"episode-detail-foot-creator-name\" onclick=\"window.location.href='/podcast/show/$creator_id'\">$podcast_title</p>
+        ";
+  }
+
+  echo "    
         </div>
 
       </div>
     ";
+  if ($premium) {
+    echo '
+      <div>
+        <h2>Comment</h2>
+        <div class="episode-comment">
+          <div id="comment-user-image-container" class="comment-user-image-container" >
+          <img class="user-image" src=' . IMAGES_DIR . "avatar-template.png" . ' alt="avatar">
+          </div>
+          <input id="episode_id" value="' . $episode_id . '" hidden/>
+          <div id="comment-input-container" class="comment-input-container" >
+            <input type="text" onclick="onClickComment()" placeholder="Enter your comment" class="comment-input" id="comment-input" aria-label="comment-input"/>
+            <div id="comment-buttons" class="comment-buttons">
+            ';
+    baseButton("Cancel", "comment-cancel");
+    baseButton("Comment", "comment-submit", "submit");
+    // <button class="comment-cancel" onclick="onCancleComment()">Cancel</button>
+    //         <button id="" class="btn secondary comment-submit">Comment</button>
+    echo '
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      ';
+  }
 
   echo '
         <script src="' . JS_DIR . 'episode/episode.js"></script>
   ';
 };
 
-function formatDate($dateString)
+function formatDateDetail($dateString)
 {
   $dateTime = new DateTime($dateString);
 

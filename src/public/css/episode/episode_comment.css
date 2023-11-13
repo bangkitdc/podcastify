@@ -1,0 +1,54 @@
+/* grid grid-cols-10 grid-rows-2 pb-9 */
+.episode-comment-card {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  padding-bottom: 9px;
+}
+
+/* flex items-center justify-center */
+.episode-comment-card-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* w-8 rounded-full col-span-1 row-span-2 */
+.episode-comment-card-image {
+  width: 2rem;
+  border-radius: 9999px;
+  grid-column: span 1 / span 10;
+  grid-row: span 2 / span 2;
+}
+
+/* flex gap-2 col-span-9 items-center text-clr-text-secondary-darken */
+.episode-comment-card-profile {
+  display: flex;
+  gap: 10px;
+  grid-column: span 9 / span 10;
+  align-items: center;
+  /* color: var(--clr-text-secondary-darken); */
+}
+
+.episode-comment-card-profile p, span {
+  font-weight: 50;
+  color: var(--clr-text-secondary-darken);
+}
+
+/* col-span-1 */
+.episode-comment-fill-div {
+  grid-column: span 1 / span 10;
+}
+
+/* col-span-9 */
+.episode-comment-content {
+  grid-column: span 9 / span 10;
+}
+
+/* h-px bg-clr-background-highlight-two col-span-10 mt-4 */
+.episode-comment-divider {
+  height: 1px;
+  background: var(--clr-background-highlight-two);
+  grid-column: span 10 / span 10;
+  margin-top: 4rem;
+}
