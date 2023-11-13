@@ -53,9 +53,9 @@ if (!$pathArray[0]) {
                         include VIEWS_DIR . "pages/episode/add_episode.php";
                         break;
                     default:
-                        if(isset($_GET['edit']) && $_GET['edit'] === 'true'){
+                        if (isset($_GET['edit']) && $_GET['edit'] === 'true') {
                             include VIEWS_DIR . "pages/episode/edit_episode.php";
-                        } else{
+                        } else {
                             include VIEWS_DIR . "pages/episode/detail_episode.php";
                         }
                         break;
@@ -89,4 +89,3 @@ if (!$pathArray[0]) {
             break;
     }
 }
-
