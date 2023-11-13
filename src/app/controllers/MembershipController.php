@@ -38,7 +38,7 @@ class MembershipController extends BaseController
 
       switch ($_SERVER['REQUEST_METHOD']) {
         case "GET":
-          $userId = 1;
+          $userId = $_SESSION['user_id'];
 
           $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
 
