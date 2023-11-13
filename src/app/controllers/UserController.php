@@ -261,8 +261,9 @@ class UserController extends BaseController {
             switch ($_SERVER['REQUEST_METHOD']) {
                 case "GET":
                     $userID = $_SESSION['user_id'];
+                    $username = $_SESSION['username'];
 
-                    $response = array("success" => true, "data" => $userID);
+                    $response = array("success" => true, "data" => ["user_id" => $userID, "username" => $username]);
                     http_response_code(ResponseHelper::HTTP_STATUS_OK);
                     header('Content-Type: application/json');
 
@@ -273,7 +274,7 @@ class UserController extends BaseController {
                     break;
             }
         } catch (Exception $e) {
-            $response = array("success" => true, "data" => "-1");
+            $response = array("success" => true, "data" => ["user_id" => "-1", "username" => ""]);
             header('Content-Type: application/json');
 
             echo json_encode($response);
