@@ -65,7 +65,6 @@ if (!$pathArray[0]) {
                 include VIEWS_DIR . "pages" . $path . "/index.php";
                 break;
             }
-            break;
         case 'membership':
             if (isset($pathArray[1])) {
                 switch ($pathArray[1]) {
