@@ -28,6 +28,7 @@ define("STORAGES_DIR", BASE_URL . "/src/storage/");
 
 define("ICONS_DIR", "/src/public/assets/icons/");
 define("IMAGES_DIR", "/src/public/assets/images/");
+define("AUDIO_DIR", "/src/public/assets/audio/");
 define("FONTS_DIR", "/src/public/assets/fonts/");
 define("CSS_DIR", "/src/public/css/");
 define("JS_DIR", "/src/public/js/");
