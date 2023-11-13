@@ -53,9 +53,9 @@ if (!$pathArray[0]) {
                         include VIEWS_DIR . "pages/episode/add_episode.php";
                         break;
                     default:
-                        if(isset($_GET['edit']) && $_GET['edit'] === 'true'){
+                        if (isset($_GET['edit']) && $_GET['edit'] === 'true') {
                             include VIEWS_DIR . "pages/episode/edit_episode.php";
-                        } else{
+                        } else {
                             include VIEWS_DIR . "pages/episode/detail_episode.php";
                         }
                         break;
@@ -65,7 +65,6 @@ if (!$pathArray[0]) {
                 include VIEWS_DIR . "pages" . $path . "/index.php";
                 break;
             }
-            break;
         case 'membership':
             if (isset($pathArray[1])) {
                 switch ($pathArray[1]) {
@@ -89,4 +88,3 @@ if (!$pathArray[0]) {
             break;
     }
 }
-
