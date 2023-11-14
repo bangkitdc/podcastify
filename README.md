@@ -161,3 +161,6 @@ Podcastify is built using the following technologies:
     <br/>
 </b>
 </div>
+
+## Copyright
+2023 © Podcastify. All Rights Reserved.
