@@ -114,15 +114,28 @@ if(document.getElementById("like-button-image")){
   document.getElementById("like-button-image").addEventListener("click", () => {
     const likeBtn = document.getElementById("like-button-image");
     const likeCtr = parseInt(document.getElementById("like-count").innerHTML);
+    const likeText = document.getElementById("like-text").innerHTML;
 
     const fileName = likeBtn.src.split('/').pop();
 
     if(fileName === 'heart-fill.svg') {
       likeBtn.src = "/src/public/assets/icons/heart.svg";
       document.getElementById('like-count').innerHTML = likeCtr - 1;
+      
+      if (likeCtr - 1 === 1) {
+        document.getElementById("like-text").innerHTML = "like";
+      } else {
+        document.getElementById("like-text").innerHTML = "likes";
+      }
     } else {
       likeBtn.src = "/src/public/assets/icons/heart-fill.svg";
       document.getElementById('like-count').innerHTML = likeCtr + 1;
+
+      if (likeCtr + 1 === 1) {
+        document.getElementById("like-text").innerHTML = "like";
+      } else {
+        document.getElementById("like-text").innerHTML = "likes";
+      }
     }
 
     const episode_id = document.getElementById('episode_id').value;
@@ -137,7 +150,6 @@ if(document.getElementById("like-button-image")){
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onload = () => {
-      console.log(xhr.responseText);
       const response = JSON.parse(xhr.responseText);
       if (xhr.status === 200) {
         if (response.success) {

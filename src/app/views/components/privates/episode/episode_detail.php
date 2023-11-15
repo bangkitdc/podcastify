@@ -79,7 +79,7 @@ function episode_detail($episode = null, $premium = false)
     </div>
         <div class=\"like-info\">
         <p id=\"like-count\"> " . $likes . "</p>
-        <p>likes</p>
+        <p id=\"like-text\">" . ($likes === 1 ? 'like' : 'likes') . "</p>
         </div>
         ";
   }
@@ -117,7 +117,7 @@ function episode_detail($episode = null, $premium = false)
   if ($premium) {
     echo '
       <div>
-        <h2>Comment</h2>
+        <h2 class="episode-comment-title">Comment</h2>
         <div class="episode-comment">
           <div id="comment-user-image-container" class="comment-user-image-container" >
           <img class="user-image" src=' . IMAGES_DIR . "avatar-template.png" . ' alt="avatar">

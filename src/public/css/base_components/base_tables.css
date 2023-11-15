@@ -134,7 +134,7 @@
 
 @media (max-width: 547px) {
   .tables td, .tables th {
-    padding: 2px; /* Reduce cell padding for smaller screens */
+    padding: 4px; /* Reduce cell padding for smaller screens */
 }
   .tables td:nth-child(4), th:nth-child(4) {
     display: none;
