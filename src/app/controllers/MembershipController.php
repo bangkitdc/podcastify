@@ -89,7 +89,7 @@ class MembershipController extends BaseController
               echo "Error decoding JSON response";
             }
           } else {
-            throw new Exception('Bad Request', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+            throw new Exception('Bad Request', $httpCode);
           }
 
           $this->view('layouts/default', $data);
@@ -163,14 +163,43 @@ class MembershipController extends BaseController
                 $data['totalPages'] = $responseData['data']['last_page'];
                 $data['episodes'] = $responseData['data']['data'];
 
-                if (isset($_GET['page'])) {
-                  return renderEpisodesTable($data['episodes'], $data['currentPage']);
+                // Get Files
+
+                $i = 0;
+                foreach ($data['episodes'] as $episode) {
+                  $apiUrlImage = REST_SERVICE_URL . '/episode/downloadImage/' . $episode['episode_id'];
+
+                  if ($episode['image_url']) {
+                    $ch = curl_init($apiUrlImage);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                    $responseImage = curl_exec($ch);
+                    $httpCodeImage = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                    $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+                    curl_close($ch);
+
+                    if ($httpCodeImage === ResponseHelper::HTTP_STATUS_OK) {
+                      $base64 = base64_encode($responseImage);
+                      $imageDataUrl = 'data:' . $contentType . ';base64,' . $base64;
+
+                      $data['episodes'][$i]['imageFile'] = $imageDataUrl;
+                      // file_put_contents(STORAGES_DIR . 'episode/images/' . $data['episode']['image_url'], $responseImage);
+                    } else {
+                      $data['episodes'][$i]['imageFile'] = null;
+                    }
+                  } else {
+                    $data['episodes'][$i]['imageFile'] = null;
+                  }
+
+                  $i++;
                 }
               } else {
                 echo "Error decoding JSON response";
               }
             } else {
-              throw new Exception('Bad Request', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+              throw new Exception('Bad Request', $httpCode);
             }
 
             // Get creator
@@ -191,11 +220,15 @@ class MembershipController extends BaseController
               if ($responseData !== null) {
                 $data['creator'] = $responseData['data'];
 
+                if (isset($_GET['page'])) {
+                  return renderEpisodesTable($data['episodes'], $data['creator']['status'], $data['currentPage']);
+                }
+
               } else {
                 echo "Error decoding JSON response";
               }
             } else {
-              throw new Exception('Bad Request', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+              throw new Exception('Bad Request', $httpCode);
             }
 
             $this->view('layouts/default', $data);
@@ -321,7 +354,7 @@ class MembershipController extends BaseController
               'Content-Type: application/json'
             ];
 
-            // Get list of prem episodes
+            // Get prem episode
             $apiUrl = REST_SERVICE_URL . "/episode/" . $episode_id;
 
             $ch = curl_init($apiUrl);
@@ -339,31 +372,60 @@ class MembershipController extends BaseController
 
               if ($responseData !== null) {
                 $data['episode'] = $responseData['data'];
+
+                // Get Files
+                $apiUrlImage = REST_SERVICE_URL . '/episode/downloadImage/' . $data['episode']['episode_id'];
+
+                if ($data['episode']['image_url']) {
+                  $ch = curl_init($apiUrlImage);
+                  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                  $responseImage = curl_exec($ch);
+                  $httpCodeImage = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                  $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+                  curl_close($ch);
+
+                  if ($httpCodeImage === ResponseHelper::HTTP_STATUS_OK) {
+                    $base64 = base64_encode($responseImage);
+                    $imageDataUrl = 'data:' . $contentType . ';base64,' . $base64;
+                    $data['episode']['imageFile'] = $imageDataUrl;
+                  } else {
+                    $data['episode']['imageFile'] = null;
+                  }
+                } else {
+                  $data['episode']['imageFile'] = null;
+                }
+
+                $apiUrlAudio = REST_SERVICE_URL . '/episode/downloadAudio/' . $data['episode']['episode_id'];
+
+                if ($data['episode']['audio_url']) {
+                  $ch = curl_init($apiUrlAudio);
+                  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+                  $responseAudio = curl_exec($ch);
+                  $httpCodeAudio = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                  $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+                  curl_close($ch);
+
+                  if ($httpCodeAudio === ResponseHelper::HTTP_STATUS_OK) {
+                    $base64 = base64_encode($responseAudio);
+                    $audioDataUrl = 'data:' . $contentType . ';base64,' . $base64;
+                    $data['episode']['audioFile'] = $audioDataUrl;
+                  } else {
+                    $data['episode']['audioFile'] = null;
+                  }
+                } else {
+                  $data['episode']['audioFile'] = null;
+                }
               } else {
                 echo "Error decoding JSON response";
               }
             } else {
-              throw new Exception('Bad Request', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
-            }
-
-            // Get Files
-            $apiUrlImage = REST_SERVICE_URL . '/episode/downloadImage/' . $data['episode']['episode_id'];
-            $responseImage = file_get_contents($apiUrlImage);
-            if(!$responseImage){
-              throw new Exception('No Image File Found', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
-            }
-
-            if($responseImage && !file_exists(STORAGES_DIR . 'episode/images/' . $data['episode']['image_url'])){
-              file_put_contents(STORAGES_DIR . 'episode/images/' . $data['episode']['image_url'] , $responseImage);
-            }
-
-            $apiUrlAudio = REST_SERVICE_URL . '/episode/downloadAudio/' . $data['episode']['episode_id'];
-            $responseAudio = file_get_contents($apiUrlAudio);
-            if(!$responseAudio){
-              throw new Exception('No Audio File Found', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
-            }
-            if($responseAudio && !file_exists(STORAGES_DIR . 'episode/audios/' . $data['episode']['audio_url'])){
-              file_put_contents(STORAGES_DIR . 'episode/audios/' . $data['episode']['audio_url'] , $responseAudio);
+              throw new Exception('Bad Request', $httpCode);
             }
 
             $this->view('layouts/default', $data);
@@ -445,7 +507,7 @@ class MembershipController extends BaseController
 
                     echo json_encode($response);
                 } else {
-                  throw new Exception('Bad Request', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+                  throw new Exception('Bad Request', $httpCode);
                 }
               break;
 
@@ -514,7 +576,7 @@ class MembershipController extends BaseController
 
                     echo json_encode($response);
                 } else {
-                  throw new Exception('Bad Request', ResponseHelper::HTTP_STATUS_BAD_REQUEST);
+                  throw new Exception('Bad Request', $httpCode);
                 }
               break;
 

@@ -73,8 +73,6 @@ const loadEpisodeList = (
 
   document.getElementById("episode-list-page-num").textContent = pageNumber;
 
-  const creator_id = document.getElementById("creator-id");
-
   let xhr = new XMLHttpRequest();
   const url = `/membership/creator/${2}?page=` + pageNumber;
   xhr.open("GET", url, true);

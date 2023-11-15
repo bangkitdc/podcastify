@@ -146,20 +146,19 @@
 }
 
 .comment-user-image-container {
-  width: 5%;
   height: inherit;
   margin-left: 1.5rem;
 }
 
 .user-image {
-  width: 100%;
-  height: 100%;
+  width: 42px;
+  height: 42px;
   object-fit: cover;
   border-radius: var(--rounded-full);
 }
 
 .comment-input-container {
-  width: 95%;
+  width: 100%;
 }
 
 .comment-input {

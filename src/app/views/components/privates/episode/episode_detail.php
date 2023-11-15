@@ -5,15 +5,14 @@ function episode_detail($episode = null, $premium = false)
 
   $id = $episode ? ($premium ? $episode['episode_id'] : $episode->episode_id) : '';
   $creator_id = $episode ? ($premium ? $episode['creator_id'] : $episode->podcast_id) : '';
-  $episode_id = $episode ? ($premium ? $episode['episode_id'] : $episode->$episode_id) : '';
 
-  $poster = $episode ? ($premium ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode['image_url']) : Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url)) : IMAGES_DIR . "episode-template.png";
+  $poster = $episode ? ($premium ? ($episode['imageFile'] ?? IMAGES_DIR . "episode-template.png") : ($episode->image_url ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png")) : IMAGES_DIR . "episode-template.png";
   $title = $episode ? ($premium ? $episode['title'] : $episode->title) : '';
   $duration = $episode ? ($premium ? round($episode['duration'] / 60) : round($episode->duration / 60)) : '';
   $upload_date = $episode ? ($premium ? formatDateDetail($episode['created_at']) : formatDateDetail($episode->created_at)) : '';
   $description = $episode ? ($premium ? $episode['description'] : $episode->description) : '';
 
-  $audio_file = $episode ? ($premium ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode['audio_url']) : Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url)) : AUDIO_DIR . "spotify-ad.mp3";
+  $audio_file = $episode ? ($premium ? ($episode['audioFile'] ?? AUDIO_DIR . "spotify-ad.mp3") : ($episode->audio_url ? Storage::getFileUrl(Storage::EPISODE_AUDIO_PATH, $episode->audio_url) : AUDIO_DIR . "spotify-ad.mp3")) : AUDIO_DIR . "spotify-ad.mp3";
 
   $podcast_title = $episode
     ? ($premium ? ($episode['user']['first_name'] . " " . $episode['user']['last_name'] ?? '')
@@ -123,7 +122,7 @@ function episode_detail($episode = null, $premium = false)
           <div id="comment-user-image-container" class="comment-user-image-container" >
           <img class="user-image" src=' . IMAGES_DIR . "avatar-template.png" . ' alt="avatar">
           </div>
-          <input id="episode_id" value="' . $episode_id . '" hidden/>
+          <input id="episode_id" value="' . $id . '" hidden/>
           <div id="comment-input-container" class="comment-input-container" >
             <input type="text" onclick="onClickComment()" placeholder="Enter your comment" class="comment-input" id="comment-input" aria-label="comment-input"/>
             <div id="comment-buttons" class="comment-buttons">
