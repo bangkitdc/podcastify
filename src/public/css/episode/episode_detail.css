@@ -179,6 +179,12 @@
   gap: 10px;
   margin: 10px auto;
 }
+
+.comment-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 /*
 .comment-submit {
   font-weight: 700;
@@ -219,6 +225,7 @@
   
   .episode-detail-foot-description {
     font-size: 10px;
+    line-height: 1rem;
   }
 
   .episode-detail-foot-creator {
@@ -228,6 +235,25 @@
 
   .episode-detail-foot-creator-name {
     font-size: 14px;
+  }
+
+  .episode-detail-head-like-button {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .episode-comment-title {
+    font-size: 1rem;
+  }
+
+  .user-image {
+    width: 30px;
+    height: 30px;
+  }
+
+  .comment-input {
+    padding: 10px;
+    font-size: 12px;
   }
 }
 

@@ -1,9 +1,19 @@
 /* grid grid-cols-10 grid-rows-2 pb-9 */
 .episode-comment-card {
   display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
-  padding-bottom: 9px;
+  gap: 6px;
+}
+
+.episode-row-1 {
+  grid-row: span 1 / span 2;
+  display: flex;
+  gap: 10px;
+}
+
+.episode-row-2 {
+  grid-row: span 1 / span 2;
+  display: flex;
 }
 
 /* flex items-center justify-center */
@@ -17,7 +27,7 @@
 .episode-comment-card-image {
   width: 2rem;
   border-radius: 9999px;
-  grid-column: span 1 / span 10;
+  /* grid-column: span 1 / span 10; */
   grid-row: span 2 / span 2;
 }
 
@@ -25,7 +35,6 @@
 .episode-comment-card-profile {
   display: flex;
   gap: 10px;
-  grid-column: span 9 / span 10;
   align-items: center;
   /* color: var(--clr-text-secondary-darken); */
 }
@@ -37,18 +46,22 @@
 
 /* col-span-1 */
 .episode-comment-fill-div {
-  grid-column: span 1 / span 10;
-}
-
-/* col-span-9 */
-.episode-comment-content {
-  grid-column: span 9 / span 10;
+  width: 42px;
 }
 
 /* h-px bg-clr-background-highlight-two col-span-10 mt-4 */
 .episode-comment-divider {
   height: 1px;
   background: var(--clr-background-highlight-two);
-  grid-column: span 10 / span 10;
   margin-top: 4rem;
+}
+
+@media (max-width: 402px) {
+  .episode-username, .episode-date  {
+    font-size: 12px;
+  }
+
+  .episode-text {
+    font-size: 13px;
+  }
 }
