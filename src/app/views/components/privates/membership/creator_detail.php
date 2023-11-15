@@ -11,7 +11,7 @@ function creator_detail($creator = null)
 
   echo "
   <head>
-  <title>Podacstify Membership | $title</title>
+  <title>Podcastify Membership | $title</title>
   </head>
    <input type=\"hidden\" id=\"creator-id\" value=\"$creator_id\" />
    <input type=\"hidden\" id=\"creator-name\" value=\"$title\" />

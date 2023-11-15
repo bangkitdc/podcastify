@@ -7,6 +7,11 @@ Podcastify is your go-to application for daily podcasts. With a simple and intui
 3. <b>Podcast Player</b>: Each episode of the chosen podcast can be listened to directly within the app, providing a seamless listening experience.
 4. <b>Admin Panel</b>: Administrators have the ability to manage podcasts, episodes, and users, ensuring the content is up-to-date and the user experience is optimized.
 
+## Updates (17 November 2023)
+We’ve added some exciting new features:
+1. <b>Memberships</b>: Users can now subscribe to their favorite creators and gain access to premium episodes.
+2. <b>User Engagement Features</b>: Users can now engage more with creators by liking or commenting on episodes.
+
 ## Tech Stacks
 Podcastify is built using the following technologies:
 
@@ -63,6 +68,19 @@ Podcastify is built using the following technologies:
 | Error Page                          |                        |                            |
 | Navbars and Home Page               |                        |                            |
 | Responsiveness                      |                        |                            |
+
+### Updates (17 November 2023)
+### Server side
+| 13521055                            | 13521072                | 13521102                   |
+| ----------------------------------- | :---------------------: | -------------------------- |
+| Memberships                         | Episode Premium Details | Subscribe                  |
+| Additional Middleware               |                         | Push Notifications         |
+
+### Client Side
+| 13521055                            | 13521072                  | 13521102                   |
+| ----------------------------------- | :-----------------------: | -------------------------- |
+| Memberships Page                    | Episode Premium Page      |                            |
+|                                     | Episode Like & Comment UI |                            |
 
 ## Responsive Layouts & Lighthouse
 <div align="center">
