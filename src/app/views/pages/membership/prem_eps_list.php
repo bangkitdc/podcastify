@@ -18,7 +18,7 @@
     $currentPage = $data['currentPage'];
 
     if (count($episodes) > 0) {
-      renderEpisodesTable($episodes, $currentPage);
+      renderEpisodesTable($episodes, $data['creator']['status'] , $currentPage);
     } else {
       echo '<h3 class="no-episodes">No premium episodes yet from this creator</h3>';
     }
@@ -44,3 +44,4 @@
 </div>
 
 <script src="<?= JS_DIR ?>/membership/pagination.js"></script>
+<script src="<?= JS_DIR ?>/membership/episode.js"></script>
