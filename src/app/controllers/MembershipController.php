@@ -82,7 +82,16 @@ class MembershipController extends BaseController
             if ($responseData !== null) {
               $data['currentPage'] = $responseData['data']['current_page'];
               $data['totalPages'] = $responseData['data']['last_page'];
-              $data['creators'] = $responseData['data']['data'];
+              if (isset($responseData['data']['data']) && is_array($responseData['data']['data'])) {
+                $sanitizedCreators = [];
+                foreach ($responseData['data']['data'] as $creator) {
+                  $sanitizedCreator = array_map('htmlspecialchars', $creator);
+                  $sanitizedCreators[] = $sanitizedCreator;
+                }
+                $data['creators'] = $sanitizedCreators;
+              } else {
+                $data['creators'] = [];
+              }
 
               if (isset($_GET['page'])) {
                 return renderCreatorCardList($data['creators']);
@@ -164,7 +173,25 @@ class MembershipController extends BaseController
               if ($responseData !== null) {
                 $data['currentPage'] = $responseData['data']['current_page'];
                 $data['totalPages'] = $responseData['data']['last_page'];
-                $data['episodes'] = $responseData['data']['data'];
+                $episodes = $responseData['data']['data']; // Fetch episodes data
+
+                if (is_array($episodes)) {
+                  $sanitizedEpisodes = [];
+                  foreach ($episodes as $episode) {
+                    // Sanitize each field in the episode data
+                    $sanitizedEpisode = [
+                      'episode_id' => htmlspecialchars($episode['episode_id']),
+                      'image_url' => htmlspecialchars($episode['image_url']),
+                      // Sanitize other fields similarly if needed
+                    ];
+
+                    // Add the sanitized episode data to the sanitizedEpisodes array
+                    $sanitizedEpisodes[] = $sanitizedEpisode;
+                  }
+                  $data['episodes'] = $sanitizedEpisodes; // Assign sanitized data to $data['episodes']
+                } else {
+                  $data['episodes'] = [];
+                }
 
                 // Get Files
 
@@ -378,6 +405,18 @@ class MembershipController extends BaseController
 
               if ($responseData !== null) {
                 $data['episode'] = $responseData['data'];
+
+                if (isset($responseData['data']['episodeComments'])) {
+                  foreach ($responseData['data']['episodeComments'] as $key => $comment) {
+                    if (isset($comment['comment_text']) && is_string($comment['comment_text'])) {
+                      $sanitizedCommentText = htmlspecialchars(strip_tags($comment['comment_text']));
+                      $responseData['data']['episodeComments'][$key]['comment_text'] = $sanitizedCommentText;
+                    }
+                  }
+                }
+
+                // Assign sanitized comments to $data['episode']['episodeComments']
+                $data['episode']['episodeComments'] = $responseData['data']['episodeComments'];
 
                 // Get Files
                 $apiUrlImage = REST_SERVICE_URL . '/episode/downloadImage/' . $data['episode']['episode_id'];
