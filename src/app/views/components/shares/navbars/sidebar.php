@@ -38,7 +38,7 @@ echo '
       </a>
 ';
 
-if (Middleware::isLoggedIn()) {
+if (Middleware::isLoggedIn() && !Middleware::isAdmin()) {
   echo '
     <a href="/membership" class="icon-text">
       <div id="membership-nav" class="link-flex">
