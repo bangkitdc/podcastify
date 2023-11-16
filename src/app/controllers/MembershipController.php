@@ -12,6 +12,7 @@ class MembershipController extends BaseController
   {
     try {
       Middleware::checkIsLoggedIn();
+      Middleware::checkIsNotAdmin();
 
       switch ($_SERVER['REQUEST_METHOD']) {
         case "GET":
@@ -35,6 +36,7 @@ class MembershipController extends BaseController
   {
     try {
       Middleware::checkIsLoggedIn();
+      Middleware::checkIsNotAdmin();
 
       switch ($_SERVER['REQUEST_METHOD']) {
         case "GET":
@@ -117,6 +119,7 @@ class MembershipController extends BaseController
       $creatorId = filter_var($creatorId, FILTER_SANITIZE_NUMBER_INT);
       try {
         Middleware::checkIsLoggedIn();
+        Middleware::checkIsNotAdmin();
 
         switch ($_SERVER['REQUEST_METHOD']) {
           case "GET":
@@ -260,6 +263,8 @@ class MembershipController extends BaseController
         switch ($_SERVER['REQUEST_METHOD']) {
             case "POST":
                 Middleware::checkIsLoggedIn();
+                Middleware::checkIsNotAdmin();
+
                 $data = json_decode(file_get_contents('php://input'), true);
                 $creator_id = $data['creator_id'];
                 $creator_name = $data['creator_name'];
@@ -335,6 +340,7 @@ class MembershipController extends BaseController
       $episode_id = filter_var($episode_id, FILTER_SANITIZE_NUMBER_INT);
       try {
         Middleware::checkIsLoggedIn();
+        Middleware::checkIsNotAdmin();
 
         switch ($_SERVER['REQUEST_METHOD']) {
           case "GET":
@@ -457,6 +463,8 @@ class MembershipController extends BaseController
         switch ($_SERVER['REQUEST_METHOD']) {
             case "POST":
                 Middleware::checkIsLoggedIn();
+                Middleware::checkIsNotAdmin();
+
                 $postData = json_decode(file_get_contents('php://input'), true);
                 $episode_id = $postData['episode_id'];
                 $username = $postData['username'];
@@ -529,6 +537,8 @@ class MembershipController extends BaseController
         switch ($_SERVER['REQUEST_METHOD']) {
             case "POST":
                 Middleware::checkIsLoggedIn();
+                Middleware::checkIsNotAdmin();
+
                 $postData = json_decode(file_get_contents('php://input'), true);
                 $episode_id = $postData['episode_id'];
 
