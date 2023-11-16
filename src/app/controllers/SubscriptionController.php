@@ -16,7 +16,7 @@ class SubscriptionController extends BaseController
                 case "GET":
                     Middleware::checkIsLoggedIn();
 
-                    $userID = Sanitizer::sanitizeIntParam("user_id");
+                    $userID = $_SESSION['user_id'];
 
                     $newNotification = $this->subscription_service->getAllNewNotification($userID);
 
@@ -47,7 +47,7 @@ class SubscriptionController extends BaseController
         } catch (Exception $e) {
             $response = array("success" => false, "data" => []);
             header('Content-Type: application/json');
-            
+
             echo json_encode($response);
             exit;
         }

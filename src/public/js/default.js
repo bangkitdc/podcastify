@@ -37,23 +37,6 @@ sliderVolumeEl.addEventListener("input", (event) => {
 
 // Poll for new notification
 const SUBSCRIPTION_NOTIFICATION_BASE_URL = "/subscription";
-const SELF_BASE_URL = "/user/self";
-
-const getSelf = async () => {
-  return new Promise((resolve, reject) => {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", SELF_BASE_URL, true);
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        var data = JSON.parse(xhr.responseText);
-        resolve(data.data);
-      } else {
-        resolve({ user_id: -1 });
-      }
-    };
-    xhr.send();
-  });
-};
 
 const subscriptionNotificationText = (creatorName, fail = false) => {
   return `Your subscription request to ${creatorName} has been ${
@@ -61,13 +44,12 @@ const subscriptionNotificationText = (creatorName, fail = false) => {
   }`;
 };
 
-const fetchNewNotification = async () => {
+const fetchNewNotification = () => {
   var xhr = new XMLHttpRequest();
 
-  let userID = (await getSelf()).user_id;
   xhr.open(
     "GET",
-    SUBSCRIPTION_NOTIFICATION_BASE_URL + "?user_id=" + userID,
+    SUBSCRIPTION_NOTIFICATION_BASE_URL,
     true
   );
   xhr.onload = async () => {
@@ -77,7 +59,7 @@ const fetchNewNotification = async () => {
 
       const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-      if (data.length > 0 && userID !== -1) {
+      if (data.length > 0) {
         for (let status of data) {
           if (status.status === "ACCEPTED") {
             showNotificationSuccess(

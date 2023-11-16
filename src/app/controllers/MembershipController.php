@@ -267,8 +267,8 @@ class MembershipController extends BaseController
                 $data = json_decode(file_get_contents('php://input'), true);
                 $creator_id = $data['creator_id'];
                 $creator_name = $data['creator_name'];
-                $subscriber_id = $data['subscriber_id'];
-                $subscriber_name = $data['subscriber_name'];
+                $subscriber_id = $_SESSION['user_id'];
+                $subscriber_name = $_SESSION['username'];
 
                 $apiUrl = SOAP_SERVICE_URL . '/subscription';
                 $envelope = <<<EOT
