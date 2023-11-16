@@ -39,12 +39,6 @@ echo '
               Episode
             </button>
           </li>
-          <li>
-            <button onclick="window.location.href = \'/membership\'">
-              <img src="' . ICONS_DIR . 'membership.svg" alt="Membership" />
-              Membership
-            </button>
-          </li>
   ';
 
 if (Middleware::isAdmin()) {
@@ -68,6 +62,15 @@ if (Middleware::isAdmin()) {
               Users List
             </button>
           </li>
+  ';
+} else {
+  echo '
+    <li>
+      <button onclick="window.location.href = \'/membership\'">
+        <img src="' . ICONS_DIR . 'membership.svg" alt="Membership" />
+        Membership
+      </button>
+    </li>
   ';
 }
 

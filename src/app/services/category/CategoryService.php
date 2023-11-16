@@ -38,8 +38,4 @@ class CategoryService {
 
     return $categories;
   }
-
-  public function getCategoryOfEpisode($episodeId){
-    return $this->category_model->getCategoryOfEpisode($episodeId);
-  }
 }

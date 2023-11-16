@@ -33,7 +33,7 @@ const submitLoginForm = async (e) => {
             location.replace(response.redirect_url);
           }, 3000);
         }
-      } else {
+      } else {  
         showNotificationDanger(response.error_message);
       }
     };
