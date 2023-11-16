@@ -9,6 +9,7 @@
     // require_once VIEWS_DIR . "components/privates/episode/episode_card.php";
     require_once VIEWS_DIR . "components/shares/paginations/primary.php";
     require_once VIEWS_DIR . "components/shares/tables/primary.php";
+    require_once COMPONENTS_SHARES_DIR . 'utility/utility.php';
     if (count($data['episodes'])) {
       echoTableHeader(["Title", "Duration", "Upload Date"], [60, 20, 15]);
       $ctr = 1;
@@ -16,7 +17,7 @@
         $id = $episode ? $episode->episode_id : '';
         $title = $episode ? $episode->title : '';
         $creator = $episode ? $episode->podcast_title : '';
-        $duration = $episode ? $episode->duration / 60 : '';
+        $duration = $episode ? secondsToMinutesSeconds($episode->duration) : '';
         $image = is_file(Storage::EPISODE_IMAGE_PATH . $episode->image_url) ? Storage::getFileUrl(Storage::EPISODE_IMAGE_PATH, $episode->image_url) : IMAGES_DIR . "episode-template.png";
         $upload_date = $episode->created_at ? formatDate($episode->created_at) : '';
 

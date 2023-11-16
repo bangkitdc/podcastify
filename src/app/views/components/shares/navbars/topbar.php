@@ -2,15 +2,6 @@
 
 echo '<link rel="stylesheet" href="' . CSS_DIR .'navbars/topbar.css">';
 
-
-// <div class="btn-flex">
-//       <button class="btn-topbar">
-//         <img src="' . ICONS_DIR . 'left-arrow.svg" />
-//       </button>
-//       <button class="btn-topbar">
-//         <img src="' . ICONS_DIR . 'right-arrow.svg" />
-//       </button>
-//     </div>
 echo '
   <div class="topbar">
     <div class="btn-flex">
@@ -71,6 +62,15 @@ if (Middleware::isAdmin()) {
               Users List
             </button>
           </li>
+  ';
+} else {
+  echo '
+    <li>
+      <button onclick="window.location.href = \'/membership\'">
+        <img src="' . ICONS_DIR . 'membership.svg" alt="Membership" />
+        Membership
+      </button>
+    </li>
   ';
 }
 

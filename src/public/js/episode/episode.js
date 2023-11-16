@@ -51,3 +51,118 @@ const showEditEpisode = (episodeId) => {
   }
   
 };
+
+//COMMENT
+let commentClicked = true;
+const onClickComment = () => {
+    if(commentClicked){
+    const commentButtons = document.getElementById("comment-buttons");
+    commentButtons.style.display = 'flex'
+    commentClicked = false;
+  }
+}
+
+if(document.getElementById('comment-cancel')){
+  document.getElementById('comment-cancel').addEventListener("click", () => {
+    const commentButtons = document.getElementById("comment-buttons");
+    commentButtons.style.display = 'none';
+    commentClicked = true;
+  })
+}
+
+if(document.getElementById("comment-submit")){
+  document.getElementById("comment-submit").addEventListener('click', async () => {
+    const username = (await getSelf()).username;
+    const episode_id = document.getElementById('episode_id').value;
+    const text = document.getElementById('comment-input').value;
+
+    const request = {
+      episode_id : parseInt(episode_id),
+      username: username,
+      comment_text: text,
+    }
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "/membership/comment", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = () => {
+      const response = JSON.parse(xhr.responseText);
+      if (xhr.status === 200) {
+        if (response.success) {
+          showNotificationSuccess(response.message);
+
+          setTimeout(() => {
+            location.replace("/membership/prem_episode/" + episode_id);
+          }, 1000);
+        } else {
+            showNotificationDanger(response.message);
+        }
+      } else {
+        showNotificationDanger(response.message);
+      }
+    };
+
+    xhr.send(JSON.stringify(request));
+  })
+}
+
+//LIKE
+let likeClicked = false;
+if(document.getElementById("like-button-image")){
+  document.getElementById("like-button-image").addEventListener("click", () => {
+    const likeBtn = document.getElementById("like-button-image");
+    const likeCtr = parseInt(document.getElementById("like-count").innerHTML);
+    const likeText = document.getElementById("like-text").innerHTML;
+
+    const fileName = likeBtn.src.split('/').pop();
+
+    if(fileName === 'heart-fill.svg') {
+      likeBtn.src = "/src/public/assets/icons/heart.svg";
+      document.getElementById('like-count').innerHTML = likeCtr - 1;
+      
+      if (likeCtr - 1 === 1) {
+        document.getElementById("like-text").innerHTML = "like";
+      } else {
+        document.getElementById("like-text").innerHTML = "likes";
+      }
+    } else {
+      likeBtn.src = "/src/public/assets/icons/heart-fill.svg";
+      document.getElementById('like-count').innerHTML = likeCtr + 1;
+
+      if (likeCtr + 1 === 1) {
+        document.getElementById("like-text").innerHTML = "like";
+      } else {
+        document.getElementById("like-text").innerHTML = "likes";
+      }
+    }
+
+    const episode_id = document.getElementById('episode_id').value;
+
+    const request = {
+      episode_id : parseInt(episode_id),
+    }
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "/membership/like", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = () => {
+      const response = JSON.parse(xhr.responseText);
+      if (xhr.status === 200) {
+        if (response.success) {
+          showNotificationSuccess(response.message);
+        } else {
+          showNotificationDanger(response.message);
+        }
+      } else {
+        showNotificationDanger(response.message);
+      }
+    };
+
+    xhr.send(JSON.stringify(request));
+
+  })
+}

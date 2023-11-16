@@ -1,0 +1,67 @@
+/* grid grid-cols-10 grid-rows-2 pb-9 */
+.episode-comment-card {
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.episode-row-1 {
+  grid-row: span 1 / span 2;
+  display: flex;
+  gap: 10px;
+}
+
+.episode-row-2 {
+  grid-row: span 1 / span 2;
+  display: flex;
+}
+
+/* flex items-center justify-center */
+.episode-comment-card-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* w-8 rounded-full col-span-1 row-span-2 */
+.episode-comment-card-image {
+  width: 2rem;
+  border-radius: 9999px;
+  /* grid-column: span 1 / span 10; */
+  grid-row: span 2 / span 2;
+}
+
+/* flex gap-2 col-span-9 items-center text-clr-text-secondary-darken */
+.episode-comment-card-profile {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  /* color: var(--clr-text-secondary-darken); */
+}
+
+.episode-comment-card-profile p, span {
+  font-weight: 50;
+  color: var(--clr-text-secondary-darken);
+}
+
+/* col-span-1 */
+.episode-comment-fill-div {
+  width: 42px;
+}
+
+/* h-px bg-clr-background-highlight-two col-span-10 mt-4 */
+.episode-comment-divider {
+  height: 1px;
+  background: var(--clr-background-highlight-two);
+  margin-top: 4rem;
+}
+
+@media (max-width: 402px) {
+  .episode-username, .episode-date  {
+    font-size: 12px;
+  }
+
+  .episode-text {
+    font-size: 13px;
+  }
+}

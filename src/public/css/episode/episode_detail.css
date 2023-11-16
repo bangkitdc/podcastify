@@ -1,7 +1,3 @@
-p {
-  color: var(--clr-text-primary);
-}
-
 .episode-detail-container {
   display: flex;
   flex-direction: column;
@@ -58,6 +54,12 @@ p {
   height: 100%;
 }
 
+#like-button-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .episode-detail-head-edit-button {
   background-color: transparent;
   border: none;
@@ -66,10 +68,25 @@ p {
   transition: all 0.3s ease;
 }
 
+.episode-detail-head-like-button {
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  width: 2rem;
+  height: 2rem;
+}
+
+.like-info {
+  display: flex;
+  gap: 5px;
+}
+
 .episode-detail-line {
   width: auto;
   height: 2px;
   background-color: #000000;
+  padding: auto 10px;
 }
 
 .episode-detail-foot {
@@ -92,7 +109,7 @@ p {
   width: 200px;
   display: flex;
   flex-direction: row;
-  border: 2px solid #ffffff;
+  border: 1px solid #ffffff;
   border-radius: 10px;
   flex-wrap: wrap;
   margin-top: 100px;
@@ -119,6 +136,74 @@ p {
   text-decoration: underline;
 }
 
+.episode-comment {
+  display: flex;
+  width: 100%;
+  margin: 20px auto;
+  max-height: 3rem;
+  gap: 10px;
+  padding: auto 4rem;
+}
+
+.comment-user-image-container {
+  height: inherit;
+  margin-left: 1.5rem;
+}
+
+.user-image {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: var(--rounded-full);
+}
+
+.comment-input-container {
+  width: 100%;
+}
+
+.comment-input {
+  padding: 14px 12px;
+  background: var(--clr-background-base-two);
+  border: 0;
+  box-shadow: 0 0 0 1px var(--essential-subdued, #878787);
+  border-radius: var(--rounded);
+  transition: box-shadow 0.3s ease;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.comment-buttons {
+  display: none;
+  justify-content: end;
+  gap: 10px;
+  margin: 10px auto;
+}
+
+.comment-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/*
+.comment-submit {
+  font-weight: 700;
+  transition: transform 0.2s ease;
+  padding: 0.5rem 2rem;
+  width: min-content;
+}
+
+.comment-submit:hover {
+  transform: scale(1.05);
+}
+
+.comment-cancel {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: var(--clr-text-secondary);
+} */
+
 @media (max-width: 402px) {
   .episode-detail-head-image, .episode-detail-head-image-empty  {
     width: 100%;
@@ -140,6 +225,7 @@ p {
   
   .episode-detail-foot-description {
     font-size: 10px;
+    line-height: 1rem;
   }
 
   .episode-detail-foot-creator {
@@ -149,6 +235,25 @@ p {
 
   .episode-detail-foot-creator-name {
     font-size: 14px;
+  }
+
+  .episode-detail-head-like-button {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .episode-comment-title {
+    font-size: 1rem;
+  }
+
+  .user-image {
+    width: 30px;
+    height: 30px;
+  }
+
+  .comment-input {
+    padding: 10px;
+    font-size: 12px;
   }
 }
 

@@ -9,6 +9,14 @@ define('MYSQL_USER', $_ENV['MYSQL_USER']);
 define('MYSQL_PASSWORD', $_ENV['MYSQL_PASSWORD']);
 define('MYSQL_DATABASE', $_ENV['MYSQL_DATABASE']);
 
+// API KEY
+define("APP_API_KEY", $_ENV['APP_API_KEY']);
+define("ENCRYPTION_KEY", $_ENV['ENCRYPTION_KEY']);
+
+// SERVICE URL
+define("REST_SERVICE_URL", $_ENV['REST_SERVICE_URL']);
+define("SOAP_SERVICE_URL", $_ENV['SOAP_SERVICE_URL']);
+
 // Directory
 define("MODELS_DIR", BASE_URL . "/src/app/models/");
 define("CONTROLLERS_DIR", BASE_URL . "/src/app/controllers/");
@@ -20,6 +28,7 @@ define("STORAGES_DIR", BASE_URL . "/src/storage/");
 
 define("ICONS_DIR", "/src/public/assets/icons/");
 define("IMAGES_DIR", "/src/public/assets/images/");
+define("AUDIO_DIR", "/src/public/assets/audio/");
 define("FONTS_DIR", "/src/public/assets/fonts/");
 define("CSS_DIR", "/src/public/css/");
 define("JS_DIR", "/src/public/js/");

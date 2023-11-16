@@ -171,9 +171,9 @@ class PodcastController extends BaseController
 
     // /edit/{id}
     public function edit($id) {
-        Middleware::checkIsAdmin();
-
         try {
+            Middleware::checkIsAdmin();
+            Middleware::checkIsLoggedIn();
             $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
             switch ($_SERVER["REQUEST_METHOD"]) {
@@ -231,9 +231,10 @@ class PodcastController extends BaseController
 
     // /add
     public function add() {
-        Middleware::checkIsAdmin();
 
         try {
+            Middleware::checkIsAdmin();
+            Middleware::checkIsLoggedIn();
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case "GET":
                     $data["type"] = "create";

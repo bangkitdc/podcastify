@@ -42,6 +42,14 @@ class Middleware {
         return;
     }
 
+    public static function checkIsNotAdmin()
+    {
+        if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+            throw new Exception('Unauthorized', ResponseHelper::HTTP_STATUS_UNAUTHORIZED);
+        }
+        return;
+    }
+
     public static function checkIsLoggedIn()
     {
         if (!isset($_SESSION['username']) && !isset($_SESSION['user_id'])) {

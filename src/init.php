@@ -14,3 +14,5 @@ require_once 'app/controllers/PodcastController.php';
 require_once 'app/controllers/LoginController.php';
 require_once 'app/controllers/EpisodeController.php';
 require_once 'app/controllers/ProfileController.php';
+require_once 'app/controllers/MembershipController.php';
+require_once 'app/controllers/SubscriptionController.php';
