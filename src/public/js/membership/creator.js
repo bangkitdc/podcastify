@@ -3,16 +3,13 @@ const showCreator = (creatorId) => {
 };
 
 if (document.getElementById("subscribe")) {
-  document.getElementById("subscribe").addEventListener("click", async () => {
-    const { user_id, username } = await getSelf();
+  document.getElementById("subscribe").addEventListener("click", () => {
     const creator_id = document.getElementById("creator-id").value;
     const creator_name = document.getElementById("creator-name").value;
 
     const request = {
       creator_id: creator_id,
       creator_name: creator_name,
-      subscriber_id: user_id,
-      subscriber_name: username,
     };
 
     const xhr = new XMLHttpRequest();
