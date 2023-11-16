@@ -180,8 +180,5 @@ Podcastify is built using the following technologies:
 </b>
 </div>
 
-## OWASP
-[OWASP Details](OWASP.md)
-
 ## Copyright
 2023 © Podcastify. All Rights Reserved.
