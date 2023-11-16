@@ -82,16 +82,7 @@ class MembershipController extends BaseController
             if ($responseData !== null) {
               $data['currentPage'] = $responseData['data']['current_page'];
               $data['totalPages'] = $responseData['data']['last_page'];
-              if (isset($responseData['data']['data']) && is_array($responseData['data']['data'])) {
-                $sanitizedCreators = [];
-                foreach ($responseData['data']['data'] as $creator) {
-                  $sanitizedCreator = array_map('htmlspecialchars', $creator);
-                  $sanitizedCreators[] = $sanitizedCreator;
-                }
-                $data['creators'] = $sanitizedCreators;
-              } else {
-                $data['creators'] = [];
-              }
+              $data['creators'] = $responseData['data']['data'];
 
               if (isset($_GET['page'])) {
                 return renderCreatorCardList($data['creators']);
@@ -173,28 +164,9 @@ class MembershipController extends BaseController
               if ($responseData !== null) {
                 $data['currentPage'] = $responseData['data']['current_page'];
                 $data['totalPages'] = $responseData['data']['last_page'];
-                $episodes = $responseData['data']['data']; // Fetch episodes data
-
-                if (is_array($episodes)) {
-                  $sanitizedEpisodes = [];
-                  foreach ($episodes as $episode) {
-                    // Sanitize each field in the episode data
-                    $sanitizedEpisode = [
-                      'episode_id' => htmlspecialchars($episode['episode_id']),
-                      'image_url' => htmlspecialchars($episode['image_url']),
-                      // Sanitize other fields similarly if needed
-                    ];
-
-                    // Add the sanitized episode data to the sanitizedEpisodes array
-                    $sanitizedEpisodes[] = $sanitizedEpisode;
-                  }
-                  $data['episodes'] = $sanitizedEpisodes; // Assign sanitized data to $data['episodes']
-                } else {
-                  $data['episodes'] = [];
-                }
+                $data['episodes'] = $responseData['data']['data']; // Fetch episodes data
 
                 // Get Files
-
                 $i = 0;
                 foreach ($data['episodes'] as $episode) {
                   $apiUrlImage = REST_SERVICE_URL . '/episode/downloadImage/' . $episode['episode_id'];
